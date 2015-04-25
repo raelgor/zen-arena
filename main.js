@@ -1,3 +1,4 @@
-var zenx = require('zenx');
+var zenx   = require('zenx'),
+    config = require('config.js');
 
-zenx.start();
+zenx.start(config);
