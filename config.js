@@ -1,8 +1,40 @@
 module.exports = {
-    "db_type": "mongodb",
-    "db_host": "mongodb://10.240.212.94:27017/zenx",
-    "db_user": "",
-    "db_pass": "",
-    "zenx_client_bind": "10.240.212.94",
-    "zenx_client_port": "10000"
+    
+    // Number of clusters
+    // to use
+    numOfClusters: 4,
+    
+    // Bind info
+    address: 'localhost',
+    port: 8080,
+    
+    // App domain name
+    domain: 'zenarena.com',
+    
+    // Default protocol
+    protocol: 'https',
+    
+    // Use x-forwarded-for header instead of
+    // remoteAddress
+    xfwd: true,
+    
+    // Non-user namespaces
+    reservedNamespaces: [
+        'about',
+        'terms-of-service',
+        'privacy-policy',
+        'contact'
+    ],
+    
+    // MongoDB
+    mongodb: {
+        dbName: 'zenarena',
+        dbUser: 'spdfrkpl2',
+        dbPassword: 'speedfreakpl2',
+        dbHost: ['zenarena.com'],
+        query: {
+            authSource: 'admin'
+        }
+    }
+    
 };
