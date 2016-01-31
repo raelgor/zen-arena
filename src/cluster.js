@@ -1,3 +1,4 @@
+/* global log */
 /* global app */
 'use strict';
 
@@ -9,6 +10,10 @@ const path = require('path');
 const config = require('../config');
 const defaultInterface = config.bind_ip;
 const port = config.port;
+
+global.log = (...args) => console.log('[' + new Date() + '] ', ...args);
+
+log('starting cluster...');
 
 // Start server
 global.app = new zenx.Server({
@@ -32,3 +37,4 @@ require('./templates');
 // Set up routes
 require('./routes');
 
+log('cluster started.');

@@ -14,6 +14,8 @@ process.title = 'zen-arena-cm';
 
 cluster.setupMaster({ exec: __dirname + '/src/cluster.js' });
 
+log('forking...');
+
 for(let i = 0; i < numOfCores; i++) {
     
     let worker = cluster.fork();
@@ -24,3 +26,5 @@ for(let i = 0; i < numOfCores; i++) {
     });
     
 }
+
+log('app cluster started.');
