@@ -1,0 +1,14 @@
+.ani01 {
+	transition-property: all;
+	transition-duration: 100ms;
+}
+
+.ani02 {
+	transition-property: all;
+	transition-duration: 200ms;
+}
+
+.ani04 {
+	transition-property: all;
+	transition-duration: 400ms;
+}

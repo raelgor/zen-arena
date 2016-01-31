@@ -1,0 +1,9 @@
+.navigation(style="background-image: url(" + navigation.themeImage + ")")
+    .background(style="background-image: url(" + navigation.themeImage + ")")
+    .foreground
+        a.logo(href=global.fullSiteName)
+            img.ani04(src=navigation.logo)
+        .buttons
+            each button in navigation.buttons
+                a.ani01(href=button.href)=button.text
+        .player-info

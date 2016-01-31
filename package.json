@@ -1,0 +1,30 @@
+{
+  "name": "zen-arena",
+  "version": "0.0.1",
+  "description": "A social network for tournaments.",
+  "homepage": "https://zenarena.com/",
+  "icon": "http://tournouatichu.com/logolight.png",
+  "license": "MIT",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raelgor/zen-arena.git"
+  },
+  "scripts": {},
+  "dependencies": {
+    "co": "^4.6.0",
+    "jade": "^1.11.0",
+    "zenx": "0.0.42"
+  },
+  "author": {
+    "name": "Kosmas Papadatos",
+    "email": "kosmas.papadatos@gmail.com",
+    "url": "https://plus.google.com/+KosmasPapadatos"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-uglify": "^1.5.1"
+  }
+}

@@ -1,5 +1,6 @@
-node_modules/*
 *.bat
+.git
+node_modules
 .vscode
 *.psd
 typings
