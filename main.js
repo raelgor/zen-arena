@@ -7,9 +7,6 @@ const numOfCores = os.cpus().length;
 const mongodb = require('mongodb');
 
 const config = require('./config');
-const makeMongoUrl = require('./src/makeMongoUrl');
-
-const mongoUrl = makeMongoUrl(config.mongodb);
 
 const log = (...args) => console.log('[' + new Date() + '] ', ...args);
 
@@ -27,16 +24,3 @@ for(let i = 0; i < numOfCores; i++) {
     });
     
 }
-
-log('connecting to mongodb...');
-
-mongodb.connect(mongoUrl, (error, db) => {
-    
-    if(!error)
-        log('connected. loading data...');
-    else
-        return log('connection failed.');
-    
-    db.collection('text').find({}).toArray(console.log);
-    
-});
