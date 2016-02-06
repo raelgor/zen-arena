@@ -21,7 +21,7 @@ const cacheClient = new zenx.cache.Client(config.cacheServer);
 
 cacheClient.on('connected', () => co(function*(){
     
-    log.green('Connected. loading configuration...');
+    log.green('Connected. Loading configuration...');
     
     var configuration = yield cacheClient.get({
         query: {},
@@ -29,16 +29,16 @@ cacheClient.on('connected', () => co(function*(){
         collection: 'configuration'
     });
     
-    log('configuration loaded. forking...');
-    log({ configuration });
+    log('Configuration loaded. Forking...');
     
     for(let i = 0; i < numOfCores; i++) {
         
         let worker = cluster.fork();
+        worker.send({ config });
         
         worker.on('disconnect', () => {
             worker.kill('SIGTERM');
-            cluster.fork();
+            cluster.fork().send({ config });
         });
         
     }

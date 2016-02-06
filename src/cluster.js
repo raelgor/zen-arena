@@ -1,40 +1,61 @@
+/* global appConfig */
+/* global cacheClient */
+/* global config */
+/* global co */
 /* global log */
 /* global app */
 'use strict';
 
 process.title = 'zen-arena-cs';
 
-const zenx = require('zenx');
-const os = require('os');
+const Server = require('zenx-server');
+const cache = require('zenx-cache');
 const path = require('path');
-const config = require('../config');
-const defaultInterface = config.bind_ip;
-const port = config.port;
 
-global.log = (...args) => console.log('[' + new Date() + '] ', ...args);
+var initialized = false;
 
-log('starting cluster...');
+global.log = require('./log');
+global.co = require('co');
 
-// Start server
-global.app = new zenx.Server({
-	bind: defaultInterface,
-	port,
-	ws: true,
-	static: path.resolve(__dirname + '/../assets')
-});
+global.cacheClient = null;
 
-app.config = {
-    defaultInterface,
-    port
-};
+log('Starting cluster...');
 
-// Connect to cache servers
-//require('./cache');
+process.on('message', message => co(function*(){
+    
+    if(!('config' in message && initialized)) return;
+    
+    global.config = message.config;
+    global.cacheClient = new cache.Client(config.cacheServer);
+    
+    yield new Promise(resolve => cacheClient.on('connect', resolve));
+    
+    var configResponse = yield cacheClient.get({
+        query: {},
+        database: 'zenarena',
+        collection: 'configuration'
+    });
+    
+    global.appConfig = {};
+    
+    for(let pair of configResponse)
+        appConfig[pair.key] = pair.value;
+        
+    // Start server
+    global.app = new Server({
+        bind: appConfig.bind_ip,
+        port: appConfig.port,
+        ws: true,
+        static: path.resolve(__dirname + '/../assets')
+    });
 
-// Load jade templates
-require('./templates');
+    // Load jade templates
+    require('./templates');
 
-// Set up routes
-require('./routes');
+    // Set up routes
+    require('./routes');
 
-log('cluster started.');
+    log.green('Cluster started.');
+    initialized = true;
+    
+}));
