@@ -1,31 +1,48 @@
 'use strict';
 
 const zenx = require('zenx');
+const co = require('co');
 const os = require('os');
 const cluster = require('cluster');
+const colors = require('colors/safe');
 const numOfCores = os.cpus().length;
 const mongodb = require('mongodb');
 const log = require('./src/log');
 
 const config = require('./config');
 
-const log = (...args) => console.log('[' + new Date() + '] ', ...args);
-
 process.title = 'zen-arena-cm';
 
 cluster.setupMaster({ exec: __dirname + '/src/cluster.js' });
 
-log('forking...');
+log(`Connecting to data server at ${colors.magenta(config.cacheServer.host + ':' + config.cacheServer.port)}...`);
 
-for(let i = 0; i < numOfCores; i++) {
+const cacheClient = new zenx.cache.Client(config.cacheServer);
+
+cacheClient.on('connected', () => co(function*(){
     
-    let worker = cluster.fork();
+    log.green('Connected. loading configuration...');
     
-    worker.on('disconnect', () => {
-        worker.kill('SIGTERM');
-        cluster.fork();
+    var configuration = yield cacheClient.get({
+        query: {},
+        database: 'zenarena',
+        collection: 'configuration'
     });
     
-}
+    log('configuration loaded. forking...');
+    log({ configuration });
+    
+    for(let i = 0; i < numOfCores; i++) {
+        
+        let worker = cluster.fork();
+        
+        worker.on('disconnect', () => {
+            worker.kill('SIGTERM');
+            cluster.fork();
+        });
+        
+    }
+    
+}));
 
-log('app cluster started.');
+log.green('App cluster started.');
