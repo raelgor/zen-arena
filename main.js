@@ -5,6 +5,7 @@ const os = require('os');
 const cluster = require('cluster');
 const numOfCores = os.cpus().length;
 const mongodb = require('mongodb');
+const log = require('./src/log');
 
 const config = require('./config');
 
