@@ -16,6 +16,7 @@ var initialized = false;
 
 global.log = require('./log');
 global.co = require('co');
+global.GeoIP = require('./GeoIP');
 
 global.cacheClient = null;
 
