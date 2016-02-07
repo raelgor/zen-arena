@@ -1,19 +1,52 @@
+/* global appConfig */
+/* global log */
+/* global cacheClient */
+/* global co */
 /* global app */
 'use strict';
 
-const CacheClient = require('zenx').cache.Client;
-const co = require('co');
+module.exports = get_data();
 
-var client = app.cacheClient = new CacheClient({
-    host: app.config.defaultInterface,
-    port: 8082,
-    protocol: 'http'
-});
-
-client.on('connected', () => co(function*(){
+function get_data(){
     
-    var x = yield client.get({ query: {}, database: 'zenarena', collection: 'text' });
+    log('Updating cache data...');
     
-    console.log(x);
-    
-}));
+    return co(function*(){
+        
+        var configResponse = yield cacheClient.get({
+            query: {},
+            database: 'zenarena',
+            collection: 'configuration'
+        });
+        
+        global.appConfig = {};
+        
+        for(let pair of configResponse)
+            appConfig[pair.key] = pair.value;
+            
+        var textResponse = yield cacheClient.get({
+            query: {},
+            database: 'zenarena',
+            collection: 'text'
+        });
+        
+        global.text = {};
+        
+        // global.text.origin.lang.id
+        for(let row of textResponse)
+            global.text[row.origin] = global.text[row.origin] || {};
+            
+        for(let code of global.appConfig.app_languages)
+            for(let origin in global.text)
+                global.text[origin][code] = {};
+            
+        for(let row of textResponse)
+            global.text[row.origin][row.language][row.id] = row;
+            
+        log.green('Cache up to date.');
+        
+        setTimeout(get_data, 1e4);
+            
+    });
+        
+}

@@ -1,0 +1,20 @@
+.carousel {
+    background-image: url(/img/mainbg.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0px -50px;
+    height: 550px;
+    color: white;
+    line-height: 450px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.carousel>div {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    position: relative;
+    top: -81px;
+    line-height: 30px;
+}

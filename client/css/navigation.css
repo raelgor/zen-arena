@@ -1,7 +1,15 @@
 .navigation {
     height: 50px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.37);
     background-size: cover;
+}
+
+.navigation * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
 .navigation .background {
@@ -48,22 +56,22 @@
     -o-transform: scale(1.2);
 }
 
-.buttons {
+.navigation .buttons {
     display: inline-block;
     vertical-align: top;
     height: 100%;
 }
 
-.buttons a {
+.navigation .buttons a {
     color: white;
     text-decoration: none;
     font-family: Open Sans, sans-serif;
-    font-weight: 800;
+    /* font-weight: 800; */
     height: 100%;
     display: inline-block;
     line-height: 50px;
     vertical-align: middle;
-    text-shadow: 1px 1px 1px black;
+    /* text-shadow: 1px 1px 1px black; */
     padding: 0 10px;
     margin: 0 10px;
     border: 1px solid transparent;
@@ -72,6 +80,81 @@
     font-size: 16px;
 }
 
-.buttons a:hover {
+.navigation .buttons a:hover {
     background: rgba(0, 0, 0, 0.4);
+}
+
+.navigation .search-box {
+    display: inline-block;
+    vertical-align: top;
+    height: 30px;
+    line-height: 30px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    width: 250px;
+    position: relative;
+    top: 10px;
+    margin: 0 20px;
+}
+
+.navigation .search-box > * {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.navigation .search-box > input {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color:white;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    top: -1px;
+}
+
+.navigation .search-box .icon-search {
+    color: white;
+    padding: 0 15px
+}
+
+.navigation .search-box button {
+    background: transparent;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    font-size: 17px;
+    position: relative;
+    top: -1px;
+}
+
+.navigation .player-info {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 50px;
+    position: relative;
+    top: -2px;
+    float: right;
+}
+
+.navigation .player-info > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px;
+    cursor: default;
+    /* font-weight: 800; */
+    color: white;
+    /* text-shadow: 1px 1px 1px black; */
+}
+
+.navigation .player-info .login, .player-info .signup {
+    color: #7CB532;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navigation .player-info .icon-user {
+    font-size: 25px;
+    margin: 0 18px 0 12px;
 }

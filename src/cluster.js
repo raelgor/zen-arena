@@ -16,6 +16,7 @@ var initialized = false;
 
 global.log = require('./log');
 global.co = require('co');
+global.colors = require('colors');
 global.GeoIP = require('./GeoIP');
 
 global.cacheClient = null;
@@ -24,24 +25,23 @@ log('Starting cluster...');
 
 process.on('message', message => co(function*(){
     
-    if(!('config' in message && initialized)) return;
+    log('Configuration message received. Initializing...');
+    
+    if('config' in message && initialized) return log.warn('Cluster asked to init more than once. Ignoring...');
     
     global.config = message.config;
     global.cacheClient = new cache.Client(config.cacheServer);
     
-    yield new Promise(resolve => cacheClient.on('connect', resolve));
+    log('Done. Waiting for connect.');
     
-    var configResponse = yield cacheClient.get({
-        query: {},
-        database: 'zenarena',
-        collection: 'configuration'
-    });
+    yield new Promise(resolve => cacheClient.on('connected', resolve));
     
-    global.appConfig = {};
+    log('Connected. Getting configuration...');
     
-    for(let pair of configResponse)
-        appConfig[pair.key] = pair.value;
+    yield require('./cache');
         
+    log('Done. Starting server...');
+    
     // Start server
     global.app = new Server({
         bind: appConfig.bind_ip,
