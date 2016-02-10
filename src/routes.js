@@ -93,7 +93,10 @@ app.router.all('/', (req, res) => {
             ],
             signUpText: global.text.core[req.lang].menu_signup.text,
             signInText: global.text.core[req.lang].menu_signin.text,
-            orText: global.text.core[req.lang].menu_or.text
+            orText: global.text.core[req.lang].menu_or.text,
+            clientData: {
+                user: req.user
+            }
         },
         global: {
             fullSiteUrl: appConfig.app_protocol + '://' + appConfig.domain_name,
