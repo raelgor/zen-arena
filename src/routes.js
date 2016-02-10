@@ -98,7 +98,8 @@ app.router.all('/', (req, res) => {
         global: {
             fullSiteUrl: appConfig.app_protocol + '://' + appConfig.domain_name,
             favicon: '/img/favicon.png',
-            domain: appConfig.domain_name
+            domain: appConfig.domain_name,
+            ga_tracking_code: appConfig.ga_tracking_code
         },
         meta: {
             title: global.text.core[req.lang].title.text
