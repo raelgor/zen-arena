@@ -1,0 +1,22 @@
+.footer {
+    height: 260px;
+    background: white;
+    width: 100%;
+}
+
+.sponsors-title {
+    text-align: center;
+    padding: 10px 0;
+    color: gray;
+    font-size: 13px;
+}
+
+.sponsors {
+    background-image: url(/img/sponsors.jpg);
+    background-size: contain;
+    height: 110px;
+    opacity: .5;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #989898;
+}

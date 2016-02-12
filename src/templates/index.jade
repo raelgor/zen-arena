@@ -1,7 +1,9 @@
 doctype html
-html(lang=lang)
+html(lang=global.language)
     include head.jade
     body
-        include navigation.jade
-        include home.jade
+        .content
+            include auth_dialogs.jade
+            include navigation.jade
+            include home.jade
         include footer.jade

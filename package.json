@@ -12,6 +12,7 @@
   },
   "scripts": {},
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "co": "^4.6.0",
     "jade": "^1.11.0",
     "mongodb": "^2.1.4",

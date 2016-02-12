@@ -1,0 +1,219 @@
+.auth-dialogs {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+    transform: scale(1) !important;
+}
+
+.auth-dialogs.hide, .auth-dialogs .hide {
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0);
+}
+
+.auth-dialogs > form {
+    background: #2A2A2A;
+    width: 340px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: scale(1);
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.84);
+    border-radius: 6px;
+}
+
+.auth-dialogs>form>.welcome {
+    text-align: center;
+    font-size: 25px;
+    padding: 10px;
+    color: #fff;
+    background: #343434;
+    border-bottom: 1px solid #1C1C1C;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 14px;
+}
+
+.error.ani04 {
+    color: red;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    top: -10px;
+    font-size: 13px;
+    height: 36px;
+    margin: 0 20px 16px;
+}
+
+.error.ani04:empty {
+    height: 0px !important;
+    margin: 0px 20px !important;
+}
+
+.auth-dialogs>form .username, .auth-dialogs>form .password {
+    display: block;
+    border-radius: 4px;
+    padding: 10px 20px;
+    width: 200px;
+    margin: 5px 50px 12px;
+    font-family: Open Sans, sans-serif;
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.47);
+    border: none;
+    color: white;
+}
+
+.auth-dialogs .forgot-password {
+    width: 242px;
+    margin: -8px auto 0;
+    font-size: 11px;
+    text-align: center;
+    display: block;
+}
+
+.register-frame .welcome {
+    font-size: 20px !important;
+}
+
+.auth-dialogs .forgot-password a {
+    color: #7cb532;
+    text-decoration:none;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+}
+
+form.login-frame.loading > *:not(.loader) {
+    opacity: .7;
+}
+
+form.login-frame.loading {
+    pointer-events: none;
+}
+
+form.login-frame.loading .loader {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -120px -20px;
+    opacity: 1 !important;
+
+}
+
+form.login-frame.loading .loader .sk-cube {
+
+    background-color: gray;
+    
+}
+
+.auth-dialogs>form .password:focus, .auth-dialogs>form .username:focus {
+    outline: none;
+    box-shadow: 0 0 2px 1px #7cb532;
+}
+
+.oauth-wrapper {
+    border-top: 1px solid #1C1C1C;
+    background: #343434;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #1C1C1C;
+}
+
+.oauth-wrapper > * {
+    color: white;
+    text-decoration: none;
+    display: block;
+    width: 239px;
+    margin: 13px auto;
+    border: 1px solid rgba(0, 0, 0, 0.56);
+    padding: 10px 10px;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.34);
+    text-shadow: 0px -1px rgba(0, 0, 0, 0.49);
+    box-sizing: border-box;
+}
+
+.oauth-wrapper > * > :first-child {
+    font-size: 25px;
+    float: left;
+    margin: 0 10px 0 5px;
+}
+
+.oauth-wrapper .fb {
+    background: #284781;
+}
+
+.oauth-wrapper .g-plus {
+    background: #D43B00;
+}
+
+.oauth-wrapper > a > span:nth-child(2) {
+    font-size: 14px;
+    margin-right: 3px;
+}
+
+.no-robot > * {
+    display: inline-block;
+}
+.no-robot {
+    text-align: center;
+    width: auto;
+    margin: 20px auto;
+    height: 83px;
+}
+
+.auth-dialogs .done:focus {
+    transform: scale(1.1);
+    outline: none;
+}
+.auth-dialogs .done {
+    background: #698248 !important;
+    border: 1px solid rgba(0, 0, 0, 0) !important;
+    box-sizing: border-box !important;
+    padding: 8px 18px !important;
+    font-size: 17px !important;
+    border-radius: 3px !important;
+    display: block !important;
+    margin: -10px auto 17px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.48) !important;
+    color: rgba(255, 255, 255, 0.89) !important;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.57) !important;
+    font-weight: bold !important;
+}
+
+.auth-dialogs,  .auth-dialogs *:not(input) {
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+.auth-dialogs a {
+    cursor: pointer;
+}
+
+.acc-question {
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    padding: 7px 0;
+}
+
+.acc-question > * {
+    margin: 0 3px;
+}
+
+.acc-question > a {
+    color: #7cb532;
+    text-decoration: none;
+}
+
+form.login-frame {
+    height: 507px;
+    top: 50%;
+    left: 50%;
+    margin: 0px;
+    max-height: 95%;
+    overflow: auto;
+}

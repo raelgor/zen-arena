@@ -9,6 +9,9 @@ const config = require('../config');
 
 app.router.use((req, res, next) => {
     
+    // Detect address
+    req._address = appConfig.use_xfwd ? req.headers['x-forwarded-for'] : req.connection.remoteAddress;
+    
     // If path looks like file, move on
     if(/(\.[a-z0-9]{2,4})$/i.test(req.path)) 
         return next();
@@ -20,10 +23,8 @@ app.router.use((req, res, next) => {
         
         if(!req.cookies.lang || !~appConfig.app_languages.indexOf(req.cookies.lang)) {
             
-            let address = appConfig.use_xfwd ? req.headers['x-forwarded-for'] : req.connection.remoteAddress;
-            
             let trace = req.headers['user-agent'] && 
-                (yield GeoIP.get(address));
+                (yield GeoIP.get(req._address));
             
             res.cookie('lang', trace || appConfig.default_lang, { 
                 maxAge: 24 * 60 * 60 * 1000, 
@@ -44,7 +45,26 @@ app.router.use((req, res, next) => {
 });
 
 // Api route
-app.router.all('/api*', (req, res, next) => res.end('under construction'));
+app.router.all('/api*', (req, res, next) => {
+    
+    if(isNaN(req.body.rid))
+        return res.end(JSON.stringify({error: 'bad_request'}));
+    else
+        next();
+    
+});
+
+app.router.post('/api/login', require('./api/login'));
+
+// Calls below this require auth
+app.router.all('/api*', (req, res, next) => {
+    
+    if(!req.user)
+        return res.end(JSON.stringify({error: 'call_requires_auth'}));
+    else
+        next();
+    
+});
 
 // Jade route
 app.router.all('/', (req, res) => {
@@ -81,29 +101,38 @@ app.router.all('/', (req, res) => {
     
     // Maintenance page
     
+    function mk_core_text(lang) {
+        var result = {};
+        for(let key in global.text.core[req.lang])
+            result[key] = global.text.core[req.lang][key].text;
+        return result;
+    }
+    
+    let core_text = mk_core_text(req.lang);
+    
     let html = app.templates.index({
         navigation: {
             themeImage: '/img/mainbg.jpg',
             logo: '/img/logo.png',
-            searchText: global.text.core[req.lang].menu_search.text,
             buttons: [
                 { text: global.text.core[req.lang].menu_1.text, href: appConfig.main_menu[0].href },
                 { text: global.text.core[req.lang].menu_2.text, href: appConfig.main_menu[1].href },
                 { text: global.text.core[req.lang].menu_3.text, href: appConfig.main_menu[2].href }
-            ],
-            signUpText: global.text.core[req.lang].menu_signup.text,
-            signInText: global.text.core[req.lang].menu_signin.text,
-            orText: global.text.core[req.lang].menu_or.text,
-            clientData: {
-                user: req.user
-            }
+            ]
         },
         global: {
-            fullSiteUrl: appConfig.app_protocol + '://' + appConfig.domain_name,
+            fullSiteUrl: appConfig.site_protocol + '://' + appConfig.domain_name,
             favicon: '/img/favicon.png',
             domain: appConfig.domain_name,
-            ga_tracking_code: appConfig.ga_tracking_code
+            ga_tracking_code: appConfig.ga_tracking_code,
+            language: req.lang,
+            clientData: {
+                user: req.user,
+                grecaptcha_site_key: appConfig.grecaptcha.site_key,
+                core_text
+            }
         },
+        core_text,
         meta: {
             title: global.text.core[req.lang].title.text
         },

@@ -1,7 +1,11 @@
-window.za = {}
+window.za = {
+    
+    ui: {}
+    
+}
 
 $(window).ready(function(){
-   
-    resize(); 
+    
+    !Boolean(window.touchstart) && $('.navigation .search').focus();
     
 });

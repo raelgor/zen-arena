@@ -1,9 +1,10 @@
-/* global appConfig */
 /* global cacheClient */
+/* global appConfig */
 /* global config */
-/* global co */
 /* global log */
 /* global app */
+/* global co */
+/* global fs */
 'use strict';
 
 process.title = 'zen-arena-cs';
@@ -18,6 +19,12 @@ global.log = require('./log');
 global.co = require('co');
 global.colors = require('colors');
 global.GeoIP = require('./GeoIP');
+global.https = require('https');
+global.fs = require('fs');
+global.bcrypt = require('bcrypt');
+
+// Load fn dir
+loaddirSync('./fn');
 
 global.cacheClient = null;
 
@@ -60,3 +67,10 @@ process.on('message', message => co(function*(){
     initialized = true;
     
 }));
+
+function loaddirSync(dir) {
+    
+    for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
+        global[file.split('.js')[0]] = require(`${dir}/${file}`);
+    
+};

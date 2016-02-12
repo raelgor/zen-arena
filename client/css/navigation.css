@@ -30,6 +30,11 @@
     height: 100%;
 }
 
+.navigation .foreground .wrapper {
+    max-width: 1000px;
+    margin: auto;
+}
+
 .navigation .logo {
     display: inline-block;
     width: 68px;
@@ -116,7 +121,9 @@
 
 .navigation .search-box .icon-search {
     color: white;
-    padding: 0 15px
+    padding: 0 15px;
+    border: none !important;
+    outline: none !important;
 }
 
 .navigation .search-box button {

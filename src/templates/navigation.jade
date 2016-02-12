@@ -1,18 +1,19 @@
 .navigation(style="background-image: url(" + navigation.themeImage + ")")
     .background(style="background-image: url(" + navigation.themeImage + ")")
     .foreground
-        a.logo(href=global.fullSiteUrl)
-            img.ani04(src=navigation.logo)
-        .buttons
-            each button in navigation.buttons
-                a.ani01(href=button.href)=button.text
-        form.search-box(action="/search", method="get", itemprop="potentialAction", itemscope, itemtype="http://schema.org/SearchAction")
-            meta(itemprop="target", content="/search?q={q}")
-            button(type="submit")
-                .icon-search
-            input.search(itemprop="query-input", pattern=".{2,50}", title=navigation.searchText, name="q", type="text", placeholder=navigation.searchText, required)
-        .player-info
-            a.login(href="#")=navigation.signUpText
-            .or=navigation.orText
-            a.signup(href="#")=navigation.signInText
-            .icon-user
+        .wrapper
+            a.logo(href=global.fullSiteUrl)
+                img.ani04(src=navigation.logo)
+            .buttons
+                each button in navigation.buttons
+                    a.ani01(href=button.href)=button.text
+            form.search-box(action="/search", method="get", itemprop="potentialAction", itemscope, itemtype="http://schema.org/SearchAction")
+                meta(itemprop="target", content="/search?q={q}")
+                button(type="submit")
+                    .icon-search
+                input.search(itemprop="query-input", pattern=".{2,50}", title=core_text.menu_search, name="q", type="text", placeholder=core_text.menu_search, required)
+            .player-info
+                a.login(href="#")=core_text.menu_signin
+                .or=core_text.menu_or
+                a.signup(href="#")=core_text.menu_signup
+                .icon-user
