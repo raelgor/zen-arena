@@ -6,7 +6,6 @@ const os = require('os');
 const cluster = require('cluster');
 const colors = require('colors/safe');
 const numOfCores = os.cpus().length;
-const mongodb = require('mongodb');
 const log = require('./src/log');
 
 const config = require('./config');
@@ -20,29 +19,29 @@ log(`Connecting to data server at ${colors.magenta(config.cacheServer.host + ':'
 const cacheClient = new zenx.cache.Client(config.cacheServer);
 
 cacheClient.on('connected', () => co(function*(){
-    
+
     log.green('Connected. Loading configuration...');
-    
-    var configuration = yield cacheClient.get({
+
+    yield cacheClient.get({
         query: {},
         database: 'zenarena',
         collection: 'configuration'
     });
-    
+
     log('Configuration loaded. Forking...');
-    
+
     for(let i = 0; i < numOfCores; i++) {
-        
+
         let worker = cluster.fork();
         worker.send({ config });
-        
+
         worker.on('disconnect', () => {
             worker.kill('SIGTERM');
             cluster.fork().send({ config });
         });
-        
+
     }
-    
+
 }));
 
 log.green('App cluster started.');

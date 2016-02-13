@@ -2,7 +2,6 @@
 /* global appConfig */
 /* global config */
 /* global log */
-/* global app */
 /* global co */
 /* global fs */
 'use strict';
@@ -31,24 +30,24 @@ global.cacheClient = null;
 log('Starting cluster...');
 
 process.on('message', message => co(function*(){
-    
+
     log('Configuration message received. Initializing...');
-    
+
     if('config' in message && initialized) return log.warn('Cluster asked to init more than once. Ignoring...');
-    
+
     global.config = message.config;
     global.cacheClient = new cache.Client(config.cacheServer);
-    
+
     log('Done. Waiting for connect.');
-    
+
     yield new Promise(resolve => cacheClient.on('connected', resolve));
-    
+
     log('Connected. Getting configuration...');
-    
+
     yield require('./cache');
-        
+
     log('Done. Starting server...');
-    
+
     // Start server
     global.app = new Server({
         bind: appConfig.bind_ip,
@@ -65,12 +64,12 @@ process.on('message', message => co(function*(){
 
     log.green('Cluster started.');
     initialized = true;
-    
+
 }));
 
 function loaddirSync(dir) {
-    
+
     for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
         global[file.split('.js')[0]] = require(`${dir}/${file}`);
-    
-};
+
+}

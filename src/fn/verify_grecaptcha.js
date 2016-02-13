@@ -2,10 +2,10 @@
 /* global appConfig */
 'use strict';
 
-const querystring = require('querystring')
+const querystring = require('querystring');
 
 module.exports = function verify_grecaptcha(rkey, ip) {
-    
+
     return new Promise(function (resolve) {
 
         var rdata = querystring.stringify({
@@ -36,7 +36,7 @@ module.exports = function verify_grecaptcha(rkey, ip) {
 
                     JSON.parse(data).success ? resolve(true) : resolve(false);
 
-                } catch (e) { resolve(null) };
+                } catch (e) { resolve(null); }
 
             });
 
@@ -50,4 +50,4 @@ module.exports = function verify_grecaptcha(rkey, ip) {
 
     });
 
-}
+};

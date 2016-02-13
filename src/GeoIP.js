@@ -3,7 +3,7 @@
 /* global appConfig */
 'use strict';
 
-const http = require('http')
+const http = require('http');
 
 const GeoIP = {
 
@@ -19,7 +19,7 @@ const GeoIP = {
             if(resolved) return;
             resolved = true;
             _resolve(val);
-        }
+        };
 
         let request = http.get(`${appConfig.geoip_url}/json/${address}`, response => {
 
@@ -35,9 +35,9 @@ const GeoIP = {
                 }
 
             });
-            
+
         });
-        
+
         request.on('error', log);
 
         setTimeout(() => {
@@ -51,6 +51,6 @@ const GeoIP = {
 
     }
 
-}
+};
 
 module.exports = GeoIP;
