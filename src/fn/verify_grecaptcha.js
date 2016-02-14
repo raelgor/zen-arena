@@ -1,10 +1,7 @@
-/* global https */
-/* global appConfig */
+/* global https, querystring, appConfig */
 'use strict';
 
-const querystring = require('querystring');
-
-module.exports = function verify_grecaptcha(rkey, ip) {
+module.exports = (rkey, ip) => {
 
     return new Promise(function (resolve) {
 

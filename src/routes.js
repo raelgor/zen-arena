@@ -1,7 +1,4 @@
-/* global GeoIP */
-/* global co */
-/* global appConfig */
-/* global app */
+/* global config, GeoIP, cacheClient, co, appConfig, app */
 'use strict';
 
 app.router.use((req, res, next) => {
@@ -13,11 +10,35 @@ app.router.use((req, res, next) => {
     if(/(\.[a-z0-9]{2,4})$/i.test(req.path))
         return next();
 
-    // Auth user if not static
-
-    // Language check
     co(function*(){
 
+      // Auth user if not static
+      if(req.cookies && req.cookies.st) {
+
+        let user = yield cacheClient.get({
+           query: { [`sessions.${req.cookies.st}`]: { $exists: 1 } },
+           collection: 'users',
+           database: config.cache_server.db_name
+        });
+
+        user = user && user[0];
+
+        if(!user)
+         res.clearCookie('st');
+        else
+         req.__user = user; // @todo Refresh session
+
+      }
+
+      /*
+
+         @todo
+         If cookie.lang != user.lang make adjustments.
+         Also send and receive core text if lang mismatch and update client.
+
+      */
+
+        // Language check
         if(!req.cookies.lang || !~appConfig.app_languages.indexOf(req.cookies.lang)) {
 
             let trace = req.headers['user-agent'] && appConfig.use_geoip &&
@@ -44,10 +65,12 @@ app.router.use((req, res, next) => {
 // Api route
 app.router.all('/api*', (req, res, next) => {
 
-    if(isNaN(req.body.rid))
-        return res.end(JSON.stringify({error: 'bad_request'}));
-    else
-        next();
+   res.setHeader('content-type', 'application/json');
+
+   if(isNaN(req.__rid = req.body.rid))
+      return res.end(JSON.stringify({error: 'bad_request'}));
+   else
+      next();
 
 });
 

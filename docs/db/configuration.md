@@ -47,3 +47,7 @@ Core app variables.
 `ssl` **object** Certificates if `protocol` is set to `https`. This object will be passed to node's `https`.
 
 `ga_tracking_code` **string** Google Analytics tracking code.
+
+`max_web_sessions` **number** Maximum number of active web sessions a user can have.
+
+`web_session_lifespan` **number** Milliseconds that a web session lasts before logging the user out.

@@ -21,6 +21,7 @@ global.GeoIP = require('./GeoIP');
 global.https = require('https');
 global.fs = require('fs');
 global.bcrypt = require('bcrypt');
+global.querystring = require('querystring');
 
 // Load fn dir
 loaddirSync('./fn');
@@ -36,9 +37,12 @@ process.on('message', message => co(function*(){
     if('config' in message && initialized) return log.warn('Cluster asked to init more than once. Ignoring...');
 
     global.config = message.config;
-    global.cacheClient = new cache.Client(config.cacheServer);
+    global.cacheClient = new cache.Client(config.cache_server);
 
     log('Done. Waiting for connect.');
+
+    // Swallow errors
+    cacheClient.on('error', () => {});
 
     yield new Promise(resolve => cacheClient.on('connected', resolve));
 

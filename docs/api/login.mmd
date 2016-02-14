@@ -1,0 +1,18 @@
+%% API Login
+graph TD;
+   api_login(/api/login)-->valid_data_check;
+   valid_data_check--yes-->valid_grecaptcha_check;
+   valid_data_check--no-->error_bad_request(error_bad_request);
+   style error_bad_request fill:cyan;
+   style api_login fill:cyan;
+   valid_grecaptcha_check--yes-->find_user;
+   valid_grecaptcha_check--no-->error_bad_request;
+   find_user--yes-->password_check;
+   find_user--no-->error_bad_request;
+   password_check--yes-->make_session;
+   password_check--no-->error_bad_request;
+   make_session--success-->set_cookie;
+   make_session--error-->error_bad_request;
+   set_cookie-->make_user_data;
+   make_user_data-->return_user_data(return_user_data);
+   style return_user_data fill:cyan;

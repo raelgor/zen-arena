@@ -14,9 +14,9 @@ process.title = 'zen-arena-cm';
 
 cluster.setupMaster({ exec: __dirname + '/src/cluster.js' });
 
-log(`Connecting to data server at ${colors.magenta(config.cacheServer.host + ':' + config.cacheServer.port)}...`);
+log(`Connecting to data server at ${colors.magenta(config.cache_server.host + ':' + config.cache_server.port)}...`);
 
-const cacheClient = new zenx.cache.Client(config.cacheServer);
+const cacheClient = new zenx.cache.Client(config.cache_server);
 
 cacheClient.on('connected', () => co(function*(){
 
@@ -24,9 +24,11 @@ cacheClient.on('connected', () => co(function*(){
 
     yield cacheClient.get({
         query: {},
-        database: 'zenarena',
+        database: config.cache_server.db_name,
         collection: 'configuration'
     });
+
+    cacheClient.on('error', () => {});
 
     log('Configuration loaded. Forking...');
 

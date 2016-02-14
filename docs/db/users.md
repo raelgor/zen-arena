@@ -14,7 +14,7 @@ Core user data storage.
 `string` Unique index.
 
 #### `date_joined`
-`string` MySQL timestamp date.
+`ISODate` Timestamp.
 
 #### `first_name`
 `string` Current first name. May be overwritten by OAuth API data.
@@ -30,3 +30,10 @@ Core user data storage.
 
 #### `password`
 `string` Password string hash from bcrypt.
+
+#### `sessions`
+`object` Session information. Keys are the session tokens.
+   * `session_token` **string** The session token or secret cookie.
+   * `csrf_token` **string** The csrf token sent with this session's requests.
+   * `expires` **number** A `Date.now() + sessionDuration`.
+   * `date_created` **number** A `Date.now()`.
