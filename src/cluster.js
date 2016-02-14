@@ -22,9 +22,11 @@ global.https = require('https');
 global.fs = require('fs');
 global.bcrypt = require('bcrypt');
 global.querystring = require('querystring');
+global.fb = require('fb');
 
-// Load fn dir
+// Load src
 loaddirSync('./fn');
+loaddirSync('./classes');
 
 global.cacheClient = null;
 

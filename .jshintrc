@@ -3,6 +3,8 @@
   "undef": true,
   "unused": true,
   "node": true,
+  "jquery": true,
+  "browser": true,
   "-W083": false,
   "-W030": false
 }

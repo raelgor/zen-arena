@@ -29,6 +29,12 @@ Core app variables.
    * `site_key` **string** Site key.
    * `secret_key` **string** Secret key.
 
+`fb_app` **object** Facebook App credentials.
+   * `app_id` **string** App id.
+   * `app_secret` **string** App secret.
+   * `fb_admins` **string** Contents of the `fb:admins` meta tag.
+   * `api_version` **string** API version that this app uses. e.g. `"v2.5"`
+
 `use_xfwd` **boolean** Whether or not to use `x-forwarded-for` header.
 
 `default_lang` **string** Default application language.

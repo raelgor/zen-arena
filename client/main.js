@@ -1,11 +1,17 @@
+/* global za */
 window.za = {
-    
-    ui: {}
-    
-}
+
+   _touch: Boolean(window.touchstart),
+   ui: {
+      nt_focus: function(selector){
+         !za._touch && $(selector).focus();
+      }
+   }
+
+};
 
 $(window).ready(function(){
-    
-    !Boolean(window.touchstart) && $('.navigation .search').focus();
-    
+
+    za.ui.nt_focus('.navigation .search');
+
 });

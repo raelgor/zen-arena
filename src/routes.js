@@ -75,6 +75,7 @@ app.router.all('/api*', (req, res, next) => {
 });
 
 app.router.post('/api/login', require('./api/login'));
+app.router.post('/api/fblogin', require('./api/fblogin'));
 
 // Calls below this require auth
 app.router.all('/api*', (req, res, next) => {
@@ -146,9 +147,14 @@ app.router.all('/', (req, res) => {
             domain: appConfig.domain_name,
             ga_tracking_code: appConfig.ga_tracking_code,
             language: req.lang,
+            fb_app_id: appConfig.fb_app.app_id,
+            fb_admins: appConfig.fb_app.fb_admins,
+            fb_api_version: appConfig.fb_app.api_version,
             clientData: {
                 user: req.user,
                 grecaptcha_site_key: appConfig.grecaptcha.site_key,
+                fb_api_version: appConfig.fb_app.api_version,
+                fb_app_id: appConfig.fb_app.app_id,
                 core_text
             }
         },

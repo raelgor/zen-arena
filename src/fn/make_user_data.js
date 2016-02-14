@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function make_user_data(user){
+module.exports = user => {
 
 	// Make display name
 	var display_name = '';

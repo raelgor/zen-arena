@@ -1,11 +1,13 @@
 head
-    title=meta.title
-    meta(content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0", name="viewport")
-    meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
-    link(href="source/styles.css?v=1",	rel="stylesheet",	type="text/css")
-    link(href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&subset=latin,greek-ext", rel="stylesheet", type="text/css")
-    link(rel="shortcut icon",	href=global.favicon)
-    script="(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '" + global.ga_tracking_code + "', 'auto');ga('send', 'pageview');"
-    script(src='https://www.google.com/recaptcha/api.js?onload=rccb&render=explicit&hl=' + global.language, async, defer)
-    script!="window.clientData = "+JSON.stringify(global.clientData)
-    script(src='/source/app.js')
+ title=meta.title
+ meta(content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0", name="viewport")
+ meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+ meta(property="fb:admins", content=global.fb_admins)
+ meta(property="fb:app_id", content=global.fb_app_id)
+ link(href="source/styles.css?v=1",	rel="stylesheet",	type="text/css")
+ link(href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&subset=latin,greek-ext", rel="stylesheet", type="text/css")
+ link(rel="shortcut icon",	href=global.favicon)
+ script="(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '" + global.ga_tracking_code + "', 'auto');ga('send', 'pageview');"
+ script(src='https://www.google.com/recaptcha/api.js?onload=rccb&render=explicit&hl=' + global.language, async, defer)
+ script!="window.clientData = "+JSON.stringify(global.clientData)
+ script(src='/source/app.js')
