@@ -219,6 +219,7 @@ za._language_change_handler = function(core_text){
       return console.warn('_language_change_handler called with invalid input.');
 
    var keys = Object.keys(core_text);
+   clientData.core_text = core_text;
 
    keys.forEach(function(key){
       $('[data-html-' + key + ']').html(core_text[key]);

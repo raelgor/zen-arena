@@ -7,12 +7,22 @@ body {
    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+a[href]:active,
+[tabindex]:active,
+button:active,
+input[type="submit"]:active,
+input[type="button"]:active {
+   opacity: .4;
+}
+
 *:not(input):focus {
+   /*
     transform: scale(1.1);
     -webkit-transform: scale(1.1);
     -moz-transform: scale(1.1);
     -ms-transform: scale(1.1);
     -o-transform: scale(1.1);
+    */
     outline: none;
 }
 

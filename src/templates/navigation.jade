@@ -6,7 +6,7 @@
             img.ani04(src=navigation.logo)
          .buttons
             each button in navigation.buttons
-               a.ani01(href=button.href)=button.text
+               a&attributes(button.attr).ani01(href=button.href)=button.text
          form.search-box(action="/search", method="get", itemprop="potentialAction", itemscope, itemtype="http://schema.org/SearchAction")
             meta(itemprop="target", content="/search?q={q}")
             button(type="submit")

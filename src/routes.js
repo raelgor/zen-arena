@@ -164,9 +164,9 @@ app.router.all('/', (req, res) => co(function*() {
          themeImage: '/img/mainbg.jpg',
          logo: '/img/logo.png',
          buttons: [
-            { text: global.text.core[req.lang].menu_1.text, href: appConfig.main_menu[0].href },
-            { text: global.text.core[req.lang].menu_2.text, href: appConfig.main_menu[1].href },
-            { text: global.text.core[req.lang].menu_3.text, href: appConfig.main_menu[2].href }
+            { attr: { 'data-html-menu_1' : 1 }, text: core_text.menu_1, href: appConfig.main_menu[0].href },
+            { attr: { 'data-html-menu_2' : 1 }, text: core_text.menu_2, href: appConfig.main_menu[1].href },
+            { attr: { 'data-html-menu_3' : 1 }, text: core_text.menu_3, href: appConfig.main_menu[2].href }
          ]
       },
       global: {

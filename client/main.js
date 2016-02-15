@@ -17,6 +17,12 @@ window.za = {
        if((tem= ua.match(/version\/(\d+)/i))!== null) M.splice(1, 1, tem[1]);
        return M.join(' ');
    })(),
+   logout: function() {
+      delete clientData.csrf_token;
+      delete clientData.user_data;
+      za.userBar.setStatus(false);
+      za.send('/api/logout');
+   },
    ui: {
       nt_focus: function(selector){
          !za._touch && $(selector).focus();
@@ -32,10 +38,18 @@ $(window).ready(function(){
    // Safari fix
    setTimeout(resize, 0);
 
-   $('.touch-nav .icon-user').click(function(){
+   $('.touch-nav .icon-user, .player-info .user-ui').click(function(){
+
+      var offset = $(this).is('.user-ui') ? 120 : 0;
 
       if(!clientData.user_data)
          za.login.promptLogin();
+      else {
+         za.ui.spawnUserBubbleMenu({
+            top: 50,
+            left: $(this).offset().left + offset,
+         });
+      }
 
    });
 
