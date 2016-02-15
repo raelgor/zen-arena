@@ -40,3 +40,6 @@ db.users.insert(
 )
 
 ```
+
+## Required data
+`users`: `id`

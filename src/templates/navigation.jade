@@ -11,9 +11,16 @@
                 meta(itemprop="target", content="/search?q={q}")
                 button(type="submit")
                     .icon-search
-                input.search(itemprop="query-input", pattern=".{2,50}", title=core_text.menu_search, name="q", type="text", placeholder=core_text.menu_search, required)
+                input.search(itemprop="query-input", pattern=".{2,50}", title=core_text.menu_search, data-title-menu_search, data-placeholder-menu_search, name="q", type="text", placeholder=core_text.menu_search, required)
             .player-info
-                a.login(href="#")=core_text.menu_signin
-                .or=core_text.menu_or
-                a.signup(href="#")=core_text.menu_signup
+                a.login(tabindex=1, data-html-menu_signin)=core_text.menu_signin
+                .or(data-html-menu_or)=core_text.menu_or
+                a.signup(tabindex=1, data-html-menu_signup)=core_text.menu_signup
                 .icon-user
+            .touch-nav
+               a(tabindex=1).icon-newspaper
+               a(tabindex=1).icon-search
+               a(tabindex=1).icon-earth
+               a(tabindex=1).icon-bubbles2
+               a(tabindex=1).icon-user
+         

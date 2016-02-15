@@ -1,7 +1,10 @@
-/* global clientData, za, grecaptcha, FB */
+/* global clientData, za, grecaptcha, FB, resize */
 za.login = {};
 
 za.login.promptLogin = function() {
+
+    resize();
+    $('.login-frame')[0].error('');
 
     $('.auth-dialogs').removeClass('hide');
     $('.auth-dialogs > *').addClass('hide');
@@ -10,7 +13,7 @@ za.login.promptLogin = function() {
 
     za.ui.nt_focus('.login-frame .username');
 
-    grecaptcha ?
+    window.grecaptcha ?
     render() :
     za.recaptcha_ready.then(render);
 
@@ -30,14 +33,17 @@ za.login.promptLogin = function() {
 
 za.login.promptRegister = function() {
 
+    resize();
+    $('.register-frame')[0].error('');
+
     $('.auth-dialogs').removeClass('hide');
     $('.auth-dialogs > *').addClass('hide');
 
     $('.register-frame').removeClass('hide');
 
-    za.ui.nt_focus('.register-frame .hide');
+    za.ui.nt_focus('.register-frame .username');
 
-    grecaptcha ?
+    window.grecaptcha ?
     render() :
     za.recaptcha_ready.then(render);
 
@@ -71,12 +77,18 @@ $(window).ready(function(){
       $('.auth-dialogs form .fb.disabled').removeClass('disabled');
     });
 
+    // Enable fbauth buttons when FB API is availalbe
+    za.gapi_ready.then(function(){
+      $('.auth-dialogs form .g-plus.disabled').removeClass('disabled');
+    });
+
     // Make x buttons close frames
     $('.auth-dialogs .icon-cancel-circle')
       .click(za.login.exitPrompts);
 
     function error(message){
         $(this).find('.error').html(message);
+        return this;
     }
 
     function loading(bool){
@@ -84,6 +96,7 @@ $(window).ready(function(){
         $(this).find('input, button').prop('disabled', bool);
         $(this).find('input, button, a').blur();
         $(this).find('.loader').html(bool?za.ui.loader():'');
+        return this;
     }
 
     // Bind FB Oauth handler
@@ -91,27 +104,28 @@ $(window).ready(function(){
 
       var token = FB.getAccessToken();
       var frame = $(this).parents('.auth-dialogs > form');
+      var permission_scope = 'public_profile,user_friends,email';
 
       if(token)
-         fb_login(token);
-      else
-         FB.login(function(response){
+         za.fb_login(token);
+      else {
+         if(/chrome|crios/i.test(navigator.userAgent) && za._touch) {
+
+            window.location.href =
+               'https://www.facebook.com/dialog/oauth?client_id=' + clientData.fb_app_id +
+               '&redirect_uri=' + clientData.base_url +
+               '&scope=' + permission_scope;
+
+         }
+         else FB.login(function(response){
             if(!response.authResponse)
                frame[0].error(clientData.core_text.fb_no_perm);
             else
-               fb_login(response.authResponse.accessToken);
+               za.fb_login(response.authResponse.accessToken);
          }, {
-            scope: 'public_profile,user_friends,email'
+            scope: permission_scope
          });
 
-      function fb_login(token){
-         za.send('/api/fblogin', {
-            access_token: token
-         })
-         .success(za._login_response_handler)
-         .fail(function(){
-            frame[0].error(clientData.core_text.error_something_went_wrong);
-         });
       }
 
     });
@@ -170,14 +184,40 @@ $(window).ready(function(){
 
 za._login_response_handler = function(response){
 
+   var register_frame = $('.auth-dialogs .register-frame')[0];
+   var login_frame = $('.auth-dialogs .login-frame')[0];
+
    if(response && response.success && response.user_data) {
 
-     za.login.exitPrompts();
-     clientData.user_data = response.user_data;
-     clientData.csrf_token = response.csrf_token;
+      za.login.exitPrompts();
+      clientData.user_data = response.user_data;
+      clientData.csrf_token = response.csrf_token;
 
-  } else
-      $(this).parents('.auth-dialogs > *')[0]
-             .error(clientData.core_text.login_fail_default);
+      if(response.user_data.lang !== clientData.lang) {
+         clientData.lang = response.user_data.lang;
+         za.send('/api/text/' + response.user_data.lang)
+            .success(za._language_change_handler);
+      }
+
+   } else {
+      register_frame.error(clientData.core_text.error_something_went_wrong);
+      login_frame.error(clientData.core_text.error_something_went_wrong);
+   }
+
+};
+
+za._language_change_handler = function(core_text){
+
+   if(typeof core_text !== 'object')
+      return console.warn('_language_change_handler called with invalid input.');
+
+   var keys = Object.keys(core_text);
+
+   keys.forEach(function(key){
+      $('[data-html-' + key + ']').html(core_text[key]);
+      $('[data-val-' + key + ']').val(core_text[key]);
+      $('[data-title-' + key + ']').attr('title', core_text[key]);
+      $('[data-placeholder-' + key + ']').attr('placeholder', core_text[key]);
+   });
 
 };

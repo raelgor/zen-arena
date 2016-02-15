@@ -40,7 +40,6 @@
     width: 68px;
     height: 100%;
     padding: 0px 15px;
-    overflow: hidden;
 }
 
 .navigation .logo img {
@@ -143,6 +142,8 @@
     position: relative;
     top: -2px;
     float: right;
+    width: 240px;
+    text-align: right;
 }
 
 .navigation .player-info > * {
@@ -164,4 +165,30 @@
 .navigation .player-info .icon-user {
     font-size: 25px;
     margin: 0 18px 0 12px;
+}
+
+.navigation .touch-nav {
+    display: none;
+    float: right;
+    width: -moz-calc(100% - 100px);
+    width: -webkit-calc(100% - 100px);
+    width: calc(100% - 100px);
+    overflow: hidden;
+    height: 50px;
+}
+
+.touch-nav > * {
+    display: inline-block;
+    font-size: 30px;
+    margin: 0 2%;
+    width: 13%;
+    padding: 9px 1%;
+    text-align: center;
+    color: #AFAFAF;
+    height: 33px;
+    cursor: pointer;
+}
+
+.touch-nav > *:hover {
+    color: white;
 }

@@ -1,4 +1,4 @@
-/* global co, fb, cacheClient, config */
+/* global co, fb, cacheClient, config, appConfig */
 /* global make_user_from_fb_info, log_user_in */
 'use strict';
 
@@ -10,7 +10,7 @@ module.exports = (req, res) => co(function*(){
    req.body.message.access_token;
 
    if(!valid_request)
-      return res.end(JSON.stringify({error: 'error_bad_request'}));
+      return res.end(JSON.stringify({error: 'err_invalid_request'}));
 
    var access_token = req.body.message.access_token;
 
@@ -26,7 +26,7 @@ module.exports = (req, res) => co(function*(){
    }, resolve));
 
    if(!user_fb_info.id)
-      return res.end(JSON.stringify({error: 'error_bad_request'}));
+      return res.end(JSON.stringify({error: 'err_bad_fb_access_token'}));
 
    var $or = [{ fbid: user_fb_info.id }];
    user_fb_info.email && $or.push({ email: user_fb_info.email });
@@ -39,9 +39,27 @@ module.exports = (req, res) => co(function*(){
 
    user = user[0];
 
-   if(!user) {
-      user = yield make_user_from_fb_info(user_fb_info);
-   }
+   var lang_hint;
+   if(req.cookies.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
+      lang_hint = req.cookies.lang;
+
+   if(!user)
+      user = yield make_user_from_fb_info(user_fb_info, lang_hint);
+   else
+      if(user.fbid != user_fb_info.id)
+         yield cacheClient.update({
+            query: { id: +user.id },
+            update: { $set: { fbid: user.fbid = user_fb_info.id } },
+            database: config.cache_server.db_name,
+            collection: 'users'
+         });
+
+   if(req.cookies.lang !== user.lang)
+      res.cookie('lang', user.lang, {
+         maxAge: 24 * 60 * 60 * 1000,
+         httpOnly: true,
+         secure: true
+      });
 
    log_user_in(res, user);
 

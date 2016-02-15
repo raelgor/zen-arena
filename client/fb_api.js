@@ -1,6 +1,30 @@
 /* global FB, clientData, za, log */
 
 za.fb_ready = new Promise(function(r){ za._fb_resolve = r; });
+za.fb_ready.then(function(){ FB.getLoginStatus(); za.login.promptLogin(); });
+
+za.fb_login = function(token){
+
+   var register_frame = $('.auth-dialogs .register-frame')[0];
+   var login_frame = $('.auth-dialogs .login-frame')[0];
+
+   register_frame.loading(true);
+   login_frame.loading(true);
+
+   za.send('/api/fblogin', {
+      access_token: token
+   })
+   .success(za._login_response_handler)
+   .fail(function(){
+      register_frame.error(clientData.core_text.error_something_went_wrong);
+      login_frame.error(clientData.core_text.error_something_went_wrong);
+   })
+   .always(function(){
+      register_frame.loading(false);
+      login_frame.loading(false);
+   });
+
+};
 
 window.fbAsyncInit = function () {
     FB.init({

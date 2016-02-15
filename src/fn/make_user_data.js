@@ -19,7 +19,8 @@ module.exports = user => {
 		display_name,
 		username: user.username,
 		first_name: user.first_name,
-		last_name: user.last_name
+		last_name: user.last_name,
+		lang: user.lang
 	};
 
 };

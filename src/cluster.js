@@ -1,9 +1,4 @@
-/* global cacheClient */
-/* global appConfig */
-/* global config */
-/* global log */
-/* global co */
-/* global fs */
+/* global cacheClient, fs, co, log, config, appConfig */
 'use strict';
 
 process.title = 'zen-arena-cs';
@@ -23,6 +18,7 @@ global.fs = require('fs');
 global.bcrypt = require('bcrypt');
 global.querystring = require('querystring');
 global.fb = require('fb');
+global.mongodb = require('mongodb');
 
 // Load src
 loaddirSync('./fn');
@@ -74,8 +70,6 @@ process.on('message', message => co(function*(){
 }));
 
 function loaddirSync(dir) {
-
     for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
         global[file.split('.js')[0]] = require(`${dir}/${file}`);
-
 }

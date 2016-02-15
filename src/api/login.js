@@ -11,10 +11,10 @@ module.exports = (req, res) => co(function*(){
    req.body.message.password;
 
    if(!valid_request)
-      return res.end(JSON.stringify({error: 'error_bad_request'}));
+      return res.end(JSON.stringify({error: 'err_invalid_request'}));
 
    if(!(yield verify_grecaptcha(req.body.message.grecaptcha, req._address)))
-      return res.end(JSON.stringify({error: 'error_no_robot'}));
+      return res.end(JSON.stringify({error: 'error_bad_recaptcha'}));
 
    var user = yield cacheClient.get({
       query: {

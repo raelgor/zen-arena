@@ -1,43 +1,47 @@
 .auth-dialogs.hide.ani04
-    form.login-frame.hide.ani04
-        .welcome!=core_text.loginText + '<span class="icon-cancel-circle" tabindex=1></span>'
-        input.username(placeholder=core_text.login_username_placeholder, type="text", required)
-        input.password(placeholder=core_text.login_password_placeholder, type="password", required)
-        .forgot-password
-            a(href="#")=core_text.forgot_password
-        .no-robot#login_no_robot
-        .error.ani04
-        input(type="submit", value=core_text.log_in).done
-        .oauth-wrapper
-            a.fb.disabled(href="#")
-                span.icon-facebook
-                span=core_text.sign_in_with
-                b Facebook
-            a.g-plus(href="#")
-                span.icon-google-plus
-                span=core_text.sign_in_with
-                b Google+
-         .acc-question
-            span=core_text.no_acc_question
-            a.create-acc(href="#")=core_text.registerText
-         .loader
-    form.register-frame.hide.ani04
-        .welcome!=core_text.registerText + '<span class="icon-cancel-circle" tabindex=1></span>'
-        input.username(placeholder=core_text.register_username_placeholder, type="text", required)
-        input.password(placeholder=core_text.register_password_placeholder, type="password", required)
-        .no-robot#register_no_robot
-        .error.ani04
-        input(type="submit", value=core_text.register).done
-        .oauth-wrapper
-            a.fb.disabled(href="#")
-                span.icon-facebook
-                span=core_text.sign_in_with
-                b Facebook
-            a.g-plus(href="#")
-                span.icon-google-plus
-                span=core_text.sign_in_with
-                b Google+
-         .acc-question
-            span=core_text.login_question
-            a.log-acc(href="#")=core_text.loginText
-         .loader
+   form.login-frame.hide.ani04
+      .welcome
+         span(data-html-loginText)=core_text.loginText
+         span.icon-cancel-circle(tabindex=1)
+      input.username(placeholder=core_text.login_username_placeholder, data-placeholder-login_username_placeholder, type="text", required)
+      input.password(placeholder=core_text.login_password_placeholder, data-placeholder-login_password_placeholder, type="password", required)
+      .forgot-password
+         a(href="#", data-html-forgot_password)=core_text.forgot_password
+      .no-robot#login_no_robot
+      .error.ani04
+      input(type="submit", data-val-log_in, value=core_text.log_in).done
+      .oauth-wrapper
+         a.fb.disabled(href="#")
+            span.icon-facebook
+            span(data-html-sign_in_with)=core_text.sign_in_with
+            b Facebook
+         a.g-plus.disabled#g_log(href="#")
+            span.icon-google-plus
+            span(data-html-sign_in_with)=core_text.sign_in_with
+            b Google+
+      .acc-question
+         span(data-html-no_acc_question)=core_text.no_acc_question
+         a.create-acc(href="#", data-html-registerText)=core_text.registerText
+      .loader
+   form.register-frame.hide.ani04
+      .welcome
+         span(data-html-registerText)=core_text.registerText
+         span.icon-cancel-circle(tabindex=1)
+      input.username(placeholder=core_text.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
+      input.password(placeholder=core_text.register_password_placeholder, data-placeholder-register_password_placeholder type="password", required)
+      .no-robot#register_no_robot
+      .error.ani04
+      input(type="submit", data-val-register, value=core_text.register).done
+      .oauth-wrapper
+         a.fb.disabled(href="#")
+            span.icon-facebook
+            span(data-html-sign_in_with)=core_text.sign_in_with
+            b Facebook
+         a.g-plus.disabled#g_reg(href="#")
+            span.icon-google-plus
+            span(data-html-sign_in_with)=core_text.sign_in_with
+            b Google+
+      .acc-question
+         span(data-html-login_question)=core_text.login_question
+         a.log-acc(href="#", data-loginText)=core_text.loginText
+      .loader

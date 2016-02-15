@@ -29,6 +29,10 @@ Core app variables.
    * `site_key` **string** Site key.
    * `secret_key` **string** Secret key.
 
+`google_oauth` **object** Google Oauth API keys.
+   `client_id` **string** Client ID.
+   `client_secret` **string** Client secret.
+
 `fb_app` **object** Facebook App credentials.
    * `app_id` **string** App id.
    * `app_secret` **string** App secret.
