@@ -36,6 +36,18 @@ body, html {
     pointer-events: none;
 }
 
+/* Mozilla based browsers */
+::-moz-selection {
+       background-color: #DDEDCA;
+       color: #000;
+}
+
+/* Works in Safari */
+::selection {
+       background-color: #DDEDCA;
+       color: #000;
+}
+
 /*
 ::-webkit-scrollbar {
     width: 10px;
