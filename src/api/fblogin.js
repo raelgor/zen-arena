@@ -5,9 +5,9 @@
 module.exports = (req, res) => co(function*(){
 
    var valid_request =
-   req.body &&
-   req.body.message &&
-   req.body.message.access_token;
+      req.body &&
+      req.body.message &&
+      req.body.message.access_token;
 
    if(!valid_request)
       return res.end(JSON.stringify({error: 'err_invalid_request'}));

@@ -24,6 +24,7 @@ input, button {
     min-height: 100%;
     background: #EBEBEB;
     border-bottom: 1px solid #C9C9C9;
+    padding-top: 50px;
 }
 
 body, html {

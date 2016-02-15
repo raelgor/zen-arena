@@ -1,4 +1,4 @@
-/* global za, resize, clientData, FB, grecaptcha */
+/* global za, resize, clientData, FB */
 window.za = {
 
    _touch: 'ontouchstart' in document.documentElement,
@@ -31,6 +31,13 @@ $(window).ready(function(){
 
    // Safari fix
    setTimeout(resize, 0);
+
+   $('.touch-nav .icon-user').click(function(){
+
+      if(!clientData.user_data)
+         za.login.promptLogin();
+
+   });
 
    if(/code\=/i.test(window.location.search)) {
 

@@ -82,6 +82,7 @@ app.router.all('/api*', (req, res, next) => {
 });
 
 app.router.post('/api/login', require('./api/login'));
+app.router.post('/api/goauth', require('./api/goauth'));
 app.router.post('/api/fblogin', require('./api/fblogin'));
 app.router.post('/api/text/:lang', require('./api/text'));
 
@@ -154,6 +155,9 @@ app.router.all('/', (req, res) => co(function*() {
    });
 
    let core_text = make_core_text(req.lang);
+
+   if(appConfig.maintenance_flag)
+      return res.end(app.templates.maintenance({core_text}));
 
    let html = app.templates.index({
       navigation: {

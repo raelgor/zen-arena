@@ -1,7 +1,11 @@
 .navigation {
-    height: 50px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.37);
-    background-size: cover;
+   height: 50px;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.37);
+   background-size: cover;
+   position: fixed;
+   width: 100%;
+   z-index: 1;
+   top: 0px;
 }
 
 .navigation * {
@@ -191,4 +195,36 @@
 
 .touch-nav > *:hover {
     color: white;
+}
+
+.user-ui, .user-ui * {
+   cursor: pointer;
+}
+
+.user-image {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    margin: 0 5px 0 20px;
+    border-radius: 4px;
+    position: relative;
+    top: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.42);
+}
+
+.user-display-name {
+    display: inline-block;
+    vertical-align: top;
+    height: 52px;
+    font-size: 13px;
+    line-height: 52px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 174px;
 }

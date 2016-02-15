@@ -1,26 +1,29 @@
 .navigation(style="background-image: url(" + navigation.themeImage + ")")
-    .background(style="background-image: url(" + navigation.themeImage + ")")
-    .foreground
-        .wrapper
-            a.logo(href=global.fullSiteUrl)
-                img.ani04(src=navigation.logo)
-            .buttons
-                each button in navigation.buttons
-                    a.ani01(href=button.href)=button.text
-            form.search-box(action="/search", method="get", itemprop="potentialAction", itemscope, itemtype="http://schema.org/SearchAction")
-                meta(itemprop="target", content="/search?q={q}")
-                button(type="submit")
-                    .icon-search
-                input.search(itemprop="query-input", pattern=".{2,50}", title=core_text.menu_search, data-title-menu_search, data-placeholder-menu_search, name="q", type="text", placeholder=core_text.menu_search, required)
-            .player-info
-                a.login(tabindex=1, data-html-menu_signin)=core_text.menu_signin
-                .or(data-html-menu_or)=core_text.menu_or
-                a.signup(tabindex=1, data-html-menu_signup)=core_text.menu_signup
-                .icon-user
-            .touch-nav
-               a(tabindex=1).icon-newspaper
-               a(tabindex=1).icon-search
-               a(tabindex=1).icon-earth
-               a(tabindex=1).icon-bubbles2
-               a(tabindex=1).icon-user
-         
+   .background(style="background-image: url(" + navigation.themeImage + ")")
+   .foreground
+      .wrapper
+         a.logo(href=global.fullSiteUrl)
+            img.ani04(src=navigation.logo)
+         .buttons
+            each button in navigation.buttons
+               a.ani01(href=button.href)=button.text
+         form.search-box(action="/search", method="get", itemprop="potentialAction", itemscope, itemtype="http://schema.org/SearchAction")
+            meta(itemprop="target", content="/search?q={q}")
+            button(type="submit")
+               .icon-search
+            input.search(itemprop="query-input", pattern=".{2,50}", title=core_text.menu_search, data-title-menu_search, data-placeholder-menu_search, name="q", type="text", placeholder=core_text.menu_search, required)
+         .player-info
+            a.login(tabindex=0, data-html-menu_signin)=core_text.menu_signin
+            .or(data-html-menu_or)=core_text.menu_or
+            a.signup(tabindex=0, data-html-menu_signup)=core_text.menu_signup
+            .icon-user
+            .user-ui(style="display:none")
+               .user-display-name
+               .user-image
+         .touch-nav
+            a(tabindex=0).icon-newspaper
+            a(tabindex=0).icon-search
+            a(tabindex=0).icon-earth
+            a(tabindex=0).icon-bubbles2
+            a(tabindex=0).icon-user
+            

@@ -2,46 +2,46 @@
    form.login-frame.hide.ani04
       .welcome
          span(data-html-loginText)=core_text.loginText
-         span.icon-cancel-circle(tabindex=1)
+         span.icon-cancel-circle(tabindex=0)
       input.username(placeholder=core_text.login_username_placeholder, data-placeholder-login_username_placeholder, type="text", required)
       input.password(placeholder=core_text.login_password_placeholder, data-placeholder-login_password_placeholder, type="password", required)
       .forgot-password
-         a(href="#", data-html-forgot_password)=core_text.forgot_password
+         a(tabindex=0, data-html-forgot_password)=core_text.forgot_password
       .no-robot#login_no_robot
       .error.ani04
       input(type="submit", data-val-log_in, value=core_text.log_in).done
       .oauth-wrapper
-         a.fb.disabled(href="#")
+         a.fb.disabled(tabindex=0)
             span.icon-facebook
             span(data-html-sign_in_with)=core_text.sign_in_with
             b Facebook
-         a.g-plus.disabled#g_log(href="#")
+         a.g-plus.disabled#g_log(tabindex=0)
             span.icon-google-plus
             span(data-html-sign_in_with)=core_text.sign_in_with
             b Google+
       .acc-question
          span(data-html-no_acc_question)=core_text.no_acc_question
-         a.create-acc(href="#", data-html-registerText)=core_text.registerText
+         a.create-acc(tabindex=0, data-html-registerText)=core_text.registerText
       .loader
    form.register-frame.hide.ani04
       .welcome
          span(data-html-registerText)=core_text.registerText
-         span.icon-cancel-circle(tabindex=1)
+         span.icon-cancel-circle(tabindex=0)
       input.username(placeholder=core_text.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
       input.password(placeholder=core_text.register_password_placeholder, data-placeholder-register_password_placeholder type="password", required)
       .no-robot#register_no_robot
       .error.ani04
       input(type="submit", data-val-register, value=core_text.register).done
       .oauth-wrapper
-         a.fb.disabled(href="#")
+         a.fb.disabled(tabindex=0)
             span.icon-facebook
             span(data-html-sign_in_with)=core_text.sign_in_with
             b Facebook
-         a.g-plus.disabled#g_reg(href="#")
+         a.g-plus.disabled#g_reg(tabindex=0)
             span.icon-google-plus
             span(data-html-sign_in_with)=core_text.sign_in_with
             b Google+
       .acc-question
          span(data-html-login_question)=core_text.login_question
-         a.log-acc(href="#", data-loginText)=core_text.loginText
+         a.log-acc(tabindex=0, data-loginText)=core_text.loginText
       .loader

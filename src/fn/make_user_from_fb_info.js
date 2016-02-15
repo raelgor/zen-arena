@@ -23,6 +23,9 @@ module.exports = (fb_info, language) => co(function*() {
    user.date_joined = new Date().toISOString();
    user.lang = language || appConfig.default_lang;
 
+   user.image_type = 'fb_link';
+   user.image = `https://graph.facebook.com/${user.fbid}/picture?type=large`;
+
    yield cacheClient.update({
       query: { id },
       update: { $set: user },

@@ -21,6 +21,8 @@ Core app variables.
 
 `geoip_timeout` **number** Time in milliseconds before aborting a request for an address's location.
 
+`maintenance_flag` **boolean** Whether or not to display the maintenance page.
+
 `use_geoip` **boolean** Whether or not to use a GeoIP server.
 
 `geoip_url` **string** Url to GeoIP service.

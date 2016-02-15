@@ -28,6 +28,12 @@ Core user data storage.
 #### `gender`
 `string` Enum 'male' or 'female'.
 
+#### `image_type`
+`string` Enum 'g_plus_link' || 'fb_link' || 'upload' || 'none'.
+
+#### `image`
+`string` Link to the user's image.
+
 #### `password`
 `string` Password string hash from bcrypt.
 

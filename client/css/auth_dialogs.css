@@ -88,15 +88,15 @@
     top: 4px;
 }
 
-form.login-frame.loading > *:not(.loader) {
+.auth-dialogs form.loading > *:not(.loader) {
     opacity: .7;
 }
 
-form.login-frame.loading {
+.auth-dialogs form.loading {
     pointer-events: none;
 }
 
-form.login-frame.loading .loader {
+.auth-dialogs form.loading .loader {
 
     position: absolute;
     top: 50%;
@@ -106,7 +106,7 @@ form.login-frame.loading .loader {
 
 }
 
-form.login-frame.loading .loader .sk-cube {
+.auth-dialogs form.loading .loader .sk-cube {
 
     background-color: gray;
 

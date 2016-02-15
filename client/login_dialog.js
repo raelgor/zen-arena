@@ -189,15 +189,22 @@ za._login_response_handler = function(response){
 
    if(response && response.success && response.user_data) {
 
+      // Exit login dialogs
       za.login.exitPrompts();
+
+      // Set data
       clientData.user_data = response.user_data;
       clientData.csrf_token = response.csrf_token;
 
+      // Check for language change
       if(response.user_data.lang !== clientData.lang) {
          clientData.lang = response.user_data.lang;
          za.send('/api/text/' + response.user_data.lang)
             .success(za._language_change_handler);
       }
+
+      // Update navigation bar
+      za.userBar.setUser(clientData.user_data);
 
    } else {
       register_frame.error(clientData.core_text.error_something_went_wrong);
