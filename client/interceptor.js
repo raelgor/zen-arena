@@ -1,4 +1,4 @@
-/* global za, clientData */
+/* global za */
 za.interceptor_map = {
    '/api/logout': za.logout,
    '/': function(){}
@@ -14,7 +14,10 @@ function interceptor(event) {
       Object.keys(za.interceptor_map).forEach(function(key){
          if(key === href){
             resolved = true;
-            za.interceptor_map[key](key);
+            if(event.which === 2)
+               window.open(href, '_blank');
+            else
+               za.interceptor_map[key](key);
          }
       });
       if(resolved) {
