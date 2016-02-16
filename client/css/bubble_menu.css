@@ -17,6 +17,6 @@
     font-size: 15px;
 }
 
-.bubble-menu > a:hover {
+.bubble-menu > a:hover, .bubble-menu > a:focus {
     background: #F2F2F2;
 }

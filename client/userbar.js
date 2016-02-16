@@ -5,8 +5,17 @@ za.userBar = {
    _status: false,
 
    setImage: function(url){
+      var image = new Image();
+      image.src = url;
+      image.onload = function(){
+         $('.navigation .player-info .user-image')
+         .animate({opacity:1},300,'swing');
+      };
       $('.navigation .player-info .user-image')
-         .css('background-image', 'url(' + url + ')');
+         .css({
+            backgroundImage: 'url(' + url + ')',
+            opacity: 0
+         });
       return this;
    },
 

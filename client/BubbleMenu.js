@@ -6,7 +6,9 @@ za.ui.BubbleMenu = function(options){
 
    el
    .addClass('bubble-menu')
+   .attr('tabindex', 0)
    .css({
+      opacity: 0,
       top: options.top + 'px',
       left: options.left + 'px'
    });
@@ -37,7 +39,10 @@ za.ui.BubbleMenu = function(options){
    setTimeout(function(){ window.addEventListener('click', object._listener); }, 0);
 
    $('body').append(this._element);
-   this._element.find('a:first-child').focus();
+   this._element.find('a:first-child');
+   this._element.focus();
+
+   this._element.animate({opacity:1}, 200, 'swing');
 
    var reach = this._element.width() + this._element.offset().left;
 
@@ -63,7 +68,7 @@ za.ui.spawnUserBubbleMenu = function(options) {
       options: [
          { text: clientData.core_text.profile, href: '/' + clientData.user_data.id },
          { text: clientData.core_text.settings, href: '/settings' },
-         { text: clientData.core_text.logout, callback: za.logout }
+         { text: clientData.core_text.logout, href: '/api/logout' }
       ]
    });
 
