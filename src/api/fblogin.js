@@ -10,7 +10,7 @@ module.exports = (req, res) => co(function*(){
       req.body.message.access_token;
 
    if(!valid_request)
-      return res.end(JSON.stringify({error: 'err_invalid_request'}));
+      return res._error('err_invalid_request');
 
    var access_token = req.body.message.access_token;
 
@@ -26,7 +26,7 @@ module.exports = (req, res) => co(function*(){
    }, resolve));
 
    if(!user_fb_info.id)
-      return res.end(JSON.stringify({error: 'err_bad_fb_access_token'}));
+      return res._error('err_bad_fb_access_token');
 
    var $or = [{ fbid: user_fb_info.id }];
    user_fb_info.email && $or.push({ email: user_fb_info.email });

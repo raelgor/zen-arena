@@ -184,6 +184,8 @@ $(window).ready(function(){
 
 za._login_response_handler = function(response){
 
+   response = response.data;
+
    var register_frame = $('.auth-dialogs .register-frame')[0];
    var login_frame = $('.auth-dialogs .login-frame')[0];
 
@@ -214,6 +216,8 @@ za._login_response_handler = function(response){
 };
 
 za._language_change_handler = function(core_text){
+
+   core_text = core_text.data;
 
    if(typeof core_text !== 'object')
       return console.warn('_language_change_handler called with invalid input.');

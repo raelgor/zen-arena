@@ -74,10 +74,18 @@ app.router.all('/api*', (req, res, next) => {
 
    res.setHeader('content-type', 'application/json');
 
-   if(isNaN(req.__rid = req.body.rid))
-      return res.end(JSON.stringify({error: 'bad_request'}));
-   else
-      next();
+   res.__response = {};
+   res._end = () => res.end(JSON.stringify(res.__response));
+
+   res._error = message => {
+      res.__response.error = message;
+      res.end(JSON.stringify(res.__response));
+   };
+
+   if(!isNaN(req.__rid = req.body.rid))
+      res.__response.rid = req.__rid;
+
+   next();
 
 });
 
@@ -89,12 +97,21 @@ app.router.post('/api/text/:lang', require('./api/text'));
 // Calls below this require auth
 app.router.all('/api*', (req, res, next) => {
 
-   if(!req.user)
-      return res.end(JSON.stringify({error: 'call_requires_auth'}));
+   let valid_session = Boolean(req.__user);
+   
+   if(valid_session)
+      try{
+         valid_session = req.__session.csrf_token === req.body.csrf_token;
+      } catch(error) { valid_session = false; }
+
+   if(!valid_session)
+      return res._error('call_requires_auth');
    else
       next();
 
 });
+
+app.router.post('/api/logout', require('./api/logout'));
 
 // Jade route
 app.router.all('/', (req, res) => co(function*() {

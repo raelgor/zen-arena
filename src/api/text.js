@@ -11,6 +11,7 @@ module.exports = (req, res) => {
    if(!~appConfig.app_languages.indexOf(req.params.lang))
       return res.end(JSON.stringify({error: 'err_invalid_language'}));
 
-   res.end(JSON.stringify(make_core_text(req.params.lang)));
+   res.__response.data = make_core_text(req.params.lang);
+   res._end();
 
 };

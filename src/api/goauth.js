@@ -16,7 +16,7 @@ module.exports = (req, res) => co(function*(){
       req.body.message.access_token;
 
    if(!valid_request)
-      return res.end(JSON.stringify({error: 'err_invalid_request'}));
+      return res._error('err_invalid_request');
 
    var access_token = req.body.message.access_token;
 
@@ -28,7 +28,7 @@ module.exports = (req, res) => co(function*(){
          (err, response) => resolve(response)));
 
    if(!user_go_info.id)
-      return res.end(JSON.stringify({error: 'err_bad_go_access_token'}));
+      return res._error('err_bad_go_access_token');
 
    var $or = [{ goid: user_go_info.id }];
 
@@ -48,7 +48,7 @@ module.exports = (req, res) => co(function*(){
    var lang_hint;
    if(req.cookies.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
       lang_hint = req.cookies.lang;
-      
+
    if(!user)
       user = yield make_user_from_go_info(user_go_info, lang_hint);
    else

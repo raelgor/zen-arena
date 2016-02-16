@@ -14,6 +14,7 @@ module.exports = (response, user) => co(function*() {
       secure: true
    });
 
-   response.end(make_user_login_data(user, session));
+   response.__response.data = make_user_login_data(user, session);
+   response._end();
 
 });

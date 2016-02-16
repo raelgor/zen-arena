@@ -18,10 +18,10 @@ window.za = {
        return M.join(' ');
    })(),
    logout: function() {
+      za.send('/api/logout');
       delete clientData.csrf_token;
       delete clientData.user_data;
       za.userBar.setStatus(false);
-      za.send('/api/logout');
    },
    ui: {
       nt_focus: function(selector){
