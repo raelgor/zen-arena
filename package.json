@@ -18,6 +18,7 @@
     "googleapis": "^2.1.7",
     "jade": "^1.11.0",
     "mongodb": "^2.1.4",
+    "nodemailer": "^2.1.0",
     "zenx": "0.0.42"
   },
   "author": {

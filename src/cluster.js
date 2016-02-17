@@ -1,4 +1,4 @@
-/* global cacheClient, fs, co, log, config, appConfig */
+/* global cacheClient, fs, co, log, config, appConfig, postman */
 'use strict';
 
 process.title = 'zen-arena-cs';
@@ -19,6 +19,7 @@ global.bcrypt = require('bcrypt');
 global.querystring = require('querystring');
 global.fb = require('fb');
 global.mongodb = require('mongodb');
+global.postman = require('./postman');
 
 // Load src
 loaddirSync('./fn');
@@ -49,6 +50,8 @@ process.on('message', message => co(function*(){
     yield require('./cache');
 
     log('Done. Starting server...');
+
+    postman.init();
 
     // Start server
     global.app = new Server({

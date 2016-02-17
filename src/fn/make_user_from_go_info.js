@@ -1,4 +1,4 @@
-/* global co, User, increment, cacheClient, config, appConfig */
+/* global co, User, increment, cacheClient, config, appConfig, postman */
 'use strict';
 
 module.exports = (go_info, language) => co(function*() {
@@ -45,6 +45,8 @@ module.exports = (go_info, language) => co(function*() {
       database: config.cache_server.db_name,
       collection: 'users'
    });
+
+   postman.welcome(user);
 
    return user;
 

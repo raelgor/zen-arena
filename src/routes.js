@@ -98,7 +98,7 @@ app.router.post('/api/text/:lang', require('./api/text'));
 app.router.all('/api*', (req, res, next) => {
 
    let valid_session = Boolean(req.__user);
-   
+
    if(valid_session)
       try{
          valid_session = req.__session.csrf_token === req.body.csrf_token;

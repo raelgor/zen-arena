@@ -63,3 +63,12 @@ Core app variables.
 `max_web_sessions` **number** Maximum number of active web sessions a user can have.
 
 `web_session_lifespan` **number** Milliseconds that a web session lasts before logging the user out.
+
+`smtp_service` **object** SMTP service credentials.
+   `name` **string** Service name. e.g. 'Gmail'
+   `username` **string** Service user.
+   `password` **string** User password.
+
+`default_email_from` **string** Default email sender.
+
+`default_email_subject` **string** Default email subject.
