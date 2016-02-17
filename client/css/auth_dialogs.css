@@ -216,15 +216,25 @@
     text-decoration: none;
 }
 
+.recover-password-frame .done {
+    position: relative;
+    top: 20px;
+}
+
 .auth-dialogs .min-height-wrapper {
     min-height: 404px;
     overflow: hidden;
 }
 
-.auth-dialogs .forgot-password-frame .success {
+.auth-dialogs > form .success {
     color: #74B031;
     font-size: 15px;
     margin: 0 25px;
+}
+
+.recover-password-frame .error {
+    position: relative;
+    top: 5px;
 }
 
 .auth-dialogs .fpass-text {

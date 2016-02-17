@@ -64,16 +64,16 @@
       .loader
    form.recover-password-frame.hide.ani04
       .welcome
-         span(data-html-recover_password_title)=core_text.recover_password_title
+         span(data-html-new_password)=core_text.new_password
          span.icon-cancel-circle(tabindex=0)
       .min-height-wrapper
          .not-sent-yet
-            .fpass-text(data-html-fpass_main_text)=core_text.fpass_main_text
-            input.username(placeholder=core_text.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
-            .no-robot#fpass_no_robot
+            .fpass-text(data-html-recover_pass_main_text)=core_text.recover_pass_main_text
+            input.password(placeholder=core_text.new_password, title=global.clientData.min_pass_length+" - "+global.clientData.max_pass_length+" "+core_text.characters, pattern=".{"+global.clientData.min_pass_length+","+global.clientData.max_pass_length+"}", data-placeholder-new_password type="password", required)
+            input.token(type="hidden")
             .error.ani04
-            input(type="submit", data-val-send_email, value=core_text.send_email).done
-         .success(data-html-forgot_password_success)!=core_text.forgot_password_success
+            input(type="submit", data-val-save_new_password, value=core_text.save_new_password).done
+         .success(data-html-password_updated_text)!=core_text.password_updated_text
       .acc-question
          a.log-acc(tabindex=0, data-menu_signin)=core_text.menu_signin
          span=" - "

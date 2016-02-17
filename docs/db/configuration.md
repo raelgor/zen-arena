@@ -74,3 +74,7 @@ Core app variables.
 `default_email_subject` **string** Default email subject.
 
 `forgot_password_interval` **number** Milliseconds until the system can send another forgot password email to the same user.
+
+`password_range` **object** Min and max password length.
+   `min` **number** Minimum accepted password length.
+   `max` **number** Maximum accepted password length.

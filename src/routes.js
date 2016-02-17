@@ -108,7 +108,7 @@ app.router.post('/api/goauth', require('./api/goauth'));
 app.router.post('/api/fblogin', require('./api/fblogin'));
 app.router.post('/api/text/:lang', require('./api/text'));
 app.router.post('/api/forgotpass', require('./api/forgotpass'));
-app.router.post('/api/recoverpass/:token', require('./api/recoverpass'));
+app.router.post('/api/recoverpass', require('./api/recoverpass'));
 
 // Calls below this require auth
 app.router.all('/api*', (req, res, next) => {
@@ -220,7 +220,9 @@ app.router.all('/', (req, res) => co(function*() {
             core_text,
             lang: req.lang,
             base_url: `${appConfig.site_protocol}://${appConfig.domain_name}/`,
-            google_client_id: appConfig.google_oauth.client_id
+            google_client_id: appConfig.google_oauth.client_id,
+            min_pass_length: appConfig.password_range.min,
+            max_pass_length: appConfig.password_range.max
          }
       },
       core_text,

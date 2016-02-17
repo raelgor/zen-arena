@@ -61,6 +61,25 @@ za.login.promptRegister = function() {
 
 };
 
+za.login.promptRecoverFrame = function(token) {
+
+   $('.recover-password-frame .not-sent-yet').show();
+   $('.recover-password-frame .success').hide();
+
+    resize();
+    $('.recover-password-frame')[0].error('');
+
+    $('.auth-dialogs').removeClass('hide');
+    $('.auth-dialogs > *').addClass('hide');
+
+    $('.recover-password-frame').removeClass('hide');
+
+    za.ui.nt_focus('.recover-password-frame .password');
+
+    $('.recover-password-frame .token').val(token);
+
+};
+
 za.login.promptForgotPassword = function() {
 
    $('.forgot-password-frame .not-sent-yet').show();
@@ -95,6 +114,7 @@ za.login.promptForgotPassword = function() {
     }
 
 };
+
 
 za.login.exitPrompts = function(callback) {
 
@@ -186,6 +206,44 @@ $(window).ready(function(){
        element.loading = loading;
    });
 
+   $('.auth-dialogs .recover-password-frame').submit(function(){
+
+      this.error('');
+      event.preventDefault();
+      event.stopPropagation();
+
+      var password = $(this).find('.password').val();
+      var frame = this;
+
+      if(!password)
+          return this.error(clientData.core_text.error_must_enter_new_password);
+
+      if(password.length > clientData.max_pass_length || password.length < clientData.min_pass_length)
+         return this.error(
+            clientData.core_text.error_invalid_password_size +
+            ' ('+clientData.min_pass_length+'-'+
+            clientData.max_pass_length +
+            ' ' + clientData.core_text.characters + ')');
+
+      this.loading(true);
+
+      za.send('/api/recoverpass',{
+         p: password,
+         token: $('.recover-password-frame .token').val()
+      })
+      .success(function(response){
+         if(response.message === 'OK') {
+            $('.recover-password-frame .not-sent-yet').hide();
+            $('.recover-password-frame .success').show();
+         } else
+            frame.error(clientData.core_text.error_something_went_wrong);
+      })
+      .always(function(){
+          $('.auth-dialogs .recover-password-frame')[0].loading(false);
+      });
+
+   });
+
    $('.auth-dialogs .forgot-password-frame').submit(function(){
 
       this.error('');
@@ -193,6 +251,7 @@ $(window).ready(function(){
       event.stopPropagation();
 
       var uid = $(this).find('.username').val();
+      var frame = this;
 
       if(!uid)
           return this.error(clientData.core_text.error_fpass_email_needed);
@@ -209,9 +268,11 @@ $(window).ready(function(){
           grecaptcha: grecaptchaResponse
       })
       .success(function(response){
-         $('.forgot-password-frame .not-sent-yet').hide();
-         $('.forgot-password-frame .success').show();
-         console.log(response);
+         if(response.message === 'OK') {
+            $('.forgot-password-frame .not-sent-yet').hide();
+            $('.forgot-password-frame .success').show();
+         } else
+            frame.error(clientData.core_text.error_something_went_wrong);
       })
       .always(function(){
           grecaptcha.reset(za.grecaptcha.fpass_no_robot);
@@ -251,6 +312,13 @@ $(window).ready(function(){
         });
 
     });
+
+    if(/recoverpass=.+/i.test(window.location.search)) {
+      var token = window.location.search.match(/^.*[\?\&]recoverpass=([^\&\#]+)$/i)[1];
+
+      if(token)
+          za.login.promptRecoverFrame(token);
+    }
 
 });
 

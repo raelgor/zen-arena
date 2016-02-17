@@ -30,7 +30,7 @@ module.exports = (req, res) => co(function*(){
 
    user = user[0];
 
-   if(!user)
+   if(!user || !user.password)
       return res._error('error_unknown_auth_combo');
 
    var correct_password = yield new Promise(
