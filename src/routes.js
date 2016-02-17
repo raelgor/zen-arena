@@ -1,6 +1,14 @@
 /* global config, GeoIP, cacheClient, co, appConfig, app, make_user_data */
-/* global make_core_text */
+/* global make_core_text, verify_grecaptcha */
 'use strict';
+
+// Stall if cache is updating
+app.router.use((req, res, next) => {
+   if(global._cache_is_updating)
+      global._on_cache_updated.then(next);
+   else
+      next();
+});
 
 app.router.use((req, res, next) => {
 
@@ -70,7 +78,7 @@ app.router.use((req, res, next) => {
 });
 
 // Api route
-app.router.all('/api*', (req, res, next) => {
+app.router.all('/api*', (req, res, next) => co(function*(){
 
    res.setHeader('content-type', 'application/json');
 
@@ -85,14 +93,22 @@ app.router.all('/api*', (req, res, next) => {
    if(!isNaN(req.__rid = req.body.rid))
       res.__response.rid = req.__rid;
 
+   if(req.body && req.body.message && req.body.message.grecaptcha)
+      if(!(yield verify_grecaptcha(req.body.message.grecaptcha, req._address)))
+         return res._error('error_bad_recaptcha');
+      else
+         res._recaptcha = true;
+
    next();
 
-});
+}));
 
 app.router.post('/api/login', require('./api/login'));
 app.router.post('/api/goauth', require('./api/goauth'));
 app.router.post('/api/fblogin', require('./api/fblogin'));
 app.router.post('/api/text/:lang', require('./api/text'));
+app.router.post('/api/forgotpass', require('./api/forgotpass'));
+app.router.post('/api/recoverpass/:token', require('./api/recoverpass'));
 
 // Calls below this require auth
 app.router.all('/api*', (req, res, next) => {
@@ -105,7 +121,7 @@ app.router.all('/api*', (req, res, next) => {
       } catch(error) { valid_session = false; }
 
    if(!valid_session)
-      return res._error('call_requires_auth');
+      return res._error('error_call_invalid_or_requires_auth');
    else
       next();
 

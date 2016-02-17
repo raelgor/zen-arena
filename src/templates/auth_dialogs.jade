@@ -6,7 +6,7 @@
       input.username(placeholder=core_text.login_username_placeholder, data-placeholder-login_username_placeholder, type="text", required)
       input.password(placeholder=core_text.login_password_placeholder, data-placeholder-login_password_placeholder, type="password", required)
       .forgot-password
-         a(tabindex=0, data-html-forgot_password)=core_text.forgot_password
+         a(tabindex=0, data-html-forgot_password, class="fpass-btn")=core_text.forgot_password
       .no-robot#login_no_robot
       .error.ani04
       input(type="submit", data-val-log_in, value=core_text.log_in).done
@@ -45,3 +45,39 @@
          span(data-html-login_question)=core_text.login_question
          a.log-acc(tabindex=0, data-loginText)=core_text.loginText
       .loader
+   form.forgot-password-frame.hide.ani04
+      .welcome
+         span(data-html-recover_password_title)=core_text.recover_password_title
+         span.icon-cancel-circle(tabindex=0)
+      .min-height-wrapper
+         .not-sent-yet
+            .fpass-text(data-html-fpass_main_text)=core_text.fpass_main_text
+            input.username(placeholder=core_text.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
+            .no-robot#fpass_no_robot
+            .error.ani04
+            input(type="submit", data-val-send_email, value=core_text.send_email).done
+         .success(data-html-forgot_password_success)!=core_text.forgot_password_success
+      .acc-question
+         a.log-acc(tabindex=0, data-menu_signin)=core_text.menu_signin
+         span=" - "
+         a.create-acc(tabindex=0, data-registerText)=core_text.registerText
+      .loader
+   form.recover-password-frame.hide.ani04
+      .welcome
+         span(data-html-recover_password_title)=core_text.recover_password_title
+         span.icon-cancel-circle(tabindex=0)
+      .min-height-wrapper
+         .not-sent-yet
+            .fpass-text(data-html-fpass_main_text)=core_text.fpass_main_text
+            input.username(placeholder=core_text.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
+            .no-robot#fpass_no_robot
+            .error.ani04
+            input(type="submit", data-val-send_email, value=core_text.send_email).done
+         .success(data-html-forgot_password_success)!=core_text.forgot_password_success
+      .acc-question
+         a.log-acc(tabindex=0, data-menu_signin)=core_text.menu_signin
+         span=" - "
+         a.create-acc(tabindex=0, data-registerText)=core_text.registerText
+      .loader
+
+      

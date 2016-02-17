@@ -61,6 +61,41 @@ za.login.promptRegister = function() {
 
 };
 
+za.login.promptForgotPassword = function() {
+
+   $('.forgot-password-frame .not-sent-yet').show();
+   $('.forgot-password-frame .success').hide();
+
+    resize();
+    $('.forgot-password-frame')[0].error('');
+
+    $('.auth-dialogs').removeClass('hide');
+    $('.auth-dialogs > *').addClass('hide');
+
+    $('.forgot-password-frame').removeClass('hide');
+
+    za.ui.nt_focus('.forgot-password-frame .username');
+
+    $('.forgot-password-frame .username').val($('.login-frame .username').val());
+
+    window.grecaptcha ?
+    render() :
+    za.recaptcha_ready.then(render);
+
+    function render(){
+
+        if(!isNaN(za.grecaptcha.fpass_no_robot))
+            grecaptcha.reset(za.grecaptcha.fpass_no_robot);
+        else
+            za.grecaptcha.fpass_no_robot = grecaptcha.render('fpass_no_robot', {
+            'sitekey': clientData.grecaptcha_site_key,
+            'theme': 'dark'
+        });
+
+    }
+
+};
+
 za.login.exitPrompts = function(callback) {
 
     $('.auth-dialogs, .auth-dialogs > form').addClass('hide');
@@ -130,6 +165,9 @@ $(window).ready(function(){
 
     });
 
+    // Forgot password click handler
+    $('.auth-dialogs .fpass-btn').click(za.login.promptForgotPassword);
+
     // Make auth buttons work
     $('.player-info .login').click(za.login.promptLogin);
     $('.player-info .signup').click(za.login.promptRegister);
@@ -148,7 +186,41 @@ $(window).ready(function(){
        element.loading = loading;
    });
 
-    $('.auth-dialogs .login-frame').submit(function(event){
+   $('.auth-dialogs .forgot-password-frame').submit(function(){
+
+      this.error('');
+      event.preventDefault();
+      event.stopPropagation();
+
+      var uid = $(this).find('.username').val();
+
+      if(!uid)
+          return this.error(clientData.core_text.error_fpass_email_needed);
+
+      var grecaptchaResponse = grecaptcha.getResponse(za.grecaptcha.fpass_no_robot);
+
+      if(!grecaptchaResponse)
+         return this.error(clientData.core_text.error_no_robot);
+
+      this.loading(true);
+
+      za.send('/api/forgotpass', {
+          uid: uid,
+          grecaptcha: grecaptchaResponse
+      })
+      .success(function(response){
+         $('.forgot-password-frame .not-sent-yet').hide();
+         $('.forgot-password-frame .success').show();
+         console.log(response);
+      })
+      .always(function(){
+          grecaptcha.reset(za.grecaptcha.fpass_no_robot);
+          $('.auth-dialogs .forgot-password-frame')[0].loading(false);
+      });
+
+   });
+
+    $('.auth-dialogs .login-frame').submit(function(){
 
         this.error('');
         event.preventDefault();

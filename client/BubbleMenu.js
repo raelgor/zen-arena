@@ -37,6 +37,7 @@ za.ui.BubbleMenu = function(options){
    };
 
    setTimeout(function(){ window.addEventListener('click', object._listener); }, 0);
+   setTimeout(function(){ window.addEventListener('touchend', object._listener); }, 0);
 
    $('body').append(this._element);
    this._element.find('a:first-child');
@@ -53,6 +54,7 @@ za.ui.BubbleMenu = function(options){
 
 za.ui.BubbleMenu.prototype.remove = function(){
    window.removeEventListener('click', this._listener);
+   window.removeEventListener('touchend', this._listener);
    this._element
    .css('pointer-events', 'none')
    .animate({opacity:0},200,'swing',function(){

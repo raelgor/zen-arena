@@ -1,20 +1,20 @@
-/* global verify_grecaptcha, co, cacheClient, cacheClient, bcrypt */
+/* global co, cacheClient, cacheClient, bcrypt */
 /* global config, log_user_in */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
 
+   if(!res._recaptcha)
+      return res._error('error_bad_recaptcha');
+
    var valid_request =
-   req.body &&
-   req.body.message &&
-   req.body.message.uid &&
-   req.body.message.password;
+      req.body &&
+      req.body.message &&
+      req.body.message.uid &&
+      req.body.message.password;
 
    if(!valid_request)
       return res._error('err_invalid_request');
-
-   if(!(yield verify_grecaptcha(req.body.message.grecaptcha, req._address)))
-      return res._error('error_bad_recaptcha');
 
    var user = yield cacheClient.get({
       query: {

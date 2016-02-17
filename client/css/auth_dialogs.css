@@ -172,9 +172,9 @@
 }
 
 .auth-dialogs .done:focus {
-    transform: scale(1.1);
     outline: none;
 }
+
 .auth-dialogs .done {
     background: #698248 !important;
     border: 1px solid rgba(0, 0, 0, 0) !important;
@@ -216,13 +216,34 @@
     text-decoration: none;
 }
 
-form.login-frame {
+.auth-dialogs .min-height-wrapper {
+    min-height: 404px;
+    overflow: hidden;
+}
+
+.auth-dialogs .forgot-password-frame .success {
+    color: #74B031;
+    font-size: 15px;
+    margin: 0 25px;
+}
+
+.auth-dialogs .fpass-text {
+    color: #C4C4C4;
+    margin: 10px 25px 30px;
+    font-size: 13px;
+}
+
+.auth-dialogs > form {
     height: 507px;
     top: 50%;
     left: 50%;
     margin: 0px;
     max-height: 95%;
     overflow: auto;
+}
+
+#register_no_robot {
+    margin: 30px auto;
 }
 
 .welcome .icon-cancel-circle {

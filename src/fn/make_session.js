@@ -1,4 +1,4 @@
-/* global appConfig, cacheClient, config, uuid */
+/* global appConfig, uuid, update_user */
 'use strict';
 
 module.exports = user => {
@@ -10,7 +10,7 @@ module.exports = user => {
    // If record has no sessions property, don't freak out
    if(!user.sessions)
       user.sessions = {};
-      
+
    // First try to clear expired sessions
    clear_expired_sessions(user.sessions);
 
@@ -28,17 +28,7 @@ module.exports = user => {
       date_created: Date.now()
    };
 
-   // Strip objects
-   delete user._id;
-   delete user.date_joined;
-
-   cacheClient.update({
-      query: { id: user.id },
-      update: { $set: user },
-      database: config.cache_server.db_name,
-      collection: 'users'
-   })
-      .then(() => resolve(user.sessions[session_token]));
+   update_user(user).then(() => resolve(user.sessions[session_token]));
 
    return promise;
 

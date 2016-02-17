@@ -22,9 +22,25 @@ postman.init = () => {
 
 };
 
-postman.welcome = user => {
+postman.sendForgotPasswordEmail = user => {
+   let core_text = make_core_text(user.lang);
 
-   console.log('welcome');
+   if(!user.email)
+      return Promise.resolve(false);
+
+   return postman.email({
+      to: user.email,
+      link: `${appConfig.site_protocol}://${appConfig.domain_name}/?recoverpass=${user.fpass_token}`,
+      subject: core_text.email_password_recovery_instructions_subject,
+      teaser_text: core_text.email_password_recovery_instructions_teaser,
+      main_text: core_text.email_password_recovery_instructions_main_text,
+      title: core_text.email_password_recovery_instructions_title,
+      unsubscribe_question: core_text.unsubscribe_question,
+      copyright_stamp: core_text.copyright_stamp
+   });
+};
+
+postman.welcome = user => {
    let core_text = make_core_text(user.lang);
 
    if(!user.email)
@@ -39,7 +55,6 @@ postman.welcome = user => {
       unsubscribe_question: core_text.unsubscribe_question,
       copyright_stamp: core_text.copyright_stamp
    });
-
 };
 
 postman.email = options => {
@@ -50,7 +65,7 @@ postman.email = options => {
    if(!options.subject)
       options.subject = appConfig.default_email_subject;
 
-   options.text = `${options.title}\n\n${options.main_text}\n\n${options.link}`;
+   options.text = `${options.title}\n\n${options.main_text}\n\n${options.link||''}`;
 
    options.html = skeleton;
    options.html = options.html.replace(':unsubscribe_question', options.unsubscribe_question);
@@ -58,7 +73,7 @@ postman.email = options => {
    options.html = options.html.replace(':text', options.main_text);
    options.html = options.html.replace(':title', options.title);
    options.html = options.html.replace(':copyright_stamp', options.copyright_stamp);
-   options.html = options.html.replace(':link', options.link ? `${options.link}<br/><br/>` : '');
+   options.html = options.html.replace(':email_link', options.link ? `${options.link}<br/><br/>` : '');
    options.html = options.html.replace(':head_image', `${appConfig.site_protocol}://${appConfig.domain_name}/img/emailhead.gif`);
 
    return postman._email.sendMail(options);

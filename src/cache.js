@@ -9,6 +9,11 @@ function get_data(){
 
     return co(function*(){
 
+      var updated;
+
+      global._cache_is_updating = true;
+      global._on_cache_updated = new Promise(r => updated = r);
+
         var configResponse = yield cacheClient.get({
             query: {},
             database: config.cache_server.db_name,
@@ -41,7 +46,10 @@ function get_data(){
 
         log.green('Cache up to date.');
 
-        setTimeout(get_data, 1e4);
+        global._cache_is_updating = false;
+        updated();
+
+        setTimeout(get_data, 6e4);
 
     });
 

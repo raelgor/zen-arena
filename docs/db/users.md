@@ -43,3 +43,6 @@ Core user data storage.
    * `csrf_token` **string** The csrf token sent with this session's requests.
    * `expires` **number** A `Date.now() + sessionDuration`.
    * `date_created` **number** A `Date.now()`.
+
+#### `fpass_cd`
+`number` A `Date.now() + offset` describing the minimum date a user can receive another forgot password email.

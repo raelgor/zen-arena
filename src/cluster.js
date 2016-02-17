@@ -49,9 +49,11 @@ process.on('message', message => co(function*(){
 
     yield require('./cache');
 
-    log('Done. Starting server...');
+    log('Loading postman...');
 
     postman.init();
+
+    log('Done. Starting server...');
 
     // Start server
     global.app = new Server({
@@ -61,13 +63,17 @@ process.on('message', message => co(function*(){
         static: path.resolve(__dirname + '/../assets')
     });
 
+    log('Done. Loading templates...');
+
     // Load jade templates
     require('./templates');
+
+    log('Done. Loading routes...');
 
     // Set up routes
     require('./routes');
 
-    log.green('Cluster started.');
+    log.green('Done. Cluster started.');
     initialized = true;
 
 }));
