@@ -27,13 +27,19 @@ window.za = {
       nt_focus: function(selector){
          !za._touch && $(selector).focus();
       }
-   }
+   },
+   controllers: {}
 
 };
 
 $(window).ready(function(){
 
    za.ui.nt_focus('.navigation .search');
+
+   var section = $('.content').attr('data-section');
+
+   if(section in za.controllers)
+      za.controllers[section]();
 
    // Safari fix
    setTimeout(resize, 0);

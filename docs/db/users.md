@@ -46,3 +46,9 @@ Core user data storage.
 
 #### `fpass_cd`
 `number` A `Date.now() + offset` describing the minimum date a user can receive another forgot password email.
+
+#### `unsubscribe_all_token`
+`string` A `uuid()` that can be used for 1-click unsubscribe from all emails for the user.
+
+#### `unsubscribe_all_email`
+`boolean` Whether or not the user has unsubscribed from all eimail.

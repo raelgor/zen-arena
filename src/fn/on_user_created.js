@@ -1,8 +1,13 @@
-/* global postman */
+/* global postman, co, uuid, update_user */
 'use strict';
 
-module.exports = user => {
+module.exports = user => co(function*(){
 
-   postman.welcome(user);
+   if(!user.unsubscribe_all_token) {
+      user.unsubscribe_all_token = uuid();
+      yield update_user(user);
+   }
 
-};
+   yield postman.welcome(user);
+
+});

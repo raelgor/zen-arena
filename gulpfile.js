@@ -4,15 +4,16 @@ const gulp = require('gulp');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const cssnano = require('gulp-cssnano');
- 
+
 gulp.task('min_js', () => {
-  
+
   let readStream = gulp.src([
       './client/lib/*',
       './client/main.js',
+      './client/controllers/*',
       './client/*'
   ]);
-  
+
   readStream
     .pipe(concat('app.js'))
     .pipe(uglify())
@@ -21,11 +22,11 @@ gulp.task('min_js', () => {
 });
 
 gulp.task('min_css', () => {
-  
+
   let readStream = gulp.src([
       './client/css/*'
   ]);
-  
+
   readStream
     .pipe(concat('styles.css'))
     .pipe(cssnano())

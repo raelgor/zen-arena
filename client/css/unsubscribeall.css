@@ -1,0 +1,34 @@
+.unsub-wrapper {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    color: #6A9F26;
+    margin-top: 10%;
+}
+
+.unsub-wrapper .icon-checkmark {
+    margin-right: 11px;
+}
+
+.unsub-wrapper .unsub-undo {
+    background: #7FB932;
+    width: 90px;
+    margin: 20px auto;
+    font-weight: normal;
+    color: white;
+    border-radius: 3px;
+    padding: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+    text-shadow: 0px -1px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    top: 0px;
+}
+
+.unsub-wrapper .unsub-undo:active {
+    top: 1px;
+}

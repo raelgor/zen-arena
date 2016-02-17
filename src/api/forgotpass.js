@@ -13,7 +13,7 @@ module.exports = (req, res) => co(function*(){
       req.body.message.uid;
 
    if(!valid_request)
-      return res._error('err_invalid_request');
+      return res._error('error_invalid_request');
 
    // Find user
    var user = yield cacheClient.get({

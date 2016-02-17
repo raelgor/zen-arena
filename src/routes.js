@@ -1,5 +1,6 @@
-/* global config, GeoIP, cacheClient, co, appConfig, app, make_user_data */
-/* global make_core_text, verify_grecaptcha */
+/* global config, GeoIP, cacheClient, co, appConfig, app */
+/* global make_core_text, verify_grecaptcha, update_user, uuid */
+/* global controllers */
 'use strict';
 
 // Stall if cache is updating
@@ -59,13 +60,12 @@ app.router.use((req, res, next) => {
             // Refresh session
             req.__session.expires= Date.now() + appConfig.web_session_lifespan;
 
+            // Make sure user has an unsubscribe all token
+            if(!user.unsubscribe_all_token)
+               user.unsubscribe_all_token = uuid();
+
             // Update user
-            yield cacheClient.update({
-               query: { id: req.__user.id },
-               update: { $set: user },
-               database: config.cache_server.db_name,
-               collection: 'users'
-            });
+            yield update_user(user);
 
          }
 
@@ -109,6 +109,7 @@ app.router.post('/api/fblogin', require('./api/fblogin'));
 app.router.post('/api/text/:lang', require('./api/text'));
 app.router.post('/api/forgotpass', require('./api/forgotpass'));
 app.router.post('/api/recoverpass', require('./api/recoverpass'));
+app.router.post('/api/resubscribe/:token', require('./api/resubscribe'));
 
 // Calls below this require auth
 app.router.all('/api*', (req, res, next) => {
@@ -130,13 +131,19 @@ app.router.all('/api*', (req, res, next) => {
 app.router.post('/api/logout', require('./api/logout'));
 
 // Jade route
-app.router.all('/', (req, res) => co(function*() {
+app.router.all([
+   '/',
+   '/unsubscribeall/:token'
+], (req, res) => co(function*() {
 
    // Parse path
    let path_parts = req.path && req.path.split('/');
    path_parts.shift();
 
-   // let dest = path_parts[0];
+   let template = path_parts[0];
+
+   if(!template || template === '/')
+      template = 'home';
 
    // /games
    // Lists all supported games
@@ -188,9 +195,10 @@ app.router.all('/', (req, res) => co(function*() {
    });
 
    let core_text = make_core_text(req.lang);
-
    if(appConfig.maintenance_flag)
       return res.end(app.templates.maintenance({core_text}));
+
+   let page_data = yield controllers[template](req, res, core_text);
 
    let html = app.templates.index({
       navigation: {
@@ -211,29 +219,11 @@ app.router.all('/', (req, res) => co(function*() {
          fb_app_id: appConfig.fb_app.app_id,
          fb_admins: appConfig.fb_app.fb_admins,
          fb_api_version: appConfig.fb_app.api_version,
-         clientData: {
-            user_data: req.__user && make_user_data(req.__user),
-            csrf_token: req.__user && req.__session ? req.__session.csrf_token : undefined,
-            grecaptcha_site_key: appConfig.grecaptcha.site_key,
-            fb_api_version: appConfig.fb_app.api_version,
-            fb_app_id: appConfig.fb_app.app_id,
-            core_text,
-            lang: req.lang,
-            base_url: `${appConfig.site_protocol}://${appConfig.domain_name}/`,
-            google_client_id: appConfig.google_oauth.client_id,
-            min_pass_length: appConfig.password_range.min,
-            max_pass_length: appConfig.password_range.max
-         }
+         clientData: page_data.client_data
       },
       core_text,
-      meta: {
-         title: global.text.core[req.lang].title.text
-      },
-      mainSection: {
-         template : "home.jade",
-         data: {
-         }
-      }
+      meta: page_data.meta,
+      mainSection: page_data.template_data
    });
 
    res.end(html);

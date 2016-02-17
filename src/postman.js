@@ -36,7 +36,8 @@ postman.sendForgotPasswordEmail = user => {
       main_text: core_text.email_password_recovery_instructions_main_text,
       title: core_text.email_password_recovery_instructions_title,
       unsubscribe_question: core_text.unsubscribe_question,
-      copyright_stamp: core_text.copyright_stamp
+      copyright_stamp: core_text.copyright_stamp,
+      unsubscribe_link: `${appConfig.site_protocol}://${appConfig.domain_name}/unsubscribeall/${user.unsubscribe_all_token}`
    });
 };
 
@@ -53,7 +54,8 @@ postman.welcome = user => {
       main_text: core_text.email_welcome_text,
       title: core_text.email_welcome_title,
       unsubscribe_question: core_text.unsubscribe_question,
-      copyright_stamp: core_text.copyright_stamp
+      copyright_stamp: core_text.copyright_stamp,
+      unsubscribe_link: `${appConfig.site_protocol}://${appConfig.domain_name}/unsubscribeall/${user.unsubscribe_all_token}`
    });
 };
 
@@ -65,10 +67,11 @@ postman.email = options => {
    if(!options.subject)
       options.subject = appConfig.default_email_subject;
 
-   options.text = `${options.title}\n\n${options.main_text}\n\n${options.link||''}`;
+   options.text = `${options.title}\n\n${options.main_text}\n\n${options.link||''}\n\nUnsubscribe: ${options.unsubscribe_link}`;
 
    options.html = skeleton;
    options.html = options.html.replace(':unsubscribe_question', options.unsubscribe_question);
+   options.html = options.html.replace(':unsubscribe_url', options.unsubscribe_link);
    options.html = options.html.replace(':teaser_text', options.teaser_text);
    options.html = options.html.replace(':text', options.main_text);
    options.html = options.html.replace(':title', options.title);

@@ -1,4 +1,4 @@
-/* global co, User, increment, cacheClient, config, appConfig, postman */
+/* global co, User, increment, cacheClient, config, appConfig, on_user_created */
 'use strict';
 
 const utilizable_fields = ['first_name', 'last_name', 'gender', 'email'];
@@ -34,7 +34,7 @@ module.exports = (fb_info, language) => co(function*() {
       collection: 'users'
    });
 
-   postman.welcome(user);
+   yield on_user_created(user);
 
    return user;
 

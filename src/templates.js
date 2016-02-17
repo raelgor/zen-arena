@@ -3,9 +3,13 @@
 
 const jade = require('jade');
 
-app.templates = {
+try{
+   app.templates = {
 
-    index: jade.compileFile('./src/templates/index.jade'),
-    maintenance: jade.compileFile('./src/templates/maintenance.jade')
+       index: jade.compileFile('./src/templates/index.jade'),
+       maintenance: jade.compileFile('./src/templates/maintenance.jade')
 
-};
+   };
+}catch(error){
+   console.log(error); 
+}

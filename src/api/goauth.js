@@ -16,7 +16,7 @@ module.exports = (req, res) => co(function*(){
       req.body.message.access_token;
 
    if(!valid_request)
-      return res._error('err_invalid_request');
+      return res._error('error_invalid_request');
 
    var access_token = req.body.message.access_token;
 
@@ -28,7 +28,7 @@ module.exports = (req, res) => co(function*(){
          (err, response) => resolve(response)));
 
    if(!user_go_info.id)
-      return res._error('err_bad_go_access_token');
+      return res._error('error_bad_go_access_token');
 
    var $or = [{ goid: user_go_info.id }];
 

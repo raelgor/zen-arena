@@ -24,6 +24,7 @@ global.postman = require('./postman');
 // Load src
 loaddirSync('./fn');
 loaddirSync('./classes');
+loaddirSync('./controllers', 'controllers');
 
 global.cacheClient = null;
 
@@ -78,7 +79,12 @@ process.on('message', message => co(function*(){
 
 }));
 
-function loaddirSync(dir) {
-    for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
-        global[file.split('.js')[0]] = require(`${dir}/${file}`);
+function loaddirSync(dir, ns) {
+   if(ns) {
+      global[ns] = {};
+      for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
+         global[ns][file.split('.js')[0]] = require(`${dir}/${file}`);
+   } else
+      for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
+         global[file.split('.js')[0]] = require(`${dir}/${file}`);
 }

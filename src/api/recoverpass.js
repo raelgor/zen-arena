@@ -11,7 +11,7 @@ module.exports = (req, res) => co(function*(){
       req.body.message.token;
 
    if(!valid_request)
-      return res._error('err_invalid_request');
+      return res._error('error_invalid_request');
 
    // Find user
    var token = req.body.message.token;

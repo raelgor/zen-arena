@@ -14,7 +14,7 @@ module.exports = (req, res) => co(function*(){
       req.body.message.password;
 
    if(!valid_request)
-      return res._error('err_invalid_request');
+      return res._error('error_invalid_request');
 
    var user = yield cacheClient.get({
       query: {
