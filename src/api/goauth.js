@@ -1,4 +1,4 @@
-/* global co, cacheClient, config, appConfig */
+/* global co, cacheClient, config, appConfig, update_user */
 /* global log_user_in, make_user_from_go_info */
 'use strict';
 
@@ -59,6 +59,12 @@ module.exports = (req, res) => co(function*(){
             database: config.cache_server.db_name,
             collection: 'users'
          });
+
+   if(user_go_info.emails[0].value && (!user.email || (user.email === user_go_info.emails[0].value && !user.email_verified))) {
+      user.email = user_go_info.emails[0].value;
+      user.email_verified = true;
+      yield update_user(user);
+   }
 
    if(req.cookies.lang !== user.lang)
       res.cookie('lang', user.lang, {

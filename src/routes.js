@@ -174,8 +174,6 @@ app.router.all([
    // 404
    // The 404 page
 
-   // Maintenance page
-
    // If we didn't get language info from a user, try to get from cookie
    if(!req.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
       req.lang = req.cookies.lang;
@@ -204,7 +202,7 @@ app.router.all([
       return res.end(app.templates.maintenance({core_text}));
 
    let page_data = yield controllers[template](req, res, core_text);
-
+   
    let html = app.templates.index({
       navigation: {
          themeImage: '/img/mainbg.jpg',

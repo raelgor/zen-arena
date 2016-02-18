@@ -43,6 +43,7 @@ module.exports = (req, res) => co(function*(){
 
    user.id = yield increment('users', 'id');
    user.password = password;
+   user.date_joined = new Date().toISOString();
 
    yield cacheClient.update({
       query: { id: user.id },

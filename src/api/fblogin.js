@@ -1,5 +1,5 @@
 /* global co, fb, cacheClient, config, appConfig */
-/* global make_user_from_fb_info, log_user_in */
+/* global make_user_from_fb_info, log_user_in, update_user */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
@@ -53,6 +53,12 @@ module.exports = (req, res) => co(function*(){
             database: config.cache_server.db_name,
             collection: 'users'
          });
+
+   if(user_fb_info.email && (!user.email || (user.email === user_fb_info.email && !user.email_verified))) {
+      user.email = user_fb_info.email;
+      user.email_verified = true;
+      yield update_user(user);
+   }
 
    if(req.cookies.lang !== user.lang)
       res.cookie('lang', user.lang, {

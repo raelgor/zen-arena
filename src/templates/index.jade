@@ -1,5 +1,6 @@
 include home.jade
 include unsubscribe_success.jade
+include verifyemail.jade
 doctype html
 html(lang=global.language)
     include head.jade
@@ -11,4 +12,6 @@ html(lang=global.language)
                mixin home(mainSection)
             if(mainSection.template === 'unsubscribe_success')
                mixin unsubscribe_success(mainSection)
+            if(mainSection.template === 'verifyemail')
+               mixin verifyemail(mainSection)
         include footer.jade
