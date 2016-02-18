@@ -1,4 +1,4 @@
-/* global co, cacheClient, config, appConfig */
+/* global co, dataTransporter, config, appConfig */
 'use strict';
 
 module.exports = email => co(function*(){
@@ -11,7 +11,7 @@ module.exports = email => co(function*(){
    // TTL for each message record
    var interval = appConfig.email_blacklist_interval;
 
-   var record = yield cacheClient.get({
+   var record = yield dataTransporter.get({
       query: { email },
       database: config.cache_server.db_name,
       collection: 'email_blacklist'
@@ -39,7 +39,7 @@ module.exports = email => co(function*(){
    delete record._id;
 
    // Update or insert
-   yield cacheClient.update({
+   yield dataTransporter.update({
       query: { email },
       update: { $set: record },
       options: { upsert: true },

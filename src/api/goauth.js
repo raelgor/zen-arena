@@ -1,4 +1,4 @@
-/* global co, cacheClient, config, appConfig, update_user */
+/* global co, dataTransporter, config, appConfig, update_user */
 /* global log_user_in, make_user_from_go_info, oauth_exploit_check */
 'use strict';
 
@@ -37,7 +37,7 @@ module.exports = (req, res) => co(function*(){
    user_go_info.emails[0].value &&
    $or.push({ email: user_go_info.emails[0].value });
 
-   var user = yield cacheClient.get({
+   var user = yield dataTransporter.get({
       query: { $or },
       database: config.cache_server.db_name,
       collection: 'users'
@@ -53,7 +53,7 @@ module.exports = (req, res) => co(function*(){
       user = yield make_user_from_go_info(user_go_info, lang_hint);
    else
       if(user.goid != user_go_info.id)
-         yield cacheClient.update({
+         yield dataTransporter.update({
             query: { id: +user.id },
             update: { $set: { goid: user.goid = user_go_info.id } },
             database: config.cache_server.db_name,

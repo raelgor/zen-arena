@@ -1,4 +1,4 @@
-/* global co, cacheClient, config, update_user, bcrypt, appConfig */
+/* global co, dataTransporter, config, update_user, bcrypt, appConfig */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
@@ -16,7 +16,7 @@ module.exports = (req, res) => co(function*(){
    // Find user
    var token = req.body.message.token;
    var password = String(req.body.message.p);
-   var user = yield cacheClient.get({
+   var user = yield dataTransporter.get({
       query: {
          fpass_token: String(token)
       },

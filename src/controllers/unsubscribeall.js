@@ -1,4 +1,4 @@
-/* global co, make_client_data, make_default_meta_data, cacheClient, config */
+/* global co, make_client_data, make_default_meta_data, dataTransporter, config */
 /* global update_user */
 'use strict';
 
@@ -24,7 +24,7 @@ module.exports = (req, res, core_text) => co(function*(){
 
    if(token) {
 
-      var user = yield cacheClient.get({
+      var user = yield dataTransporter.get({
          query: { unsubscribe_all_token: String(token) },
          database: config.cache_server.db_name,
          collection: 'users'

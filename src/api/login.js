@@ -1,4 +1,4 @@
-/* global co, cacheClient, cacheClient, bcrypt */
+/* global co, dataTransporter, dataTransporter, bcrypt */
 /* global config, log_user_in */
 'use strict';
 
@@ -16,7 +16,7 @@ module.exports = (req, res) => co(function*(){
    if(!valid_request)
       return res._error('error_invalid_request');
 
-   var user = yield cacheClient.get({
+   var user = yield dataTransporter.get({
       query: {
          $or: [
             { username: String(req.body.message.uid) },

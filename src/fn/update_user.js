@@ -1,4 +1,4 @@
-/* global co, cacheClient, config */
+/* global co, dataTransporter, config */
 'use strict';
 
 module.exports = user => { return co(function*(){
@@ -7,7 +7,7 @@ module.exports = user => { return co(function*(){
    delete user._id;
    delete user.date_joined;
 
-   yield cacheClient.update({
+   yield dataTransporter.update({
       query: { id: user.id },
       update: { $set: user },
       database: config.cache_server.db_name,

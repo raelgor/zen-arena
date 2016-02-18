@@ -1,4 +1,4 @@
-/* global cacheClient, fs, co, log, config, appConfig, postman */
+/* global dataTransporter, fs, co, log, config, appConfig, postman */
 'use strict';
 
 // Worker process title
@@ -29,7 +29,7 @@ loaddirSync('./classes');
 loaddirSync('./controllers', 'controllers');
 
 // Global objects
-global.cacheClient = null;
+global.dataTransporter = null;
 global.app = null;
 
 log('Starting worker...');
@@ -42,14 +42,14 @@ process.on('message', message => co(function*(){
       return log.warn('Cluster asked to init more than once. Ignoring...');
 
     global.config = message.config;
-    global.cacheClient = new cache.Client(config.cache_server);
+    global.dataTransporter = new cache.Client(config.cache_server);
 
     log('Done. Waiting for connect.');
 
     // Swallow errors
-    cacheClient.on('error', () => {});
+    dataTransporter.on('error', () => {});
 
-    yield new Promise(resolve => cacheClient.on('connected', resolve));
+    yield new Promise(resolve => dataTransporter.on('connected', resolve));
 
     log('Connected. Getting configuration...');
 

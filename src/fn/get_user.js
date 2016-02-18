@@ -1,9 +1,9 @@
-/* global co, cacheClient, config */
+/* global co, dataTransporter, config */
 'use strict';
 
 module.exports = query => co(function*(){
 
-   var user = yield cacheClient.get({
+   var user = yield dataTransporter.get({
       query,
       database: config.cache_server.db_name,
       collection: 'users'

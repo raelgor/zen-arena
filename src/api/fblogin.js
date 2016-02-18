@@ -1,4 +1,4 @@
-/* global co, fb, cacheClient, config, appConfig, oauth_exploit_check */
+/* global co, fb, dataTransporter, config, appConfig, oauth_exploit_check */
 /* global make_user_from_fb_info, log_user_in, update_user */
 'use strict';
 
@@ -31,7 +31,7 @@ module.exports = (req, res) => co(function*(){
    var $or = [{ fbid: user_fb_info.id }];
    user_fb_info.email && $or.push({ email: user_fb_info.email });
 
-   var user = yield cacheClient.get({
+   var user = yield dataTransporter.get({
       query: { $or },
       database: config.cache_server.db_name,
       collection: 'users'
@@ -47,7 +47,7 @@ module.exports = (req, res) => co(function*(){
       user = yield make_user_from_fb_info(user_fb_info, lang_hint);
    else
       if(user.fbid != user_fb_info.id)
-         yield cacheClient.update({
+         yield dataTransporter.update({
             query: { id: +user.id },
             update: { $set: { fbid: user.fbid = user_fb_info.id } },
             database: config.cache_server.db_name,

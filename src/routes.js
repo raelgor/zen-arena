@@ -1,4 +1,4 @@
-/* global config, GeoIP, cacheClient, co, appConfig, app */
+/* global config, GeoIP, dataTransporter, co, appConfig, app */
 /* global make_core_text, verify_grecaptcha, update_user, uuid */
 /* global controllers */
 'use strict';
@@ -25,7 +25,7 @@ app.router.use((req, res, next) => {
       // Auth user if not static
       if(req.cookies && req.cookies.st) {
 
-         let user = yield cacheClient.get({
+         let user = yield dataTransporter.get({
             query: { [`sessions.${req.cookies.st}`]: { $exists: 1 } },
             collection: 'users',
             database: config.cache_server.db_name

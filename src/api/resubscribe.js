@@ -1,4 +1,4 @@
-/* global co, cacheClient, config, update_user */
+/* global co, dataTransporter, config, update_user */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
@@ -8,7 +8,7 @@ module.exports = (req, res) => co(function*(){
    if(!valid_request)
       return res._error('error_invalid_request');
 
-   var user = yield cacheClient.get({
+   var user = yield dataTransporter.get({
       query: { unsubscribe_all_token: String(req.params.token) },
       database: config.cache_server.db_name,
       collection: 'users'

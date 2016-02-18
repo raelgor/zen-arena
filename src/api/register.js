@@ -1,4 +1,4 @@
-/* global co, cacheClient, cacheClient, bcrypt, on_user_created, uuid */
+/* global co, dataTransporter, dataTransporter, bcrypt, on_user_created, uuid */
 /* global config, log_user_in, increment, postman */
 'use strict';
 
@@ -16,7 +16,7 @@ module.exports = (req, res) => co(function*(){
    if(!valid_request)
       return res._error('error_invalid_request');
 
-   var user = yield cacheClient.get({
+   var user = yield dataTransporter.get({
       query: { email: String(req.body.message.uid) },
       database: config.cache_server.db_name,
       collection: 'users'
@@ -45,7 +45,7 @@ module.exports = (req, res) => co(function*(){
    user.password = password;
    user.date_joined = new Date().toISOString();
 
-   yield cacheClient.update({
+   yield dataTransporter.update({
       query: { id: user.id },
       update: { $set: user },
       options: { upsert: true },

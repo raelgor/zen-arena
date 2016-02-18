@@ -1,4 +1,4 @@
-/* global appConfig, config, cacheClient, log, co */
+/* global appConfig, config, dataTransporter, log, co */
 'use strict';
 
 module.exports = get_data();
@@ -14,7 +14,7 @@ function get_data(){
       global._cache_is_updating = true;
       global._on_cache_updated = new Promise(r => updated = r);
 
-        var configResponse = yield cacheClient.get({
+        var configResponse = yield dataTransporter.get({
             query: {},
             database: config.cache_server.db_name,
             collection: 'configuration'
@@ -25,7 +25,7 @@ function get_data(){
         for(let pair of configResponse)
             appConfig[pair.key] = pair.value;
 
-        var textResponse = yield cacheClient.get({
+        var textResponse = yield dataTransporter.get({
             query: {},
             database: config.cache_server.db_name,
             collection: 'text'

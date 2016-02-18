@@ -1,4 +1,4 @@
-/* global config, cacheClient, co, appConfig, uuid, update_user, postman */
+/* global config, dataTransporter, co, appConfig, uuid, update_user, postman */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
@@ -16,7 +16,7 @@ module.exports = (req, res) => co(function*(){
       return res._error('error_invalid_request');
 
    // Find user
-   var user = yield cacheClient.get({
+   var user = yield dataTransporter.get({
       query: { email: String(req.body.message.uid) },
       database: config.cache_server.db_name,
       collection: 'users'
