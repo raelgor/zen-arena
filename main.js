@@ -1,49 +1,48 @@
+/*
+zen-arena
+Developed by Kosmas Papadatos
+*/
 'use strict';
 
 const zenx = require('zenx');
-const co = require('co');
 const os = require('os');
 const cluster = require('cluster');
 const colors = require('colors/safe');
 const numOfCores = os.cpus().length;
 const log = require('./src/log');
 
+// Load configuration or throw
+// @todo Make an error that points to documentation about the contents
+// of config.json
 const config = require('./config');
 
+// Set master process title
 process.title = 'zen-arena-cm';
 
-cluster.setupMaster({ exec: __dirname + '/src/cluster.js' });
+const cacheServerUrl = config.cache_server.host + ':' + config.cache_server.port;
+log(`Connecting to data server at ${colors.magenta(cacheServerUrl)}...`);
 
-log(`Connecting to data server at ${colors.magenta(config.cache_server.host + ':' + config.cache_server.port)}...`);
+const transporter = new zenx.cache.Client(config.cache_server);
 
-const cacheClient = new zenx.cache.Client(config.cache_server);
+transporter.on('connected', () => {
+   transporter.on('error', log);
 
-cacheClient.on('connected', () => co(function*(){
+   log('Connected. Forking workers...');
 
-    log.green('Connected. Loading configuration...');
+   cluster.setupMaster({ exec: __dirname + '/src/cluster.js' });
 
-    yield cacheClient.get({
-        query: {},
-        database: config.cache_server.db_name,
-        collection: 'configuration'
-    });
+   // Start as many workers as the cores we have
+   // @todo Make the number of workers configurable
+   for(let i = 0; i < numOfCores; i++) {
+      let worker = cluster.fork();
 
-    cacheClient.on('error', () => {});
+      worker.send({ config });
 
-    log('Configuration loaded. Forking...');
+      worker.on('disconnect', () => {
+         worker.kill('SIGTERM');
+         cluster.fork().send({ config });
+      });
+   }
 
-    for(let i = 0; i < numOfCores; i++) {
-
-        let worker = cluster.fork();
-        worker.send({ config });
-
-        worker.on('disconnect', () => {
-            worker.kill('SIGTERM');
-            cluster.fork().send({ config });
-        });
-
-    }
-
-}));
-
-log.green('App cluster started.');
+   log.green('Main process initialized.');
+});

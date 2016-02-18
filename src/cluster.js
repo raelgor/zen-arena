@@ -1,6 +1,7 @@
 /* global cacheClient, fs, co, log, config, appConfig, postman */
 'use strict';
 
+// Worker process title
 process.title = 'zen-arena-cs';
 
 const Server = require('zenx-server');
@@ -9,6 +10,7 @@ const path = require('path');
 
 var initialized = false;
 
+// Global dependencies
 global.log = require('./log');
 global.co = require('co');
 global.colors = require('colors');
@@ -21,20 +23,23 @@ global.fb = require('fb');
 global.mongodb = require('mongodb');
 global.postman = require('./postman');
 
-// Load src
+// Compile directories
 loaddirSync('./fn');
 loaddirSync('./classes');
 loaddirSync('./controllers', 'controllers');
 
+// Global objects
 global.cacheClient = null;
+global.app = null;
 
-log('Starting cluster...');
+log('Starting worker...');
 
 process.on('message', message => co(function*(){
 
     log('Configuration message received. Initializing...');
 
-    if('config' in message && initialized) return log.warn('Cluster asked to init more than once. Ignoring...');
+    if('config' in message && initialized)
+      return log.warn('Cluster asked to init more than once. Ignoring...');
 
     global.config = message.config;
     global.cacheClient = new cache.Client(config.cache_server);
@@ -74,16 +79,26 @@ process.on('message', message => co(function*(){
     // Set up routes
     require('./routes');
 
-    log.green('Done. Cluster started.');
+    log.green('Done. Worker initialized.');
     initialized = true;
 
 }));
 
-function loaddirSync(dir, ns) {
-   if(ns) {
-      global[ns] = {};
+/**
+ * @function loaddirSync
+ *
+ * @desc Loads a directory to a namespace or the global scope. Variables are
+ * file names without the extention.
+ *
+ * @param {string} dir The directory to load.
+ * @param {number} namespace The global.<namespace> to load to. (Optional)
+ * @return {undefined}
+ */
+function loaddirSync(dir, namespace) {
+   if(namespace) {
+      global[namespace] = {};
       for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
-         global[ns][file.split('.js')[0]] = require(`${dir}/${file}`);
+         global[namespace][file.split('.js')[0]] = require(`${dir}/${file}`);
    } else
       for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
          global[file.split('.js')[0]] = require(`${dir}/${file}`);
