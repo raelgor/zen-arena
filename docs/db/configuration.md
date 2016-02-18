@@ -78,3 +78,7 @@ Core app variables.
 `password_range` **object** Min and max password length.
    `min` **number** Minimum accepted password length.
    `max` **number** Maximum accepted password length.
+
+`email_blacklist_interval` **number** Time in milliseconds that an expiry date record will exist in email's messages array.
+
+`max_emails_per_interval` **number** Maximum number of pending expiry dates.

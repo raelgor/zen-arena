@@ -1,4 +1,4 @@
-/* global appConfig, fs, make_core_text */
+/* global appConfig, fs, make_core_text, co, increment_email */
 'use strict';
 
 const mailer = require('nodemailer');
@@ -27,7 +27,7 @@ postman.verifyAccountEmail = user => {
 
    if(!user.email)
       return Promise.resolve(false);
-      
+
    return postman.email({
       to: user.email,
       link: `${appConfig.site_protocol}://${appConfig.domain_name}/verifyemail/${user.verify_email_token}`,
@@ -78,7 +78,7 @@ postman.welcome = user => {
    });
 };
 
-postman.email = options => {
+postman.email = options => co(function*(){
 
    if(!options.from)
       options.from = appConfig.default_email_from;
@@ -98,6 +98,9 @@ postman.email = options => {
    options.html = options.html.replace(':email_link', options.link ? `${options.link}<br/><br/>` : '');
    options.html = options.html.replace(':head_image', `${appConfig.site_protocol}://${appConfig.domain_name}/img/emailhead.gif`);
 
-   return postman._email.sendMail(options);
+   if(!(yield increment_email(options.to)))
+      return Promise.resolve(false);
 
-};
+   return yield postman._email.sendMail(options);
+
+});
