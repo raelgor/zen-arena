@@ -40,8 +40,6 @@ module.exports = (req, res) => co(function*(){
    // Send email
    var email_status = yield postman.sendForgotPasswordEmail(user);
 
-   console.log(email_status);
-
    // Return success
    if(email_status && email_status.accepted && email_status.accepted.length) {
       res.__response.message = 'OK';
