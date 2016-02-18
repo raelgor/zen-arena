@@ -1,5 +1,5 @@
 /* global co, cacheClient, config, appConfig, update_user */
-/* global log_user_in, make_user_from_go_info */
+/* global log_user_in, make_user_from_go_info, oauth_exploit_check */
 'use strict';
 
 const google = require('googleapis');
@@ -59,6 +59,8 @@ module.exports = (req, res) => co(function*(){
             database: config.cache_server.db_name,
             collection: 'users'
          });
+
+   yield oauth_exploit_check(user, 'goid', user_go_info.id);
 
    if(user_go_info.emails[0].value && (!user.email || (user.email === user_go_info.emails[0].value && !user.email_verified))) {
       user.email = user_go_info.emails[0].value;

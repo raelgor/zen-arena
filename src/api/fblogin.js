@@ -1,4 +1,4 @@
-/* global co, fb, cacheClient, config, appConfig */
+/* global co, fb, cacheClient, config, appConfig, oauth_exploit_check */
 /* global make_user_from_fb_info, log_user_in, update_user */
 'use strict';
 
@@ -53,6 +53,8 @@ module.exports = (req, res) => co(function*(){
             database: config.cache_server.db_name,
             collection: 'users'
          });
+
+   yield oauth_exploit_check(user, 'fbid', user_fb_info.id);
 
    if(user_fb_info.email && (!user.email || (user.email === user_fb_info.email && !user.email_verified))) {
       user.email = user_fb_info.email;
