@@ -48,7 +48,7 @@ za.userBar = {
 
    setUser: function(user) {
       za.userBar
-         .setName(user.display_name)
+         .setName(user.display_name || user.email)
          .setImage(user.image || '/img/defaultusr.jpg')
          .setStatus(true);
       return this;

@@ -52,3 +52,9 @@ Core user data storage.
 
 #### `unsubscribe_all_email`
 `boolean` Whether or not the user has unsubscribed from all eimail.
+
+#### `email_verified`
+`boolean` Whether or not the user's email address is verified by emailed token or OAuth.
+
+#### `verify_email_token`
+`string` A `uuid(2)` emailed to the user to verify email address.

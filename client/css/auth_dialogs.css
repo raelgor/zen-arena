@@ -9,6 +9,13 @@
     transform: scale(1) !important;
 }
 
+.register-frame .checkbox {
+    width: 260px;
+    margin: auto;
+    position: relative;
+    top: -24px;
+}
+
 .auth-dialogs.hide, .auth-dialogs .hide {
     pointer-events: none;
     opacity: 0;

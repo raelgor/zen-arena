@@ -26,6 +26,9 @@ module.exports = (fb_info, language) => co(function*() {
    user.image_type = 'fb_link';
    user.image = `https://graph.facebook.com/${user.fbid}/picture?type=large`;
 
+   if(user.email)
+      user.email_verified = true;
+
    yield cacheClient.update({
       query: { id },
       update: { $set: user },

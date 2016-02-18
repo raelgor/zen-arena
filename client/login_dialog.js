@@ -127,12 +127,18 @@ za.login.exitPrompts = function(callback) {
 
 $(window).ready(function(){
 
+   var termsCheckbox = new za.ui.Checkbox(clientData.core_text.register_accept_terms,{
+      'data-html-register_accept_terms':1
+   },true);
+
+   $('.auth-dialogs .register-frame .checkbox').html(termsCheckbox.element);
+
     // Enable fbauth buttons when FB API is availalbe
     za.fb_ready.then(function(){
       $('.auth-dialogs form .fb.disabled').removeClass('disabled');
     });
 
-    // Enable fbauth buttons when FB API is availalbe
+    // Enable fbauth buttons when Google API is availalbe
     za.gapi_ready.then(function(){
       $('.auth-dialogs form .g-plus.disabled').removeClass('disabled');
     });
@@ -239,6 +245,7 @@ $(window).ready(function(){
             frame.error(clientData.core_text.error_something_went_wrong);
       })
       .always(function(){
+          $('.auth-dialogs .password').val('');
           $('.auth-dialogs .recover-password-frame')[0].loading(false);
       });
 
@@ -276,10 +283,63 @@ $(window).ready(function(){
       })
       .always(function(){
           grecaptcha.reset(za.grecaptcha.fpass_no_robot);
+           $('.auth-dialogs .password').val('');
           $('.auth-dialogs .forgot-password-frame')[0].loading(false);
       });
 
    });
+
+   $('.auth-dialogs .register-frame').submit(function(){
+
+      this.error('');
+      event.preventDefault();
+      event.stopPropagation();
+
+      var uid = $(this).find('.username').val();
+      var password = $(this).find('.password').val();
+      var frame = this;
+
+      if(!uid || !password)
+           return this.error(clientData.core_text.error_both_credentials);
+
+      var grecaptchaResponse = grecaptcha.getResponse(za.grecaptcha.register_no_robot);
+
+      if(!grecaptchaResponse)
+           return this.error(clientData.core_text.error_no_robot);
+
+      if(!/^[^\@\&\_\! ]+\@[^\@\&\_\! ]+$/.test(uid))
+         return this.error(clientData.core_text.error_invalid_email);
+
+      if(password.length > clientData.max_pass_length || password.length < clientData.min_pass_length)
+         return this.error(clientData.core_text.error_invalid_password_size + ' ('+clientData.min_pass_length+' - '+clientData.max_pass_length+') ' + clientData.core_text.characters);
+
+      if(!termsCheckbox.isChecked())
+         return this.error(clientData.core_text.error_must_accept_terms);
+
+      this.loading(true);
+
+      za.send('/api/register', {
+           uid: uid,
+           password: password,
+           grecaptcha: grecaptchaResponse
+      })
+      .success(function(response){
+         console.log(response);
+         if(response.error || !response.data){
+            if(response.error === 'error_user_exists')
+               return frame.error(clientData.core_text.error_user_exists);
+            return frame.error(clientData.core_text.error_something_went_wrong);
+         } else
+            za._login_response_handler(response);
+      })
+      .always(function(){
+           grecaptcha.reset(za.grecaptcha.register_no_robot);
+           $('.auth-dialogs .register-frame')[0].loading(false);
+               $('.auth-dialogs .password').val('');
+      });
+
+   });
+
 
     $('.auth-dialogs .login-frame').submit(function(){
 
@@ -309,6 +369,7 @@ $(window).ready(function(){
         .always(function(){
             grecaptcha.reset(za.grecaptcha.login_no_robot);
             $('.auth-dialogs .login-frame')[0].loading(false);
+             $('.auth-dialogs .password').val('');
         });
 
     });

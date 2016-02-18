@@ -99,6 +99,9 @@ app.router.all('/api*', (req, res, next) => co(function*(){
       else
          res._recaptcha = true;
 
+   if(!req.lang)
+      req.lang = ~appConfig.app_languages.indexOf(req.cookies.lang) ? req.cookies.lang : appConfig.default_lang;
+
    next();
 
 }));
@@ -107,6 +110,7 @@ app.router.post('/api/login', require('./api/login'));
 app.router.post('/api/goauth', require('./api/goauth'));
 app.router.post('/api/fblogin', require('./api/fblogin'));
 app.router.post('/api/text/:lang', require('./api/text'));
+app.router.post('/api/register', require('./api/register'));
 app.router.post('/api/forgotpass', require('./api/forgotpass'));
 app.router.post('/api/recoverpass', require('./api/recoverpass'));
 app.router.post('/api/resubscribe/:token', require('./api/resubscribe'));
@@ -133,7 +137,8 @@ app.router.post('/api/logout', require('./api/logout'));
 // Jade route
 app.router.all([
    '/',
-   '/unsubscribeall/:token'
+   '/unsubscribeall/:token',
+   '/verifyemail/:token'
 ], (req, res) => co(function*() {
 
    // Parse path

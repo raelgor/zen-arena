@@ -38,6 +38,9 @@ module.exports = (go_info, language) => co(function*() {
       user.image = go_info.image.url.replace(/([\?\&])sz=[0-9]+/,'$1sz=500');
    }
 
+   if(user.email)
+      user.email_verified = true;
+
    yield cacheClient.update({
       query: { id },
       update: { $set: user },

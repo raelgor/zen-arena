@@ -8,6 +8,7 @@ module.exports = user => co(function*(){
       yield update_user(user);
    }
 
-   yield postman.welcome(user);
+   if(user.email_verified)
+      yield postman.welcome(user);
 
 });

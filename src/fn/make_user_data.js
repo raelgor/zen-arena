@@ -22,6 +22,7 @@ module.exports = user => {
 		last_name: user.last_name,
 		lang: user.lang,
 		image: user.image,
+		email: user.email,
 		image_type: user.image_type
 	};
 

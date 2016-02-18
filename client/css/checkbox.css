@@ -1,0 +1,36 @@
+.za-checkbox .za-checkbox-box {
+    border: 2px solid #BABABA;
+    font-size: 15px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 2px;
+    background: #777777;
+    color: #DADCDA;
+    margin-right: 10px;
+}
+
+.za-checkbox:not(.checked) .icon-checkmark {
+   display: none;
+}
+
+.za-checkbox * {
+    vertical-align: top;
+}
+
+.za-checkbox, .za-checkbox * {
+    cursor: pointer !important;
+}
+
+.za-checkbox .za-checkbox-text {
+    color: white;
+    font-size: 14px;
+    display: inline-block;
+    width: calc(100% - 40px);
+}
+
+.za-checkbox .za-checkbox-text a {
+    color: #69C526;
+    text-decoration: none;
+}

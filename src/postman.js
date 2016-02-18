@@ -22,6 +22,25 @@ postman.init = () => {
 
 };
 
+postman.verifyAccountEmail = user => {
+   let core_text = make_core_text(user.lang);
+
+   if(!user.email)
+      return Promise.resolve(false);
+      
+   return postman.email({
+      to: user.email,
+      link: `${appConfig.site_protocol}://${appConfig.domain_name}/verifyemail/${user.verify_email_token}`,
+      subject: core_text.email_verify_subject,
+      teaser_text: core_text.email_verify_teaser,
+      main_text: core_text.email_verify_main_text,
+      title: core_text.email_verify_title,
+      unsubscribe_question: core_text.unsubscribe_question,
+      copyright_stamp: core_text.copyright_stamp,
+      unsubscribe_link: `${appConfig.site_protocol}://${appConfig.domain_name}/unsubscribeall/${user.unsubscribe_all_token}`
+   });
+};
+
 postman.sendForgotPasswordEmail = user => {
    let core_text = make_core_text(user.lang);
 
