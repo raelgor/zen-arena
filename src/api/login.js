@@ -1,5 +1,5 @@
 /* global co, dataTransporter, dataTransporter, bcrypt */
-/* global config, log_user_in */
+/* global log_user_in */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
@@ -16,25 +16,19 @@ module.exports = (req, res) => co(function*(){
    if(!valid_request)
       return res._error('error_invalid_request');
 
-   var user = yield dataTransporter.get({
-      query: {
+   var user = yield dataTransporter.getUser({
          $or: [
             { username: String(req.body.message.uid) },
             { email: String(req.body.message.uid) },
             { phone: String(req.body.message.uid) }
          ]
-      },
-      database: config.cache_server.db_name,
-      collection: 'users'
-   });
+      });
 
-   user = user[0];
-
-   if(!user || !user.password)
+   if(!user || !user.get('password'))
       return res._error('error_unknown_auth_combo');
 
    var correct_password = yield new Promise(
-      resolve => bcrypt.compare(req.body.message.password, user.password,
+      resolve => bcrypt.compare(req.body.message.password, user.get('password'),
          (error, result) => resolve(result)));
 
    if(!correct_password)

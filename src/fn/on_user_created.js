@@ -1,11 +1,11 @@
-/* global postman, co, uuid, update_user */
+/* global postman, co, uuid */
 'use strict';
 
 module.exports = user => co(function*(){
 
-   if(!user.unsubscribe_all_token) {
-      user.unsubscribe_all_token = uuid();
-      yield update_user(user);
+   if(!user.get('unsubscribe_all_token')) {
+      user.set('unsubscribe_all_token', uuid());
+      yield user.updateRecord();
    }
 
    if(user.email_verified)

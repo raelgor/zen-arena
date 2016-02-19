@@ -1,4 +1,4 @@
-/* global co, User, increment, dataTransporter, config, appConfig, on_user_created */
+/* global co, User, increment, appConfig, on_user_created */
 'use strict';
 
 module.exports = (go_info, language) => co(function*() {
@@ -9,45 +9,39 @@ module.exports = (go_info, language) => co(function*() {
    if(go_info.name) {
 
       if(go_info.name.familyName)
-         user.last_name = go_info.name.familyName;
+         user.set('last_name', go_info.name.familyName);
 
       if(go_info.name.givenName)
-         user.first_name = go_info.name.givenName;
+         user.set('first_name', go_info.name.givenName);
 
    }
 
-   if(!user.first_name && go_info.displayName)
-      user.first_name = go_info.displayName.split(' ')[0] || '';
+   if(!user.get('first_name') && go_info.displayName)
+      user.set('first_name', go_info.displayName.split(' ')[0] || '');
 
-   if(!user.last_name && go_info.displayName)
-      user.last_name = go_info.displayName.split(' ').pop() || '';
+   if(!user.get('last_name') && go_info.displayName)
+      user.set('last_name', go_info.displayName.split(' ').pop() || '');
 
-   user.goid = go_info.id;
-   user.id = id;
-   user.date_joined = new Date().toISOString();
-   user.lang = language || appConfig.default_lang;
+   user.set('goid', go_info.id);
+   user.set('id', id);
+   user.set('date_joined', new Date().toISOString());
+   user.set('lang', language || appConfig.default_lang);
 
    if(go_info.gender)
-      user.gender = go_info.gender;
+      user.set('gender', go_info.gender);
 
    if(go_info.emails && go_info.emails[0] && go_info.emails[0].value)
-      user.email = go_info.emails[0].value;
+      user.set('email', go_info.emails[0].value);
 
    if(go_info.image && go_info.image.url) {
-      user.image_type = 'g_plus_link';
-      user.image = go_info.image.url.replace(/([\?\&])sz=[0-9]+/,'$1sz=500');
+      user.set('image_type', 'g_plus_link');
+      user.set('image', go_info.image.url.replace(/([\?\&])sz=[0-9]+/,'$1sz=500'));
    }
 
    if(user.email)
-      user.email_verified = true;
+      user.set('email_verified', true);
 
-   yield dataTransporter.update({
-      query: { id },
-      update: { $set: user },
-      options: { upsert: true },
-      database: config.cache_server.db_name,
-      collection: 'users'
-   });
+   yield user.insertRecord();
 
    yield on_user_created(user);
 

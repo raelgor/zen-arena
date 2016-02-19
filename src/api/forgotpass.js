@@ -1,4 +1,4 @@
-/* global config, dataTransporter, co, appConfig, uuid, update_user, postman */
+/* global dataTransporter, co, appConfig, uuid, postman */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
@@ -16,26 +16,22 @@ module.exports = (req, res) => co(function*(){
       return res._error('error_invalid_request');
 
    // Find user
-   var user = yield dataTransporter.get({
-      query: { email: String(req.body.message.uid) },
-      database: config.cache_server.db_name,
-      collection: 'users'
+   var user = yield dataTransporter.getUser({
+      email: String(req.body.message.uid)
    });
-
-   user = user[0];
 
    if(!user)
       return res._error('error_no_user');
 
    // Check if we can send another recover email
-   if(user.fpass_cd && user.fpass_cd > Date.now())
+   if(user.get('fpass_cd') && user.get('fpass_cd') > Date.now())
       return res._error('error_fpass_on_cooldown');
 
-   user.fpass_cd = Date.now() + appConfig.forgot_password_interval;
-   user.fpass_token = uuid(2);
+   user.set('fpass_cd', Date.now() + appConfig.forgot_password_interval);
+   user.set('fpass_token', uuid(2));
 
    // Update user
-   yield update_user(user);
+   yield user.updateRecord();
 
    // Send email
    var email_status = yield postman.sendForgotPasswordEmail(user);

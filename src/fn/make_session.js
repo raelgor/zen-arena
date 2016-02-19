@@ -1,38 +1,34 @@
-/* global appConfig, uuid, update_user */
+/* global appConfig, uuid, co */
 'use strict';
 
-module.exports = user => {
-
-   // Is async function
-   let resolve;
-   let promise = new Promise(r => resolve = r);
+module.exports = user => co(function*(){
 
    // If record has no sessions property, don't freak out
-   if(!user.sessions)
-      user.sessions = {};
+   if(!user.get('sessions'))
+      user.set('sessions', {});
 
    // First try to clear expired sessions
-   clear_expired_sessions(user.sessions);
+   clear_expired_sessions(user.record.sessions);
 
    // If we reached max_web_sessions, try to make some room
-   if(Object.keys(user.sessions).length >= appConfig.max_web_sessions)
-      remove_oldest_web_session(user.sessions);
+   if(Object.keys(user.record.sessions).length >= appConfig.max_web_sessions)
+      remove_oldest_web_session(user.record.sessions);
 
    let session_token = uuid();
    let csrf_token = uuid();
 
-   user.sessions[session_token] = {
+   user.record.sessions[session_token] = {
       session_token,
       csrf_token,
       expires: Date.now() + appConfig.web_session_lifespan,
       date_created: Date.now()
    };
 
-   update_user(user).then(() => resolve(user.sessions[session_token]));
+   yield user.updateRecord();
 
-   return promise;
+   return user.getSession(session_token);
 
-};
+});
 
 // Deletes expired sessions from the index
 function clear_expired_sessions(sessions) {

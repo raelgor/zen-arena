@@ -4,9 +4,14 @@
         "dictionaries": ["jsdoc"]
     },
     "source": {
-        "include": ["src", "client", "docs", "package.json", "README.md"],
+        "include": [
+           "src",
+           "client",
+           "package.json",
+           "README.md"
+        ],
         "includePattern": ".js$",
-        "excludePattern": "(node_modules/|docs)"
+        "excludePattern": "(node_modules/|docs/zen-arena)"
     },
     "plugins": [
         "plugins/markdown"

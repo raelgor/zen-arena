@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>fn/update_user.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,29 +28,45 @@
 
 <div id="main">
     
+    <h1 class="page-title">fn/update_user.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* global co, dataTransporter, config */
+'use strict';
 
+/**
+ * @function update_user
+ *
+ * @desc Updates the given user's record using the global dataTransporter.
+ *
+ * @param {User} user The user to update.
+ *
+ * @returns {Promise}
+ */
+module.exports = user => { return co(function*(){
 
+   // Strip objects
+   delete user._id;
+   delete user.date_joined;
 
+   yield dataTransporter.update({
+      query: { id: user.id },
+      update: { $set: user },
+      database: config.cache_server.db_name,
+      collection: 'users'
+   });
 
-
-
-
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>zen-arena</h1><p>The <a href="https://zenarena.com">zenarena.com</a> website.</p></article>
+}); };
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

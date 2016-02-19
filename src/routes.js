@@ -1,81 +1,20 @@
-/* global config, GeoIP, dataTransporter, co, appConfig, app */
-/* global make_core_text, verify_grecaptcha, update_user, uuid */
+/* global GeoIP, co, appConfig, app */
+/* global make_core_text, verify_grecaptcha */
 /* global controllers */
 'use strict';
 
-// Stall if cache is updating
-app.router.use((req, res, next) => {
-   if(global._cache_is_updating)
-      global._on_cache_updated.then(next);
-   else
-      next();
-});
+const pageRoutes = [
+   '/',
+   '/unsubscribeall/:token',
+   '/verifyemail/:token'
+];
 
-app.router.use((req, res, next) => {
-
-   // Detect address
-   req._address = appConfig.use_xfwd ? req.headers['x-forwarded-for'] : req.connection.remoteAddress;
-
-   // If path looks like file, move on
-   if(/(\.[a-z0-9]{2,4})$/i.test(req.path))
-      return next();
-
-   co(function*(){
-
-      // Auth user if not static
-      if(req.cookies && req.cookies.st) {
-
-         let user = yield dataTransporter.get({
-            query: { [`sessions.${req.cookies.st}`]: { $exists: 1 } },
-            collection: 'users',
-            database: config.cache_server.db_name
-         });
-
-         user = user && user[0];
-
-         if(!user)
-            res.clearCookie('st');
-         else {
-
-            req.__user = user;
-            req.__session = user.sessions[req.cookies.st];
-
-            // If user has a valid lang setting, set the request's lang
-            if(req.__user.lang && ~appConfig.app_languages.indexOf(req.__user.lang))
-               req.lang = req.__user.lang;
-
-            // If the user has no lang setting but we have a lang cookie,
-            // set the user's lang
-            if(!req.__user.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
-               req.__user.lang = req.cookies.lang;
-
-            // If user still has no language
-            if(!req.__user.lang)
-               req.__user.lang = appConfig.default_lang;
-
-            // Delete object values
-            delete req.__user._id;
-            delete req.__user.date_joined;
-
-            // Refresh session
-            req.__session.expires= Date.now() + appConfig.web_session_lifespan;
-
-            // Make sure user has an unsubscribe all token
-            if(!user.unsubscribe_all_token)
-               user.unsubscribe_all_token = uuid();
-
-            // Update user
-            yield update_user(user);
-
-         }
-
-      }
-
-      next();
-
-   });
-
-});
+// Routes for non-static destinations
+app.router.use(pageRoutes.concat(['/api*']), [
+   require('./routes/cache_staller'),
+   require('./routes/detect_ip'),
+   require('./routes/authentication')
+]);
 
 // Api route
 app.router.all('/api*', (req, res, next) => co(function*(){
@@ -135,11 +74,7 @@ app.router.all('/api*', (req, res, next) => {
 app.router.post('/api/logout', require('./api/logout'));
 
 // Jade route
-app.router.all([
-   '/',
-   '/unsubscribeall/:token',
-   '/verifyemail/:token'
-], (req, res) => co(function*() {
+app.router.all(pageRoutes, (req, res) => co(function*() {
 
    // Parse path
    let path_parts = req.path && req.path.split('/');
@@ -202,7 +137,7 @@ app.router.all([
       return res.end(app.templates.maintenance({core_text}));
 
    let page_data = yield controllers[template](req, res, core_text);
-   
+
    let html = app.templates.index({
       navigation: {
          themeImage: '/img/mainbg.jpg',

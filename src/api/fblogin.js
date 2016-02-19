@@ -31,13 +31,7 @@ module.exports = (req, res) => co(function*(){
    var $or = [{ fbid: user_fb_info.id }];
    user_fb_info.email && $or.push({ email: user_fb_info.email });
 
-   var user = yield dataTransporter.get({
-      query: { $or },
-      database: config.cache_server.db_name,
-      collection: 'users'
-   });
-
-   user = user[0];
+   var user = yield dataTransporter.getUser({ $or });
 
    var lang_hint;
    if(req.cookies.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
@@ -46,24 +40,22 @@ module.exports = (req, res) => co(function*(){
    if(!user)
       user = yield make_user_from_fb_info(user_fb_info, lang_hint);
    else
-      if(user.fbid != user_fb_info.id)
-         yield dataTransporter.update({
-            query: { id: +user.id },
-            update: { $set: { fbid: user.fbid = user_fb_info.id } },
-            database: config.cache_server.db_name,
-            collection: 'users'
-         });
+      if(user.get('fbid') != user_fb_info.id)
+         yield dataTransporter.updateUser(
+            user,
+            { $set: { fbid: user.set('fbid', user_fb_info.id) } }
+         );
 
    yield oauth_exploit_check(user, 'fbid', user_fb_info.id);
 
-   if(user_fb_info.email && (!user.email || (user.email === user_fb_info.email && !user.email_verified))) {
-      user.email = user_fb_info.email;
-      user.email_verified = true;
-      yield update_user(user);
+   if(user_fb_info.email && (!user.get('email') || (user.get('email') === user_fb_info.email && !user.get('email_verified')))) {
+      user.set('email', user_fb_info.email);
+      user.set('email_verified', true);
+      yield user.updateRecord();
    }
 
-   if(req.cookies.lang !== user.lang)
-      res.cookie('lang', user.lang, {
+   if(req.cookies.lang !== user.get('lang'))
+      res.cookie('lang', user.get('lang'), {
          maxAge: 24 * 60 * 60 * 1000,
          httpOnly: true,
          secure: true

@@ -1,5 +1,5 @@
 /* global co, dataTransporter, dataTransporter, bcrypt, on_user_created, uuid */
-/* global config, log_user_in, increment, postman */
+/* global log_user_in, increment, postman */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
@@ -16,13 +16,9 @@ module.exports = (req, res) => co(function*(){
    if(!valid_request)
       return res._error('error_invalid_request');
 
-   var user = yield dataTransporter.get({
-      query: { email: String(req.body.message.uid) },
-      database: config.cache_server.db_name,
-      collection: 'users'
+   var user = yield dataTransporter.getUser({
+      email: String(req.body.message.uid)
    });
-
-   user = user[0];
 
    if(user)
       return res._error('error_user_exists');
@@ -41,17 +37,11 @@ module.exports = (req, res) => co(function*(){
    var salt = yield new Promise(resolve => bcrypt.genSalt(10, (err, res) => resolve(res)));
    var password = yield new Promise(resolve => bcrypt.hash(req.body.message.password, salt, (err, res) => resolve(res)));
 
-   user.id = yield increment('users', 'id');
-   user.password = password;
-   user.date_joined = new Date().toISOString();
+   user.set('id', yield increment('users', 'id'));
+   user.set('password', password);
+   user.set('date_joined', new Date().toISOString());
 
-   yield dataTransporter.update({
-      query: { id: user.id },
-      update: { $set: user },
-      options: { upsert: true },
-      database: config.cache_server.db_name,
-      collection: 'users'
-   });
+   yield user.insertRecord();
 
    yield on_user_created(user);
 

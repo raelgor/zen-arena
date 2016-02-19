@@ -1,4 +1,4 @@
-/* global co, dataTransporter, config, appConfig, update_user */
+/* global co, dataTransporter, appConfig */
 /* global log_user_in, make_user_from_go_info, oauth_exploit_check */
 'use strict';
 
@@ -37,13 +37,7 @@ module.exports = (req, res) => co(function*(){
    user_go_info.emails[0].value &&
    $or.push({ email: user_go_info.emails[0].value });
 
-   var user = yield dataTransporter.get({
-      query: { $or },
-      database: config.cache_server.db_name,
-      collection: 'users'
-   });
-
-   user = user[0];
+   var user = yield dataTransporter.getUser({ $or });
 
    var lang_hint;
    if(req.cookies.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
@@ -52,29 +46,27 @@ module.exports = (req, res) => co(function*(){
    if(!user)
       user = yield make_user_from_go_info(user_go_info, lang_hint);
    else
-      if(user.goid != user_go_info.id)
-         yield dataTransporter.update({
-            query: { id: +user.id },
-            update: { $set: { goid: user.goid = user_go_info.id } },
-            database: config.cache_server.db_name,
-            collection: 'users'
-         });
+      if(user.get('goid') != user_go_info.id)
+         yield dataTransporter.updateUser(
+            user,
+            { $set: { goid: user.set('goid', user_go_info.id) } }
+         );
 
    yield oauth_exploit_check(user, 'goid', user_go_info.id);
 
-   if(user_go_info.emails[0].value && (!user.email || (user.email === user_go_info.emails[0].value && !user.email_verified))) {
-      user.email = user_go_info.emails[0].value;
-      user.email_verified = true;
-      yield update_user(user);
+   if(user_go_info.emails[0].value && (!user.get('email') || (user.get('email') === user_go_info.emails[0].value && !user.get('email_verified')))) {
+      user.set('email', user_go_info.emails[0].value);
+      user.set('email_verified', true);
+      yield user.updateRecord();
    }
 
    if(req.cookies.lang !== user.lang)
-      res.cookie('lang', user.lang, {
+      res.cookie('lang', user.get('lang'), {
          maxAge: 24 * 60 * 60 * 1000,
          httpOnly: true,
          secure: true
       });
-
+      
    log_user_in(res, user);
 
 });

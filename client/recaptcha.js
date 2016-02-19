@@ -3,15 +3,23 @@
 // Store instance ids
 za.grecaptcha = {};
 
+// Callback might not be called so we'll check
+var grecaptcha_load_checker_interval = setInterval(function(){
+   if(grecaptcha) {
+      clearInterval(grecaptcha_load_checker_interval);
+      log('ReCaptcha load detected.');
+      za._recaptcha_resolve();
+   }
+}, 1e3);
+
 // Promise of loaded
 za.recaptcha_ready = new Promise(function(r){ za._recaptcha_resolve = r; });
 
 // Load callback
 window.rccb = function() {
-
-    log('ReCaptcha loaded.');
-    za._recaptcha_resolve();
-
+   log('ReCaptcha loaded.');
+   clearInterval(grecaptcha_load_checker_interval);
+   za._recaptcha_resolve();
 };
 
 $(window).ready(function(){

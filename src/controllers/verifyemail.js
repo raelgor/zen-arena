@@ -1,4 +1,4 @@
-/* global co, make_client_data, make_default_meta_data, get_user, update_user */
+/* global co, make_client_data, make_default_meta_data, dataTransporter */
 /* global postman */
 'use strict';
 
@@ -19,11 +19,11 @@ module.exports = (req, res, core_text) => co(function*(){
    client_data.page_data = extra_client_data;
 
    if(req.params.token) {
-      let user = yield get_user({ verify_email_token: String(req.params.token) });
-      if(user && !user.email_verified){
-         user.email_verified = true;
+      let user = yield dataTransporter.getUser({ verify_email_token: String(req.params.token) });
+      if(user && !user.get('email_verified')){
+         user.set('email_verified', true);
          postman.welcome(user);
-         yield update_user(user);
+         yield user.updateRecord();
       }
    }
 

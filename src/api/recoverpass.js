@@ -1,4 +1,4 @@
-/* global co, dataTransporter, config, update_user, bcrypt, appConfig */
+/* global co, dataTransporter, bcrypt, appConfig */
 'use strict';
 
 module.exports = (req, res) => co(function*(){
@@ -16,15 +16,9 @@ module.exports = (req, res) => co(function*(){
    // Find user
    var token = req.body.message.token;
    var password = String(req.body.message.p);
-   var user = yield dataTransporter.get({
-      query: {
-         fpass_token: String(token)
-      },
-      database: config.cache_server.db_name,
-      collection: 'users'
+   var user = yield dataTransporter.getUser({
+      fpass_token: String(token)
    });
-
-   user = user[0];
 
    if(!user)
       return res._error('error_invalid_token');
@@ -36,11 +30,11 @@ module.exports = (req, res) => co(function*(){
    var salt = yield new Promise(resolve => bcrypt.genSalt(10, (err, res) => resolve(res)));
    var hash = yield new Promise(resolve => bcrypt.hash(password, salt, (err, res) => resolve(res)));
 
-   user.password = hash;
-   user.fpass_token = null;
+   user.set('password', hash);
+   user.set('fpass_token', null);
 
    // Update user
-   yield update_user(user);
+   yield user.updateRecord();
 
    // Return :)
    res.__response.message = 'OK';

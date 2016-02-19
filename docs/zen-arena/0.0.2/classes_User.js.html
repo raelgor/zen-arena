@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>classes/User.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,29 +28,63 @@
 
 <div id="main">
     
+    <h1 class="page-title">classes/User.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* global dataTransporter */
+'use strict';
 
+/**
+ * @class User
+ * @desc A user record wrapper class.
+ * @param {object} user The user object. (Optional)
+ * @returns {User}
+ */
+module.exports = class User {
 
+   constructor(user){
 
+      /**
+       * The user's record.
+       * @memberof User
+       * @access public
+       * @type {object}
+       */
+      this.record = user;
 
+   }
 
+   /**
+    * @method User.updateRecord
+    * @access public
+    * @desc Updates the user's record using the `dataTransporter` object.
+    * @returns {Promise}
+    */
+   updateRecord(){
+      return dataTransporter.updateUser(this);
+   }
 
+   /**
+    * @method User.insertRecord
+    * @access public
+    * @desc Inserts the user's record using `upsert`.
+    * @returns {Promise}
+    */
+   insertRecord(){
+      return dataTransporter.insertUser(this);
+   }
 
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>zen-arena</h1><p>The <a href="https://zenarena.com">zenarena.com</a> website.</p></article>
+};
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

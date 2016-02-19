@@ -1,4 +1,4 @@
-/* global co, User, increment, dataTransporter, config, appConfig, on_user_created */
+/* global co, User, increment, appConfig, on_user_created */
 'use strict';
 
 const utilizable_fields = ['first_name', 'last_name', 'gender', 'email'];
@@ -10,32 +10,26 @@ module.exports = (fb_info, language) => co(function*() {
 
    for(let field in fb_info)
       if(~utilizable_fields.indexOf(field))
-         user[field] = fb_info[field];
+         user.set(field, fb_info[field]);
 
-   if(!user.first_name && fb_info.name)
-      user.first_name = fb_info.name.split(' ')[0] || '';
+   if(!user.get('first_name') && fb_info.name)
+      user.set('first_name', fb_info.name.split(' ')[0] || '');
 
-   if(!user.last_name && fb_info.name)
-      user.last_name = fb_info.name.split(' ').pop() || '';
+   if(!user.get('last_name') && fb_info.name)
+      user.set('last_name', fb_info.name.split(' ').pop() || '');
 
-   user.fbid = fb_info.id;
-   user.id = id;
-   user.date_joined = new Date().toISOString();
-   user.lang = language || appConfig.default_lang;
+   user.set('fbid', fb_info.id);
+   user.set('id', id);
+   user.set('date_joined', new Date().toISOString());
+   user.set('lang', language || appConfig.default_lang);
+   user.set('image_type', 'fb_link');
+   user.set('image',
+      `https://graph.facebook.com/${user.get('fbid')}/picture?type=large`);
 
-   user.image_type = 'fb_link';
-   user.image = `https://graph.facebook.com/${user.fbid}/picture?type=large`;
+   if(user.get('email'))
+      user.set('email_verified', true);
 
-   if(user.email)
-      user.email_verified = true;
-
-   yield dataTransporter.update({
-      query: { id },
-      update: { $set: user },
-      options: { upsert: true },
-      database: config.cache_server.db_name,
-      collection: 'users'
-   });
+   yield user.insertRecord();
 
    yield on_user_created(user);
 
