@@ -6,7 +6,7 @@ module.exports = (req, res) => co(function*(){
    res.clearCookie('st');
 
    yield dataTransporter.updateUser(
-      req.__user.id,
+      req.__user,
       { $unset: { [`sessions.${req.__session.session_token}`]: 1 }}
    );
 

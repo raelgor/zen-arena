@@ -37,6 +37,7 @@ loaddirSync('./controllers', 'controllers');
  */
 global.dataTransporter = new DataTransporter();
 global.appConfig = null;
+global.config = null;
 global.app = null;
 
 log('Starting worker...');
