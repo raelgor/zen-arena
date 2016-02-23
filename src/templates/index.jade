@@ -1,17 +1,9 @@
-include home.jade
-include unsubscribe_success.jade
-include verifyemail.jade
 doctype html
 html(lang=global.language)
     include head.jade
     body
-        .content(data-section=mainSection.template)
+        .content
             include auth_dialogs.jade
             include navigation.jade
-            if(mainSection.template === 'home')
-               mixin home(mainSection)
-            if(mainSection.template === 'unsubscribe_success')
-               mixin unsubscribe_success(mainSection)
-            if(mainSection.template === 'verifyemail')
-               mixin verifyemail(mainSection)
+            .page-view!=pageView
         include footer.jade

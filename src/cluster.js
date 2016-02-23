@@ -16,6 +16,7 @@ global.log = require('./log');
 global.co = require('co');
 global.colors = require('colors');
 global.GeoIP = require('./GeoIP');
+global.jade = require('jade');
 global.https = require('https');
 global.fs = require('fs');
 global.bcrypt = require('bcrypt');
@@ -24,10 +25,24 @@ global.fb = require('fb');
 global.mongodb = require('mongodb');
 global.postman = require('./postman');
 
+// Load classes
+global.Route = require('./classes/Route');
+global.APIRoute = require('./classes/APIRoute');
+global.PageRoute = require('./classes/PageRoute');
+global.DataTransporter = require('./classes/DataTransporter');
+global.Response = require('./classes/Response');
+global.JSONResponse = require('./classes/JSONResponse');
+global.User = require('./classes/User');
+
 // Compile directories
 loaddirSync('./fn');
-loaddirSync('./classes');
-loaddirSync('./controllers', 'controllers');
+
+/**
+ * @namespace routes
+ * @desc Stores the application's request routes.
+ */
+loaddirSync('./routes', 'routes');
+loaddirSync('./factory', 'factory');
 
 // Global objects
 /**
@@ -69,6 +84,10 @@ process.on('message', message => co(function*(){
 
     postman.init();
 
+    log('Loading apis...');
+
+    loaddirSync('./api', 'api');
+
     log('Done. Starting server...');
 
     // Start server
@@ -87,6 +106,7 @@ process.on('message', message => co(function*(){
     log('Done. Loading routes...');
 
     // Set up routes
+    loaddirSync('./pageHandlers', 'pageHandlers');
     require('./routes');
 
     log.green('Done. Worker initialized.');

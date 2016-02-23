@@ -1,6 +1,4 @@
-/* global log */
-/* global colors */
-/* global appConfig */
+/* global log, colors, appConfig */
 'use strict';
 
 const http = require('http');

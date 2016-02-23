@@ -1,15 +1,12 @@
-/* global app */
+/* global jade */
 'use strict';
 
-const jade = require('jade');
-
 try{
-   app.templates = {
-
+   global.templates = {
        index: jade.compileFile('./src/templates/index.jade'),
-       maintenance: jade.compileFile('./src/templates/maintenance.jade')
-
+       maintenance: jade.compileFile('./src/templates/maintenance.jade'),
+       home: jade.compileFile('./src/templates/home.jade')
    };
 }catch(error){
-   console.log(error); 
+   console.log(error);
 }

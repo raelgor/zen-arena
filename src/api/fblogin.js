@@ -1,8 +1,8 @@
-/* global co, fb, dataTransporter, config, appConfig, oauth_exploit_check */
-/* global make_user_from_fb_info, log_user_in, update_user */
+/* global co, fb, dataTransporter, appConfig, oauth_exploit_check */
+/* global make_user_from_fb_info, log_user_in, APIRoute */
 'use strict';
 
-module.exports = (req, res) => co(function*(){
+var route = new APIRoute((response, req, res) => co(function*(){
 
    var valid_request =
       req.body &&
@@ -10,7 +10,7 @@ module.exports = (req, res) => co(function*(){
       req.body.message.access_token;
 
    if(!valid_request)
-      return res._error('error_invalid_request');
+      return response.error('error_invalid_request');
 
    var access_token = req.body.message.access_token;
 
@@ -26,7 +26,7 @@ module.exports = (req, res) => co(function*(){
    }, resolve));
 
    if(!user_fb_info.id)
-      return res._error('error_bad_fb_access_token');
+      return response.error('error_bad_fb_access_token');
 
    var $or = [{ fbid: user_fb_info.id }];
    user_fb_info.email && $or.push({ email: user_fb_info.email });
@@ -61,6 +61,8 @@ module.exports = (req, res) => co(function*(){
          secure: true
       });
 
-   log_user_in(res, user);
+   log_user_in(response, user);
 
-});
+}));
+
+module.exports = route;

@@ -6,15 +6,15 @@ module.exports = (response, user) => co(function*() {
    var session = yield make_session(user);
 
    if(!session)
-      return response.end(JSON.stringify({error: 'error_bad_request'}));
+      return response.error('error_bad_request');
 
-   response.cookie('st', session.session_token, {
+   response.response.cookie('st', session.session_token, {
       maxAge: appConfig.web_session_lifespan,
       httpOnly: true,
       secure: true
    });
 
-   response.__response.data = make_user_login_data(user, session);
-   response._end();
+   response.responseData = make_user_login_data(user, session);
+   response.end();
 
 });

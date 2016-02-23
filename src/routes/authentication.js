@@ -1,7 +1,7 @@
-/* global co, dataTransporter, appConfig, uuid */
+/* global Route, co, dataTransporter, appConfig, uuid */
 'use strict';
 
-module.exports = (req, res, next) => co(function*(){
+module.exports = new Route((response, req, res, next) => co(function*(){
 
    // Auth user if not static
    if(req.cookies && req.cookies.st) {
@@ -46,4 +46,4 @@ module.exports = (req, res, next) => co(function*(){
 
    next();
 
-});
+}));

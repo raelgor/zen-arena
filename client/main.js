@@ -1,7 +1,22 @@
 /* global za, resize, clientData, FB */
+/**
+ * @namespace za
+ * @desc The za client library.
+ */
 window.za = {
 
+   /**
+    * @memberof za
+    * @desc Whether we are on a touch device or not.
+    * @type boolean
+    */
    _touch: 'ontouchstart' in document.documentElement,
+
+   /**
+    * @memberof za
+    * @desc An attempt to detect the browser from the userAgent.
+    * @type string
+    */
    _browser: (function(){
        var ua= navigator.userAgent, tem,
        M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -17,24 +32,54 @@ window.za = {
        if((tem= ua.match(/version\/(\d+)/i))!== null) M.splice(1, 1, tem[1]);
        return M.join(' ');
    })(),
+
+   /**
+    * @memberof za
+    * @desc Logs the user out by deleting local data and messaging the server
+    * to delete cookies and tokens.
+    * @type function
+    */
    logout: function() {
       za.send('/api/logout');
       delete clientData.csrf_token;
       delete clientData.user_data;
       za.userBar.setStatus(false);
    },
+
+   /**
+    * @namespace za.ui
+    * @memberof za
+    * @desc Stores UI functions and classes.
+    * @type object
+    */
    ui: {
-      nt_focus: function(selector){
+
+      /**
+       * @memberof za.ui
+       * @desc Focuses an element only if environment is touch device.
+       * @type function
+       */
+      ntFocus: function(selector){
          !za._touch && $(selector).focus();
       }
    },
+
+   /**
+    * @namespace za.controllers
+    * @memberof za
+    * @desc Stores controllers.
+    * @type object
+    */
    controllers: {}
 
 };
 
 $(window).ready(function(){
 
-   za.ui.nt_focus('.navigation .search');
+   if(!clientData.geolocation.city)
+      za.geoRequest();
+
+   za.ui.ntFocus('.navigation .search');
 
    var section = $('.content').attr('data-section');
 

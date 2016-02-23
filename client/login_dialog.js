@@ -11,7 +11,7 @@ za.login.promptLogin = function() {
 
     $('.login-frame').removeClass('hide');
 
-    za.ui.nt_focus('.login-frame .username');
+    za.ui.ntFocus('.login-frame .username');
 
     window.grecaptcha ?
     render() :
@@ -41,7 +41,7 @@ za.login.promptRegister = function() {
 
     $('.register-frame').removeClass('hide');
 
-    za.ui.nt_focus('.register-frame .username');
+    za.ui.ntFocus('.register-frame .username');
 
     window.grecaptcha ?
     render() :
@@ -74,7 +74,7 @@ za.login.promptRecoverFrame = function(token) {
 
     $('.recover-password-frame').removeClass('hide');
 
-    za.ui.nt_focus('.recover-password-frame .password');
+    za.ui.ntFocus('.recover-password-frame .password');
 
     $('.recover-password-frame .token').val(token);
 
@@ -93,7 +93,7 @@ za.login.promptForgotPassword = function() {
 
     $('.forgot-password-frame').removeClass('hide');
 
-    za.ui.nt_focus('.forgot-password-frame .username');
+    za.ui.ntFocus('.forgot-password-frame .username');
 
     $('.forgot-password-frame .username').val($('.login-frame .username').val());
 

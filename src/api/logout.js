@@ -1,7 +1,7 @@
-/* global co, dataTransporter */
+/* global co, dataTransporter, APIRoute, routes */
 'use strict';
 
-module.exports = (req, res) => co(function*(){
+var route = new APIRoute((response, req, res) => co(function*(){
 
    res.clearCookie('st');
 
@@ -10,7 +10,12 @@ module.exports = (req, res) => co(function*(){
       { $unset: { [`sessions.${req.__session.session_token}`]: 1 }}
    );
 
-   res.__response.message = 'OK';
-   res._end();
+   response.responseData.message = 'OK';
+   response.end();
 
-});
+}));
+
+route.prependRoute(routes.authentication.route);
+route.prependRoute(routes.authFilter.route);
+
+module.exports = route;

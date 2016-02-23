@@ -1,4 +1,4 @@
-/* global co, dataTransporter, appConfig */
+/* global co, dataTransporter, appConfig, APIRoute */
 /* global log_user_in, make_user_from_go_info, oauth_exploit_check */
 'use strict';
 
@@ -8,7 +8,7 @@ const OAuth2 = google.auth.OAuth2;
 const oauth2Client = new OAuth2(appConfig.google_oauth.client_id,
                                 appConfig.google_oauth.client_secret);
 
-module.exports = (req, res) => co(function*(){
+var route = new APIRoute((response, req, res) => co(function*(){
 
    var valid_request =
       req.body &&
@@ -16,7 +16,7 @@ module.exports = (req, res) => co(function*(){
       req.body.message.access_token;
 
    if(!valid_request)
-      return res._error('error_invalid_request');
+      return response.error('error_invalid_request');
 
    var access_token = req.body.message.access_token;
 
@@ -28,7 +28,7 @@ module.exports = (req, res) => co(function*(){
          (err, response) => resolve(response)));
 
    if(!user_go_info.id)
-      return res._error('error_bad_go_access_token');
+      return response.error('error_bad_go_access_token');
 
    var $or = [{ goid: user_go_info.id }];
 
@@ -66,7 +66,9 @@ module.exports = (req, res) => co(function*(){
          httpOnly: true,
          secure: true
       });
-      
-   log_user_in(res, user);
 
-});
+   log_user_in(response, user);
+
+}));
+
+module.exports = route;

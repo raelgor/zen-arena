@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>client/main.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIRoute.html">APIRoute</a><ul class='methods'><li data-type='method'><a href="APIRoute.html#.handle">handle</a></li><li data-type='method'><a href="APIRoute.html#.handle">handle</a></li><li data-type='method'><a href="APIRoute.html#.handle">handle</a></li><li data-type='method'><a href="APIRoute.html#.handler">handler</a></li></ul></li><li><a href="DataTransporter.html">DataTransporter</a><ul class='methods'><li data-type='method'><a href="DataTransporter.html#.get">get</a></li><li data-type='method'><a href="DataTransporter.html#.getUser">getUser</a></li><li data-type='method'><a href="DataTransporter.html#.insertUser">insertUser</a></li><li data-type='method'><a href="DataTransporter.html#.remove">remove</a></li><li data-type='method'><a href="DataTransporter.html#.setClient">setClient</a></li><li data-type='method'><a href="DataTransporter.html#.update">update</a></li><li data-type='method'><a href="DataTransporter.html#.updateUser">updateUser</a></li></ul></li><li><a href="JSONResponse.html">JSONResponse</a><ul class='methods'><li data-type='method'><a href="JSONResponse.html#.end">end</a></li><li data-type='method'><a href="JSONResponse.html#.error">error</a></li></ul></li><li><a href="PageRoute.html">PageRoute</a></li><li><a href="Response.html">Response</a><ul class='methods'><li data-type='method'><a href="Response.html#.end">end</a></li><li data-type='method'><a href="Response.html#.redirect">redirect</a></li></ul></li><li><a href="Route.html">Route</a><ul class='methods'><li data-type='method'><a href="Route.html#.prependRoute">prependRoute</a></li><li data-type='method'><a href="Route.html#.take">take</a></li></ul></li><li><a href="User.html">User</a><ul class='methods'><li data-type='method'><a href="User.html#.get">get</a></li><li data-type='method'><a href="User.html#.getSession">getSession</a></li><li data-type='method'><a href="User.html#.insertRecord">insertRecord</a></li><li data-type='method'><a href="User.html#.set">set</a></li><li data-type='method'><a href="User.html#.updateRecord">updateRecord</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="routes.html">routes</a></li><li><a href="za.html">za</a><ul class='methods'><li data-type='method'><a href="za.html#.geoRequest">geoRequest</a></li><li data-type='method'><a href="za.html#.logout">logout</a></li></ul></li><li><a href="za.controllers.html">controllers</a></li><li><a href="za.ui.html">ui</a><ul class='methods'><li data-type='method'><a href="za.ui.html#.ntFocus">ntFocus</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#dataTransporter">dataTransporter</a></li><li><a href="global.html#loaddirSync">loaddirSync</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">client/main.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* global za, resize, clientData, FB */
+/**
+ * @namespace za
+ * @desc The za client library.
+ */
+window.za = {
+
+   /**
+    * @memberof za
+    * @desc Whether we are on a touch device or not.
+    * @type boolean
+    */
+   _touch: 'ontouchstart' in document.documentElement,
+
+   /**
+    * @memberof za
+    * @desc An attempt to detect the browser from the userAgent.
+    * @type string
+    */
+   _browser: (function(){
+       var ua= navigator.userAgent, tem,
+       M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+       if(/trident/i.test(M[1])){
+           tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+           return 'IE '+(tem[1] || '');
+       }
+       if(M[1]=== 'Chrome'){
+           tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+           if(tem!== null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+       }
+       M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+       if((tem= ua.match(/version\/(\d+)/i))!== null) M.splice(1, 1, tem[1]);
+       return M.join(' ');
+   })(),
+
+   /**
+    * @memberof za
+    * @desc Logs the user out by deleting local data and messaging the server
+    * to delete cookies and tokens.
+    * @type function
+    */
+   logout: function() {
+      za.send('/api/logout');
+      delete clientData.csrf_token;
+      delete clientData.user_data;
+      za.userBar.setStatus(false);
+   },
+
+   /**
+    * @namespace za.ui
+    * @memberof za
+    * @desc Stores UI functions and classes.
+    * @type object
+    */
+   ui: {
+
+      /**
+       * @memberof za.ui
+       * @desc Focuses an element only if environment is touch device.
+       * @type function
+       */
+      ntFocus: function(selector){
+         !za._touch &amp;&amp; $(selector).focus();
+      }
+   },
+
+   /**
+    * @namespace za.controllers
+    * @memberof za
+    * @desc Stores controllers.
+    * @type object
+    */
+   controllers: {}
+
+};
+
+$(window).ready(function(){
+
+   if(!clientData.geolocation.city)
+      za.geoRequest();
+
+   za.ui.ntFocus('.navigation .search');
+
+   var section = $('.content').attr('data-section');
+
+   if(section in za.controllers)
+      za.controllers[section]();
+
+   // Safari fix
+   setTimeout(resize, 0);
+
+   $('.touch-nav .icon-user, .player-info .user-ui').click(function(){
+
+      var offset = $(this).is('.user-ui') ? 120 : 0;
+
+      if(!clientData.user_data)
+         za.login.promptLogin();
+      else {
+         za.ui.spawnUserBubbleMenu({
+            top: 50,
+            left: $(this).offset().left + offset,
+         });
+      }
+
+   });
+
+   if(/code\=/i.test(window.location.search)) {
+
+      za.login.promptLogin();
+      setTimeout(function(){
+         $('.auth-dialogs .login-frame')[0].loading(true);
+         $('.auth-dialogs .register-frame')[0].loading(true);
+      }, 10);
+
+      za.fb_ready.then(function(){
+
+         FB.getLoginStatus(function(response){
+
+            if(response.status === 'connected')
+               za.fb_login(response.authResponse.accessToken);
+            else {
+               $('.auth-dialogs .login-frame')[0]
+               .loading(false)
+               .error(clientData.core_text.fb_no_perm);
+
+               $('.auth-dialogs .register-frame')[0]
+               .loading(false)
+               .error(clientData.core_text.fb_no_perm);
+            }
+
+         });
+
+      });
+
+   }
+
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 22 2016 17:41:26 GMT+0200 (GTB Standard Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

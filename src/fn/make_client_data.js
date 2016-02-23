@@ -14,7 +14,11 @@ module.exports = (req, core_text) => {
       base_url: `${appConfig.site_protocol}://${appConfig.domain_name}/`,
       google_client_id: appConfig.google_oauth.client_id,
       min_pass_length: appConfig.password_range.min,
-      max_pass_length: appConfig.password_range.max
+      max_pass_length: appConfig.password_range.max,
+      geolocation: {
+         country: (req.__user && req.__user.get('country')) || req.cookies.ctrycd,
+         city: (req.__user && req.__user.get('city')) || req.cookies.ctcd
+      }
    };
-   
+
 };
