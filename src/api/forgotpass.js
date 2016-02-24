@@ -1,10 +1,14 @@
-/* global dataTransporter, co, appConfig, uuid, postman */
+/* global dataTransporter, co, appConfig, uuid, postman, APIRoute, routes */
 'use strict';
 
-var route = new APIRoute((response, req, res) => co(function*(){
-
-   if(!res._recaptcha)
-      return response.error('error_bad_recaptcha');
+/**
+ * Generates a password reset link and sends it to the user.
+ * @function forgotpass
+ * @param {JSONResponse} response The response object.
+ * @memberof api
+ * @returns undefined
+ */
+var route = new APIRoute((response, req) => co(function*(){
 
    // Check if request is valid
    var valid_request =
@@ -44,5 +48,7 @@ var route = new APIRoute((response, req, res) => co(function*(){
       response.error('error_failed_to_send_email');
 
 }));
+
+route.prependRoute(routes.grecaptcha.route);
 
 module.exports = route;

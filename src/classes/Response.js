@@ -3,6 +3,9 @@
 /**
  * @class Response
  * @desc A response object wrapper.
+ * @prop {object} request Express request object.
+ * @prop {object} response Express response object.
+ * @prop {object} responseData The data to send on `.end()`. 
  * @param {function} handler The main API call handler.
  * @returns {Response}
  */

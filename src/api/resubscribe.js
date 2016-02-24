@@ -1,6 +1,13 @@
 /* global co, dataTransporter, update_user, APIRoute */
 'use strict';
 
+/**
+ * Resubscribes a user to emails using an `unsubscribe_all_token`.
+ * @function resubscribe
+ * @param {JSONResponse} response The response object.
+ * @memberof api
+ * @returns undefined
+ */
 var route = new APIRoute((response, req) => co(function*(){
 
    var valid_request = req.params.token;

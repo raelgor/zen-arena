@@ -19,7 +19,8 @@ module.exports = class JSONResponse extends Response {
    }
 
    /**
-    * Calls response.end() with a stringify object.
+    * Calls response.end() with a JSON stringified responseData object and sets
+    * headers for a JSON response.
     * @function end
     * @memberof JSONResponse
     * @param {object} object The object to stringify and return. (Optional)

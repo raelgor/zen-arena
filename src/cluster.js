@@ -1,5 +1,5 @@
 /* global dataTransporter, fs, co, log, config, appConfig, postman */
-/* global DataTransporter, cacheClient */
+/* global DataTransporter, cacheClient, path */
 'use strict';
 
 // Worker process title
@@ -7,15 +7,12 @@ process.title = 'zen-arena-cs';
 
 const Server = require('zenx-server');
 const cache = require('zenx-cache');
-const path = require('path');
 
 var initialized = false;
 
 // Global dependencies
-global.log = require('./log');
 global.co = require('co');
 global.colors = require('colors');
-global.GeoIP = require('./GeoIP');
 global.jade = require('jade');
 global.https = require('https');
 global.fs = require('fs');
@@ -23,6 +20,10 @@ global.bcrypt = require('bcrypt');
 global.querystring = require('querystring');
 global.fb = require('fb');
 global.mongodb = require('mongodb');
+global.path = require('path');
+
+global.log = require('./log');
+global.GeoIP = require('./GeoIP');
 global.postman = require('./postman');
 
 // Load classes
@@ -38,19 +39,32 @@ global.User = require('./classes/User');
 loaddirSync('./fn');
 
 /**
+ * Index of the application's request routes.
  * @namespace routes
- * @desc Stores the application's request routes.
  */
 loaddirSync('./routes', 'routes');
+
+/**
+ * Index of the application's jade controllers.
+ * @namespace factory
+ */
 loaddirSync('./factory', 'factory');
 
 // Global objects
+
 /**
+ * A data transporter object to handle data exchanges.
  * @global dataTransporter
- * @desc A data transporter object to handle data exchanges.
  * @type DataTransporter
  */
 global.dataTransporter = new DataTransporter();
+
+/**
+ * The client used for data exchanges by this worker.
+ * @global cacheClient
+ * @type zenx.cache.Client
+ */
+global.cacheClient = null;
 global.appConfig = null;
 global.config = null;
 global.app = null;
@@ -86,6 +100,10 @@ process.on('message', message => co(function*(){
 
     log('Loading apis...');
 
+    /**
+     * Index of {@link APIRoute} objects.
+     * @namespace api
+     */
     loaddirSync('./api', 'api');
 
     log('Done. Starting server...');
@@ -106,6 +124,10 @@ process.on('message', message => co(function*(){
     log('Done. Loading routes...');
 
     // Set up routes
+    /**
+     * Index of {@link PageRoute} objects.
+     * @namespace pageHandlers
+     */
     loaddirSync('./pageHandlers', 'pageHandlers');
     require('./routes');
 

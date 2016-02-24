@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/api/goauth.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIRoute.html">APIRoute</a><ul class='methods'><li data-type='method'><a href="APIRoute.html#.handle">handle</a></li></ul></li><li><a href="DataTransporter.html">DataTransporter</a><ul class='methods'><li data-type='method'><a href="DataTransporter.html#.get">get</a></li><li data-type='method'><a href="DataTransporter.html#.getUser">getUser</a></li><li data-type='method'><a href="DataTransporter.html#.insertUser">insertUser</a></li><li data-type='method'><a href="DataTransporter.html#.remove">remove</a></li><li data-type='method'><a href="DataTransporter.html#.setClient">setClient</a></li><li data-type='method'><a href="DataTransporter.html#.update">update</a></li><li data-type='method'><a href="DataTransporter.html#.updateUser">updateUser</a></li></ul></li><li><a href="JSONResponse.html">JSONResponse</a><ul class='methods'><li data-type='method'><a href="JSONResponse.html#.end">end</a></li><li data-type='method'><a href="JSONResponse.html#.error">error</a></li></ul></li><li><a href="PageRoute.html">PageRoute</a><ul class='methods'><li data-type='method'><a href="PageRoute.html#.handle">handle</a></li></ul></li><li><a href="Response.html">Response</a><ul class='methods'><li data-type='method'><a href="Response.html#.end">end</a></li><li data-type='method'><a href="Response.html#.redirect">redirect</a></li></ul></li><li><a href="Route.html">Route</a><ul class='methods'><li data-type='method'><a href="Route.html#.handle">handle</a></li><li data-type='method'><a href="Route.html#.handler">handler</a></li><li data-type='method'><a href="Route.html#.prependRoute">prependRoute</a></li><li data-type='method'><a href="Route.html#.take">take</a></li></ul></li><li><a href="User.html">User</a><ul class='methods'><li data-type='method'><a href="User.html#.get">get</a></li><li data-type='method'><a href="User.html#.getSession">getSession</a></li><li data-type='method'><a href="User.html#.insertRecord">insertRecord</a></li><li data-type='method'><a href="User.html#.set">set</a></li><li data-type='method'><a href="User.html#.updateRecord">updateRecord</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="api.html">api</a><ul class='methods'><li data-type='method'><a href="api.html#.fblogin">fblogin</a></li><li data-type='method'><a href="api.html#.forgotpass">forgotpass</a></li><li data-type='method'><a href="api.html#.goauth">goauth</a></li><li data-type='method'><a href="api.html#.login">login</a></li><li data-type='method'><a href="api.html#.logout">logout</a></li><li data-type='method'><a href="api.html#.recoverpass">recoverpass</a></li><li data-type='method'><a href="api.html#.register">register</a></li><li data-type='method'><a href="api.html#.resubscribe">resubscribe</a></li><li data-type='method'><a href="api.html#.text">text</a></li></ul></li><li><a href="factory.html">factory</a><ul class='methods'><li data-type='method'><a href="factory.html#.home">home</a></li><li data-type='method'><a href="factory.html#.index">index</a></li><li data-type='method'><a href="factory.html#.unsubscribeall">unsubscribeall</a></li><li data-type='method'><a href="factory.html#.verifyemail">verifyemail</a></li></ul></li><li><a href="pageHandlers.html">pageHandlers</a><ul class='methods'><li data-type='method'><a href="pageHandlers.html#.home">home</a></li><li data-type='method'><a href="pageHandlers.html#.unsubscribeall">unsubscribeall</a></li><li data-type='method'><a href="pageHandlers.html#.verifyemail">verifyemail</a></li></ul></li><li><a href="routes.html">routes</a><ul class='methods'><li data-type='method'><a href="routes.html#.authentication">authentication</a></li><li data-type='method'><a href="routes.html#.authFilter">authFilter</a></li><li data-type='method'><a href="routes.html#.cacheStaller">cacheStaller</a></li><li data-type='method'><a href="routes.html#.detectAddress">detectAddress</a></li><li data-type='method'><a href="routes.html#.grecaptcha">grecaptcha</a></li><li data-type='method'><a href="routes.html#.langCookieGetter">langCookieGetter</a></li></ul></li><li><a href="za.html">za</a><ul class='methods'><li data-type='method'><a href="za.html#.geoRequest">geoRequest</a></li><li data-type='method'><a href="za.html#.logout">logout</a></li></ul></li><li><a href="za.controllers.html">controllers</a></li><li><a href="za.ui.html">ui</a><ul class='methods'><li data-type='method'><a href="za.ui.html#.ntFocus">ntFocus</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#cacheClient">cacheClient</a></li><li><a href="global.html#dataTransporter">dataTransporter</a></li><li><a href="global.html#loaddirSync">loaddirSync</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">src/api/goauth.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* global co, dataTransporter, appConfig, APIRoute */
+/* global log_user_in, make_user_from_go_info, oauth_exploit_check */
+'use strict';
+
+const google = require('googleapis');
+const plus = google.plus('v1');
+const OAuth2 = google.auth.OAuth2;
+const oauth2Client = new OAuth2(appConfig.google_oauth.client_id,
+                                appConfig.google_oauth.client_secret);
+
+/**
+* Logs the user in or registers using Google+ OAuth 2.
+* @function goauth
+* @param {JSONResponse} response The response object.
+* @memberof api
+* @returns undefined
+*/
+var route = new APIRoute((response, req, res) => co(function*(){
+
+   var valid_request =
+      req.body &amp;&amp;
+      req.body.message &amp;&amp;
+      req.body.message.access_token;
+
+   if(!valid_request)
+      return response.error('error_invalid_request');
+
+   var access_token = req.body.message.access_token;
+
+   oauth2Client.setCredentials({ access_token });
+
+   var user_go_info = yield new Promise(resolve =>
+      plus.people.get(
+         { userId: 'me', auth: oauth2Client },
+         (err, response) => resolve(response)));
+
+   if(!user_go_info.id)
+      return response.error('error_bad_go_access_token');
+
+   var $or = [{ goid: user_go_info.id }];
+
+   user_go_info.emails &amp;&amp;
+   user_go_info.emails[0] &amp;&amp;
+   user_go_info.emails[0].value &amp;&amp;
+   $or.push({ email: user_go_info.emails[0].value });
+
+   var user = yield dataTransporter.getUser({ $or });
+
+   var lang_hint;
+   if(req.cookies.lang &amp;&amp; ~appConfig.app_languages.indexOf(req.cookies.lang))
+      lang_hint = req.cookies.lang;
+
+   if(!user)
+      user = yield make_user_from_go_info(user_go_info, lang_hint);
+   else
+      if(user.get('goid') != user_go_info.id)
+         yield dataTransporter.updateUser(
+            user,
+            { $set: { goid: user.set('goid', user_go_info.id) } }
+         );
+
+   yield oauth_exploit_check(user, 'goid', user_go_info.id);
+
+   if(user_go_info.emails[0].value &amp;&amp; (!user.get('email') || (user.get('email') === user_go_info.emails[0].value &amp;&amp; !user.get('email_verified')))) {
+      user.set('email', user_go_info.emails[0].value);
+      user.set('email_verified', true);
+      yield user.updateRecord();
+   }
+
+   if(req.cookies.lang !== user.lang)
+      res.cookie('lang', user.get('lang'), {
+         maxAge: 24 * 60 * 60 * 1000,
+         httpOnly: true,
+         secure: true
+      });
+
+   log_user_in(response, user);
+
+}));
+
+module.exports = route;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Feb 24 2016 22:23:01 GMT+0200 (GTB Standard Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

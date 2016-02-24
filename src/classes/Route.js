@@ -14,7 +14,7 @@ module.exports = class Route {
       /**
        * The handler function for this api call.
        * @function handler
-       * @memberof APIRoute
+       * @memberof Route
        * @type function
        */
       this.handler = handler;
@@ -22,7 +22,7 @@ module.exports = class Route {
       /**
        * An array to store prepended routes.
        * @name pre
-       * @memberof APIRoute
+       * @memberof Route
        * @type Array
        */
       this.pre = [];
@@ -30,9 +30,9 @@ module.exports = class Route {
    }
 
    /**
-    * Returns the handler function wrapped to include a JSONResponse object.
+    * Returns the handler function wrapped to include a {@link Response} object.
     * @function handle
-    * @memberof APIRoute
+    * @memberof Route
     * @param {function} handler The name of the main handler of this API call.
     * @returns function
     */
@@ -45,7 +45,7 @@ module.exports = class Route {
    /**
     * Returns the final route middleware to pass to an express application.
     * @name route
-    * @memberof APIRoute
+    * @memberof Route
     * @type Array
     */
    get route() {
@@ -64,7 +64,7 @@ module.exports = class Route {
    }
 
    /**
-    * Takes this route manually and resolves when
+    * Takes this route manually and resolves when next is called.
     * @function take
     * @memberof Route
     * @param {object} request Express request object.

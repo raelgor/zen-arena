@@ -2,6 +2,13 @@
 /* global log_user_in, APIRoute */
 'use strict';
 
+/**
+ * Attempts to log the user in.
+ * @function login
+ * @param {JSONResponse} response The response object.
+ * @memberof api
+ * @returns undefined
+ */
 var route = new APIRoute((response, req) => co(function*(){
 
    var valid_request =

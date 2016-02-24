@@ -5,6 +5,7 @@
  * @class DataTransporter
  * @desc Creates a portable transporter object with useful methods for data
  * exchanges.
+ * @prop {zenx.cache.Client} _client The cache client stored internally.
  * @param {zenx.cache.Client} cacheClient The client that will actually make
  * the exchanges.
  * @returns {DataTransporter}

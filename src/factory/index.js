@@ -1,8 +1,15 @@
 /* global co, templates, appConfig */
 'use strict';
 
+/**
+ * Produces html for the index view and returns it asynchronously.
+ * @method factory.index
+ * @param {object} pageData The default page data including meta and global
+ * variables.
+ * @param {string} pageView HTML for the current page.
+ * @returns Promise
+ */
 module.exports = (pageData, pageView) => co(function() {
-   
      return templates.index({
         navigation: {
            themeImage: '/img/mainbg.jpg',
@@ -28,5 +35,4 @@ module.exports = (pageData, pageView) => co(function() {
         meta: pageData.meta,
         pageView
      });
-
 });

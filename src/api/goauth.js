@@ -8,6 +8,13 @@ const OAuth2 = google.auth.OAuth2;
 const oauth2Client = new OAuth2(appConfig.google_oauth.client_id,
                                 appConfig.google_oauth.client_secret);
 
+/**
+* Logs the user in or registers using Google+ OAuth 2.
+* @function goauth
+* @param {JSONResponse} response The response object.
+* @memberof api
+* @returns undefined
+*/
 var route = new APIRoute((response, req, res) => co(function*(){
 
    var valid_request =

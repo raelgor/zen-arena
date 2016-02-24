@@ -1,6 +1,13 @@
 /* global Route, co, dataTransporter, appConfig, uuid */
 'use strict';
 
+/**
+ * A route that will create `req.__user` and `req.__session` if a
+ * valid session is detected.
+ * @method routes.authentication
+ * @param {Response} response The response object.
+ * @returns undefined
+ */
 module.exports = new Route((response, req, res, next) => co(function*(){
 
    // Auth user if not static

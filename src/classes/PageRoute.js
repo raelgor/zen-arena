@@ -22,7 +22,7 @@ module.exports = class PageRoute extends Route {
    /**
     * Returns the handler function wrapped to include a Response object.
     * @function handle
-    * @memberof APIRoute
+    * @memberof PageRoute
     * @param {function} handler The name of the main handler of this API call.
     * @returns function
     */

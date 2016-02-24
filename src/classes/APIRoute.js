@@ -17,7 +17,8 @@ module.exports = class APIRoute extends Route {
    }
 
    /**
-    * Returns the handler function wrapped to include a JSONResponse object.
+    * Returns the handler function wrapped to include a {@link JSONResponse}
+    * object.
     * @function handle
     * @memberof APIRoute
     * @param {function} handler The name of the main handler of this API call.

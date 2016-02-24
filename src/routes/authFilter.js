@@ -3,8 +3,9 @@
 
 /**
  * Filters API requests that are not authorized by previous middleware.
- * @name authFilter
- * @memberof routes 
+ * @method routes.authFilter
+ * @param {Response} response The response object.
+ * @returns undefined
  */
 module.exports = new APIRoute((response, req, res, next) => {
    if(req.__user)

@@ -3,10 +3,10 @@
 'use strict';
 
 /**
- * Stalls the request if this application instance is updating its cache
- * @name cacheStaller
- * @memberof routes
- * @type {Route}
+ * Stalls the request if this application instance is updating its cache.
+ * @function routes.cacheStaller
+ * @param {Response} response The response object.
+ * @returns undefined
  */
 module.exports = new Route((response, req, res, next) => {
    if(global._cache_is_updating)

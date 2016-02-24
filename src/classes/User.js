@@ -14,7 +14,6 @@ module.exports = class User {
       /**
        * The user's record.
        * @memberof User
-       * @access public
        * @type {object}
        */
       this.record = user || {};
@@ -23,7 +22,6 @@ module.exports = class User {
 
    /**
     * @method User.updateRecord
-    * @access public
     * @desc Updates the user's record using the `dataTransporter` object.
     * @returns {Promise}
     */
@@ -33,7 +31,6 @@ module.exports = class User {
 
    /**
     * @method User.insertRecord
-    * @access public
     * @desc Inserts the user's record using `upsert`.
     * @returns {Promise}
     */

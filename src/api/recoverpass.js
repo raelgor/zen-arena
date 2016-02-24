@@ -1,6 +1,13 @@
 /* global co, dataTransporter, bcrypt, appConfig, APIRoute */
 'use strict';
 
+/**
+ * Attempts to change the password from a recovery token.
+ * @function recoverpass
+ * @param {JSONResponse} response The response object.
+ * @memberof api
+ * @returns undefined
+ */
 var route = new APIRoute((response, req) => co(function*(){
 
    // Validate request

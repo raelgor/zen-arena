@@ -2,6 +2,13 @@
 /* global make_user_from_fb_info, log_user_in, APIRoute */
 'use strict';
 
+/**
+ * Logs the user in or registers using Facebook OAuth 2.
+ * @function fblogin
+ * @param {JSONResponse} response The response object.
+ * @memberof api
+ * @returns undefined
+ */
 var route = new APIRoute((response, req, res) => co(function*(){
 
    var valid_request =
