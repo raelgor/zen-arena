@@ -3,7 +3,7 @@ function resize(){
    // Fix carousel
    $('.carousel').css({
       height: window.innerWidth*0.51 - 50 + 'px',
-      lineHeight: window.innerWidth*0.51 - 50 + 'px',
+      // lineHeight: window.innerWidth*0.51 - 50 + 'px',
       maxHeight: window.innerHeight + 'px'
    });
 

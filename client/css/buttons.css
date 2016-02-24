@@ -1,0 +1,28 @@
+.button {
+    border-radius: 3px;
+    box-shadow: 0 2px rgba(0, 0, 0, 0.43);
+    width: auto;
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    background: #7DB632;
+    text-shadow: 0px -1px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    position: relative;
+    top: 0px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.button:active {
+    top: 1px;
+}
+
+
+.big.button {
+    padding: 10px 20px;
+    font-size: 20px;
+}

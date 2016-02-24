@@ -5,17 +5,13 @@
     background-position: 0px -50px;
     height: 550px;
     color: white;
-    line-height: 450px;
     text-align: center;
     font-size: 20px;
     border-bottom: 1px solid #969696;
 }
 
-.carousel>div {
-    display: inline-block;
-    vertical-align: middle;
-    width: 100%;
-    position: relative;
-    top: -81px;
-    line-height: 30px;
+.carousel .tagline {
+    padding-top: 10%;
+    margin: 0 0 20px 0;
+    font-size: 25px;
 }

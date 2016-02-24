@@ -1,6 +1,6 @@
 .navigation {
    height: 50px;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.37);
+   /* border-bottom: 1px solid rgba(0, 0, 0, 0.37); */
    background-size: cover;
    position: fixed;
    width: 100%;
@@ -19,18 +19,20 @@
 .navigation .background {
     height: 100%;
     background-size: cover;
-    filter: blur(25px);
     overflow: hidden;
+    /*
+    filter: blur(25px);
     -webkit-filter: blur(25px);
     -moz-filter: blur(25px);
     -ms-filter: blur(25px);
     -o-filter: blur(25px);
+    */
 }
 
 .navigation .foreground {
     position: relative;
     top: -100%;
-    background: rgba(55, 55, 55, 0.35);
+    background: rgba(0, 0, 0, 0.48);
     height: 100%;
 }
 
@@ -97,7 +99,7 @@
     vertical-align: top;
     height: 30px;
     line-height: 30px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.11);
     border-radius: 20px;
     width: 250px;
     position: relative;
