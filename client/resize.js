@@ -15,15 +15,17 @@ function resize(){
    });
 
    if(window.innerWidth <= 940) {
-
       $('.navigation .foreground .wrapper > *:not(.logo)').hide();
       $('.navigation .touch-nav').show();
-
    } else {
-
       $('.navigation .foreground .wrapper > *:not(.logo)').show();
       $('.navigation .touch-nav').hide();
+   }
 
+   if(window.innerWidth > 530) {
+      $('.tagline').css('font-size', '25px');
+   } else {
+      $('.tagline').css('font-size', '20px');
    }
 
 }

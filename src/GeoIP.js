@@ -1,7 +1,5 @@
-/* global log, colors, appConfig */
+/* global log, colors, appConfig, http */
 'use strict';
-
-const http = require('http');
 
 const GeoIP = {
 
@@ -26,8 +24,12 @@ const GeoIP = {
             response.on('end', () => {
 
                 try {
+                   let parsed = JSON.parse(data);
                     // @todo Map properly
-                    resolve(JSON.parse(data).country_code === 'GR' ? 'el' : 'en');
+                    resolve({
+                       language: parsed.country_code === 'GR' ? 'el' : 'en',
+                       country_code: parsed.country_code
+                    });
                 } catch(err) {
                     resolve(false);
                 }

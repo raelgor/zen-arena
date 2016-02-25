@@ -5,7 +5,7 @@ za.grecaptcha = {};
 
 // Callback might not be called so we'll check
 var grecaptcha_load_checker_interval = setInterval(function(){
-   if(grecaptcha) {
+   if(window.grecaptcha) {
       clearInterval(grecaptcha_load_checker_interval);
       log('ReCaptcha load detected.');
       za._recaptcha_resolve();

@@ -17,8 +17,8 @@ module.exports = (req, core_text) => {
       max_pass_length: appConfig.password_range.max,
       page_data: {},
       geolocation: {
-         country: (req.__user && req.__user.get('country')) || req.cookies.ctrycd,
-         city: (req.__user && req.__user.get('city')) || req.cookies.ctcd
+         country: (req.__user && req.__user.get('country')) || req.cookies.country_code,
+         city: (req.__user && req.__user.get('city')) || req.cookies.city_code
       }
    };
 

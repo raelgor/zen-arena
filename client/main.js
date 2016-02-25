@@ -1,4 +1,5 @@
 /* global za, resize, clientData, FB */
+
 /**
  * @namespace za
  * @desc The za client library.
@@ -76,7 +77,7 @@ window.za = {
 
 $(window).ready(function(){
 
-   if(!clientData.geolocation.city)
+   if(!clientData.geolocation.city || !clientData.geolocation.country)
       za.geoRequest();
 
    za.ui.ntFocus('.navigation .search');

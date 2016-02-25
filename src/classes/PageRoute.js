@@ -28,6 +28,34 @@ module.exports = class PageRoute extends Route {
     */
    handle(handler) {
       return (req, res, next) => co(function*(){
+
+         let geoipInfo;
+
+         if(req.__user && !req.__user.get('country') && appConfig.use_geoip) {
+            if(req.cookies.country_code) {
+               req.__user.set('country', req.cookies.country_code);
+               req.__user.updateRecord();
+               return;
+            }
+
+            // If we have no address, use the detectAddress route
+            if(!req._address)
+               yield routes.detectAddress.take(req, res);
+
+            // Get country_code info from GeoIP service
+            geoipInfo = yield GeoIP.get(req._address);
+
+            if(geoipInfo.country_code) {
+               req.__user.set('country', geoipInfo.country_code);
+               req.__user.updateRecord();
+               res.cookie('country_code', geoipInfo.country_code, {
+                  maxAge: 200 * 24 * 60 * 60 * 1000,
+                  httpOnly: true,
+                  secure: true
+               });
+            }
+         }
+
          // If we didn't get language info from a user, try to get from cookie
          if(!req.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
             req.lang = req.cookies.lang;
@@ -39,10 +67,10 @@ module.exports = class PageRoute extends Route {
                // Then if we can use GeoIP and this looks like a valid request
                if(appConfig.use_geoip && req.headers['user-agent']) {
                   // If we have no address, use the detectAddress route
-                  if(!req._address)
+                  if(!req._address && !geoipInfo)
                      yield routes.detectAddress.take(req, res);
                   // Get lang info from GeoIP service
-                  req.lang = (yield GeoIP.get(req._address));
+                  req.lang = (geoipInfo = geoipInfo || (yield GeoIP.get(req._address))).language;
                }
 
          // If we didn't manage to find the language, fall back to default
@@ -66,6 +94,7 @@ module.exports = class PageRoute extends Route {
          };
 
          handler(response, req, res, next);
+
       });
    }
 

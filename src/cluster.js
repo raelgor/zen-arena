@@ -15,6 +15,7 @@ global.co = require('co');
 global.colors = require('colors');
 global.jade = require('jade');
 global.https = require('https');
+global.http = require('http');
 global.fs = require('fs');
 global.bcrypt = require('bcrypt');
 global.querystring = require('querystring');
@@ -105,7 +106,7 @@ process.on('message', message => co(function*(){
      * @namespace api
      */
     loaddirSync('./api', 'api');
-
+    
     log('Done. Starting server...');
 
     // Start server

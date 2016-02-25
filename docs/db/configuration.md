@@ -82,3 +82,5 @@ Core app variables.
 `email_blacklist_interval` **number** Time in milliseconds that an expiry date record will exist in email's messages array.
 
 `max_emails_per_interval` **number** Maximum number of pending expiry dates.
+
+`google_maps_server_key` **string** Google maps server key.

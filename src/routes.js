@@ -13,6 +13,7 @@ app.router.post('/api/login', api.login.route);
 app.router.post('/api/goauth', api.goauth.route);
 app.router.post('/api/fblogin', api.fblogin.route);
 app.router.post('/api/register', api.register.route);
+app.router.post('/api/updategeo', api.updategeo.route);
 app.router.post('/api/forgotpass', api.forgotpass.route);
 app.router.post('/api/recoverpass', api.recoverpass.route);
 app.router.post('/api/resubscribe/:token', api.resubscribe.route);
@@ -22,5 +23,56 @@ app.router.post('/api/logout', api.logout.route);
 
 // Page routes
 app.router.all(['/','/home'], pageHandlers.home.route);
-app.router.all('/unsubscribeall/:token', pageHandlers.unsubscribeall.route);
 app.router.all('/verifyemail/:token', pageHandlers.verifyemail.route);
+app.router.all('/unsubscribeall/:token', pageHandlers.unsubscribeall.route);
+
+// @todo Make these routes
+
+// Main game page
+app.router.all('/:game', () => {});
+
+// Leaderboards
+app.router.all('/:game/leaderboard/top-players', () => {});
+app.router.all('/:game/leaderboard/top-teams', () => {});
+
+// Tournaments using default geoip
+app.router.all('/:game/tournaments', () => {});
+app.router.all('/:game/tournaments/:country_code/:city', () => {});
+
+// Team page
+app.router.all('/teams/:id_or_namespace', () => {});
+
+// Place page
+app.router.all('/places/:id_or_namespace', () => {});
+app.router.all('/places/:id_or_namespace/tournaments', () => {});
+
+// Tournament page
+app.router.all('/tournaments/:id_or_alias', () => {});
+app.router.all('/tournaments/:id_or_alias/teams', () => {});
+app.router.all('/tournaments/:id_or_alias/info', () => {});
+app.router.all('/tournaments/:id_or_alias/feats', () => {});
+app.router.all('/tournaments/:id_or_alias/prizes', () => {});
+app.router.all('/tournaments/:id_or_alias/progress', () => {});
+app.router.all('/tournaments/:id_or_alias/leaderboard', () => {});
+app.router.all('/tournaments/:id_or_alias/settings', () => {});
+
+// Static
+app.router.all('/settings', () => {});
+app.router.all('/settings/sessions', () => {});
+app.router.all('/settings/merge', () => {});
+
+app.router.all('/terms-of-service', () => {});
+app.router.all('/privacy-policy', () => {});
+app.router.all('/about', () => {});
+app.router.all('/contact', () => {});
+
+// Site announcements
+app.router.all('/news', () => {});
+
+// List of supported games
+app.router.all('/games', () => {});
+
+// Player page
+app.router.all('/:player_id_or_namespace', () => {});
+app.router.all('/:player_id_or_namespace/achievements', () => {});
+app.router.all('/:player_id_or_namespace/teams', () => {});
