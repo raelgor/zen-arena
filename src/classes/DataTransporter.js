@@ -1,4 +1,4 @@
-/* global co, config, User */
+/* global co, config, User, Timer, log */
 'use strict';
 
 /**
@@ -155,5 +155,55 @@ module.exports = class DataTransporter {
    remove() {
       return this._client.remove(...arguments);
    }
+
+   /**
+    * Asynchronously fetches a post.
+    * @method DataTransporter.getPost
+    * @param {number} postId The post's Id.
+    * @returns {Promise}
+    */
+    getPost(id) {
+      var transporter = this;
+
+      return co(function*(){
+         var result = yield transporter.get({
+            query: { id },
+            collection: 'posts',
+            database: config.cache_server.db_name
+         });
+
+         return result[0];
+      });
+    }
+
+    /**
+    * Asynchronously fetches a post.
+    * @method DataTransporter.getPost
+    * @param {number} postId The post's Id.
+    * @returns {Promise}
+    */
+    getRecordByNamespace(namespace) {
+      var transporter = this;
+
+      return co(function*(){
+         log.debug(`dataTransporter.getRecordByNamespace: Getting ns record...`);
+         var timer = new Timer();
+
+         var response = yield transporter.get({
+            query: { $or: [{id: namespace}, {namespace}] },
+            collection: 'namespaces',
+            database: config.cache_server.db_name
+         });
+
+         log.debug(`dataTransporter.getRecordByNamespace: Done. (${timer.click()}ms) Getting refered record...`);
+         var result = response[0];
+
+         if(result && result.collection === 'users')
+            result = yield transporter.getUser({ id: result.id });
+
+         log.debug(`dataTransporter.getRecordByNamespace: Done. (${timer.click()}ms)`);
+         return result;
+      });
+    }
 
 };

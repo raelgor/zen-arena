@@ -1,11 +1,11 @@
 /* global config, dataTransporter, co */
 'use strict';
 
-module.exports = (collection, _id) => co(function*(){
+module.exports = (collection, id) => co(function*(){
 
    // Increment
    yield dataTransporter.update({
-      query: { collection, _id },
+      query: { collection, id },
       update: { $inc: { seq: 1 } },
       options: {},
       database: config.cache_server.db_name,
@@ -14,7 +14,7 @@ module.exports = (collection, _id) => co(function*(){
 
    // Get
    var entry = yield dataTransporter.get({
-      query: { collection, _id },
+      query: { collection, id },
       database: config.cache_server.db_name,
       collection: 'counters'
    });

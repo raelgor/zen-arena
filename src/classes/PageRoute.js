@@ -1,4 +1,4 @@
-/* global Route, appConfig, co, routes, Response, GeoIP, make_core_text */
+/* global Route, co, routes, Response, make_core_text, Timer, log */
 /* global make_default_meta_data, make_client_data */
 'use strict';
 
@@ -16,6 +16,7 @@ module.exports = class PageRoute extends Route {
       super(handler);
 
       this.pre.push(routes.authentication.route);
+      this.pre.push(routes.sessionInfoMaker.route);
 
    }
 
@@ -27,61 +28,10 @@ module.exports = class PageRoute extends Route {
     * @returns function
     */
    handle(handler) {
-      return (req, res, next) => co(function*(){
+      return (req, res, next) => co(function(){
 
-         let geoipInfo;
-
-         if(req.__user && !req.__user.get('country') && appConfig.use_geoip) {
-            if(req.cookies.country_code) {
-               req.__user.set('country', req.cookies.country_code);
-               req.__user.updateRecord();
-               return;
-            }
-
-            // If we have no address, use the detectAddress route
-            if(!req._address)
-               yield routes.detectAddress.take(req, res);
-
-            // Get country_code info from GeoIP service
-            geoipInfo = yield GeoIP.get(req._address);
-
-            if(geoipInfo.country_code) {
-               req.__user.set('country', geoipInfo.country_code);
-               req.__user.updateRecord();
-               res.cookie('country_code', geoipInfo.country_code, {
-                  maxAge: 200 * 24 * 60 * 60 * 1000,
-                  httpOnly: true,
-                  secure: true
-               });
-            }
-         }
-
-         // If we didn't get language info from a user, try to get from cookie
-         if(!req.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
-            req.lang = req.cookies.lang;
-
-         // If we don't know anything about what language to use
-         if(!req.lang)
-            // Then if we don't have a language cookie, or it is invalid
-            if(!req.cookies.lang || !~appConfig.app_languages.indexOf(req.cookies.lang))
-               // Then if we can use GeoIP and this looks like a valid request
-               if(appConfig.use_geoip && req.headers['user-agent']) {
-                  // If we have no address, use the detectAddress route
-                  if(!req._address && !geoipInfo)
-                     yield routes.detectAddress.take(req, res);
-                  // Get lang info from GeoIP service
-                  req.lang = (geoipInfo = geoipInfo || (yield GeoIP.get(req._address))).language;
-               }
-
-         // If we didn't manage to find the language, fall back to default
-         req.lang = req.lang || appConfig.default_lang;
-
-         // If the cookie is wrong, fix it
-         req.lang !== req.cookies.lang && res.cookie('lang', req.lang, {
-            maxAge: 24 * 60 * 60 * 1000,
-            httpOnly: true,
-            secure: true
-         });
+         log.debug('pageHandler: Preparing handler...');
+         var timer = new Timer();
 
          var coreText = make_core_text(req.lang);
 
@@ -93,6 +43,7 @@ module.exports = class PageRoute extends Route {
             clientData: make_client_data(req, coreText)
          };
 
+         log.debug(`pageHandler: Done. (${timer.click()}ms)`);
          handler(response, req, res, next);
 
       });

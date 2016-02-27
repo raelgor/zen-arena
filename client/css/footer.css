@@ -1,22 +1,51 @@
 .footer {
-    height: 260px;
-    background: white;
+    background: #EBEBEB;
     width: 100%;
 }
 
 .sponsors-title {
     text-align: center;
     padding: 10px 0;
-    color: gray;
+    color: #B2B2B2;
     font-size: 13px;
 }
 
 .sponsors {
     background-image: url(/img/sponsors.jpg);
     background-size: contain;
-    height: 110px;
+    height: 80px;
     opacity: .5;
     background-position: 50%;
     background-repeat: no-repeat;
-    border-bottom: 1px solid #989898;
+}
+
+.supporters-line {
+    background: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.06);
+}
+
+.bottom-line {
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+}
+
+.bottom-line .dev {
+    float: right;
+}
+
+.bottom-line {
+    color: gray;
+    font-size: 11px;
+    padding: 10px 0;
+}
+
+.bottom-line .dev a {
+    color: #575757;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.copyright {
+    float: left;
 }

@@ -62,7 +62,24 @@ window.za = {
        */
       ntFocus: function(selector){
          !za._touch && $(selector).focus();
+      },
+
+      /**
+       * Controllers of the parameter element and all sub-elements with the
+       * data-controller attribute set.
+       * @method za.ui.initControllers
+       */
+      initControllers: function(element) {
+         var controllerName = $(element).attr('data-controller');
+         if(controllerName in za.controllers && $(element).is(':not([data-controller-init=1])'))
+            za.controllers[controllerName].init(element);
+         $(element).attr('data-controller-init', '1');
+         $(element).find('[data-controller]:not([data-controller-init=1])')
+         .each(function(index,element){
+            za.ui.initControllers(element);
+         });
       }
+
    },
 
    /**
@@ -71,7 +88,22 @@ window.za = {
     * @desc Stores controllers.
     * @type object
     */
-   controllers: {}
+   controllers: {},
+
+   /**
+    * View controller class.
+    * @class za.Controller
+    * @returns {Controller}
+    */
+   Controller: function(handlerFunction){
+      return {
+         init: function(element){
+            $(element).attr('data-controller-init', '1');
+            handlerFunction(element);
+            za.ui.initControllers(element);
+         }
+      };
+   }
 
 };
 
@@ -82,10 +114,7 @@ $(window).ready(function(){
 
    za.ui.ntFocus('.navigation .search');
 
-   var section = $('.content').attr('data-section');
-
-   if(section in za.controllers)
-      za.controllers[section]();
+   za.ui.initControllers('body > .content');
 
    // Safari fix
    setTimeout(resize, 0);

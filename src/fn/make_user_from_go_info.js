@@ -4,7 +4,7 @@
 module.exports = (go_info, language) => co(function*() {
 
    var user = new User();
-   var id = yield increment('users', 'id');
+   var id = yield increment('ns_id', 'id');
 
    if(go_info.name) {
 

@@ -1,4 +1,4 @@
-/* global Route, co, dataTransporter, appConfig, uuid */
+/* global Route, co, dataTransporter, appConfig, uuid, Timer, log */
 'use strict';
 
 /**
@@ -10,6 +10,9 @@
  */
 module.exports = new Route((response, req, res, next) => co(function*(){
 
+   log.debug('authentication: Authenticating...');
+   var timer = new Timer();
+
    // Auth user if not static
    if(req.cookies && req.cookies.st) {
 
@@ -17,9 +20,12 @@ module.exports = new Route((response, req, res, next) => co(function*(){
          [`sessions.${req.cookies.st}`]: { $exists: 1 }
       });
 
-      if(!user)
+      if(!user) {
+         log.debug('authentication: Cookies were invalid. Clearing...');
          res.clearCookie('st');
-      else {
+      } else {
+
+         log.debug('authentication: User found. Gathering info...');
 
          req.__user = user;
          req.__session = user.getSession(req.cookies.st);
@@ -38,7 +44,7 @@ module.exports = new Route((response, req, res, next) => co(function*(){
             user.set('lang', appConfig.default_lang);
 
          // Refresh session
-         req.__session.expires= Date.now() + appConfig.web_session_lifespan;
+         req.__session.expires = Date.now() + appConfig.web_session_lifespan;
 
          // Make sure user has an unsubscribe all token
          if(!user.get('unsubscribe_all_token'))
@@ -49,8 +55,10 @@ module.exports = new Route((response, req, res, next) => co(function*(){
 
       }
 
-   }
+   } else
+      log.debug('authentication: No auth.');
 
+   log.debug(`authentication: Authentication finished. (${timer.click()}ms)`);
    next();
 
 }));

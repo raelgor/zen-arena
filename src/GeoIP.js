@@ -5,7 +5,7 @@ const GeoIP = {
 
     get: address => {
 
-        log(`GeoIP getting ${colors.magenta(address)}...`);
+        log.debug(`GeoIP: Getting ${colors.magenta(address)}...`);
 
         let resolved = false;
         let _resolve;
@@ -30,8 +30,10 @@ const GeoIP = {
                        language: parsed.country_code === 'GR' ? 'el' : 'en',
                        country_code: parsed.country_code
                     });
+                    log.debug(`GeoIP: Success. (${parsed.country_code})`);
                 } catch(err) {
                     resolve(false);
+                    log.debug('GeoIP: Failed to parse response.');
                 }
 
             });
@@ -42,8 +44,11 @@ const GeoIP = {
 
         setTimeout(() => {
 
+           if(resolved) return;
+
             request.abort();
             resolve(false);
+            log.debug('GeoIP: Timed out.');
 
         }, appConfig.geoip_timeout);
 

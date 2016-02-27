@@ -57,7 +57,7 @@ var route = new APIRoute((response, req, res) => co(function*(){
 
       city = found[0].short_name;
    } catch(e) { }
-console.log(geoInfo);
+   
    if(typeof geoInfo !== 'object' || (!country && !city))
       return response.error('error_get_geoinfo_failed');
 

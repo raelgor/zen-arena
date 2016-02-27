@@ -35,6 +35,7 @@ global.DataTransporter = require('./classes/DataTransporter');
 global.Response = require('./classes/Response');
 global.JSONResponse = require('./classes/JSONResponse');
 global.User = require('./classes/User');
+global.Timer = require('./classes/Timer');
 
 // Compile directories
 loaddirSync('./fn');
@@ -106,7 +107,7 @@ process.on('message', message => co(function*(){
      * @namespace api
      */
     loaddirSync('./api', 'api');
-    
+
     log('Done. Starting server...');
 
     // Start server

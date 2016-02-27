@@ -1,0 +1,15 @@
+.post-wrapper(data-controller="post", data-date_published=data.date_published)
+   .post-container
+      .post-head
+         a.post-publisher-image(style="background-image: url("+data.publisher_image+")", href="/"+data.publisher_namespace)
+         .post-publisher-info
+            a.post-publisher-name(href="/"+data.publisher_namespace)=data.publisher_display_name
+            a.post-date-published(href="/post/"+data.id)
+               span.number
+               span.text
+      if data.title
+         .post-title=data.title
+      .post-text!=data.text
+      .post-interaction-wrapper
+         span.post-upvote-button.icon-like(data-title-like, tabindex=0, title=coreText.like)
+         span.post-upvote-button-pool

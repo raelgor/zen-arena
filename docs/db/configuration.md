@@ -84,3 +84,5 @@ Core app variables.
 `max_emails_per_interval` **number** Maximum number of pending expiry dates.
 
 `google_maps_server_key` **string** Google maps server key.
+
+`home_posts` **array** Array of post Ids that will display in the home page.

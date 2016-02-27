@@ -238,7 +238,7 @@ $(window).ready(function(){
          token: $('.recover-password-frame .token').val()
       })
       .success(function(response){
-         if(response.message === 'OK') {
+         if(response.data.message === 'OK') {
             $('.recover-password-frame .not-sent-yet').hide();
             $('.recover-password-frame .success').show();
          } else
@@ -275,7 +275,7 @@ $(window).ready(function(){
           grecaptcha: grecaptchaResponse
       })
       .success(function(response){
-         if(response.message === 'OK') {
+         if(response.data.message === 'OK') {
             $('.forgot-password-frame .not-sent-yet').hide();
             $('.forgot-password-frame .success').show();
          } else
@@ -324,7 +324,6 @@ $(window).ready(function(){
            grecaptcha: grecaptchaResponse
       })
       .success(function(response){
-         console.log(response);
          if(response.error || !response.data){
             if(response.error === 'error_user_exists')
                return frame.error(clientData.core_text.error_user_exists);

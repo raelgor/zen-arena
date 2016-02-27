@@ -10,11 +10,14 @@ const cluster = require('cluster');
 const colors = require('colors/safe');
 const numOfCores = os.cpus().length;
 const log = require('./src/log');
+const packageInfo = require('./package');
 
 // Load configuration or throw
 // @todo Make an error that points to documentation about the contents
 // of config.json
 const config = require('./config');
+
+config.version = packageInfo.version;
 
 // Set master process title
 process.title = 'zen-arena-cm';

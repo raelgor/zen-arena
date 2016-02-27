@@ -2,21 +2,11 @@
 
 module.exports = user => {
 
-	// Make display name
-	var display_name = '';
-
-	if(user.get('username'))
-	 	display_name = user.get('username');
- 	else {
-		display_name = user.get('first_name') || '';
-		display_name && (display_name+=' ');
-		display_name += user.get('last_name') || '';
-	}
 
 	// Return user data
 	return {
 		id: user.get('id'),
-		display_name,
+		display_name: user.displayName(),
 		username: user.get('username'),
 		first_name: user.get('first_name'),
 		last_name: user.get('last_name'),

@@ -1,0 +1,87 @@
+.post-wrapper {
+    border: 1px solid #D0D0D0;
+    background: white;
+    border-radius: 4px;
+    font-family: Open Sans, sans-serif;
+}
+
+.post-head {
+   margin: 15px 20px 10px;
+}
+
+.post-publisher-image {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    vertical-align: top;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.47);
+    cursor: pointer;
+}
+
+.post-publisher-info {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+a.post-publisher-name {
+    text-decoration: none;
+    color: #575757;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+a.post-date-published {
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+    color: gray;
+    cursor: pointer;
+}
+
+a.post-date-published:hover {
+    text-decoration: underline;
+}
+
+.post-date-published .number {
+    padding-right: 4px;
+}
+
+.post-date-published .number:empty {
+   padding: 0px !important;
+}
+
+.post-title {
+    font-weight: bold;
+    font-size: 25px;
+    color: #333;
+    padding: 10px 20px;
+}
+
+.post-text {
+    padding: 10px 20px;
+    font-size: 15px;
+}
+
+.post-interaction-wrapper {
+    margin-top: 10px;
+    border-top: 1px solid #EAEAEA;
+    padding: 10px;
+    height: 30px;
+}
+
+.post-upvote-button.icon-like {
+    font-size: 26px;
+    margin-left: 12px;
+    cursor:pointer;
+}
+
+.post-upvote-button-pool {
+    margin-left: 10px;
+    position: relative;
+    top: -3px;
+    color: gray;
+}

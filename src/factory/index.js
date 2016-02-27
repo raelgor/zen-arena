@@ -1,4 +1,4 @@
-/* global co, templates, appConfig */
+/* global co, templates, appConfig, config */
 'use strict';
 
 /**
@@ -29,7 +29,8 @@ module.exports = (pageData, pageView) => co(function() {
            fb_app_id: appConfig.fb_app.app_id,
            fb_admins: appConfig.fb_app.fb_admins,
            fb_api_version: appConfig.fb_app.api_version,
-           clientData: pageData.clientData
+           clientData: pageData.clientData,
+           version: config.version
         },
         coreText: pageData.coreText,
         meta: pageData.meta,

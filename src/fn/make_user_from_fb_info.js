@@ -6,7 +6,7 @@ const utilizable_fields = ['first_name', 'last_name', 'gender', 'email'];
 module.exports = (fb_info, language) => co(function*() {
 
    var user = new User();
-   var id = yield increment('users', 'id');
+   var id = yield increment('ns_id', 'id');
 
    for(let field in fb_info)
       if(~utilizable_fields.indexOf(field))

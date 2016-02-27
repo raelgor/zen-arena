@@ -1,5 +1,5 @@
 /* global za, clientData */
-za.controllers.unsubscribe_success = function(){
+za.controllers.unsubscribe_success = new za.Controller(function(){
    $('.unsub-wrapper .unsub-undo').click(function(){
       var btn = $(this);
       btn.css({opacity:0.3,pointerEvents:'none'});
@@ -16,4 +16,4 @@ za.controllers.unsubscribe_success = function(){
          btn.css({opacity:1,pointerEvents:'all'});
       });
    });
-};
+});

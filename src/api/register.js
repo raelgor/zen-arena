@@ -41,7 +41,7 @@ var route = new APIRoute((response, req) => co(function*(){
    var salt = yield new Promise(resolve => bcrypt.genSalt(10, (err, res) => resolve(res)));
    var password = yield new Promise(resolve => bcrypt.hash(req.body.message.password, salt, (err, res) => resolve(res)));
 
-   user.set('id', yield increment('users', 'id'));
+   user.set('id', yield increment('ns_id', 'id'));
    user.set('password', password);
    user.set('date_joined', new Date().toISOString());
 

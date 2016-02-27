@@ -73,4 +73,21 @@ module.exports = class User {
       return value;
    }
 
+   displayName() {
+
+   	// Make display name
+   	var displayName = '';
+
+   	if(this.get('username'))
+   	 	displayName = this.get('username');
+    	else {
+   		displayName = this.get('first_name') || '';
+   		displayName && (displayName+=' ');
+   		displayName += this.get('last_name') || '';
+   	}
+
+      return displayName;
+
+   }
+
 };

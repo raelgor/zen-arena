@@ -1,3 +1,8 @@
-.carousel
-      .tagline(data-html-home_tagline)!=coreText.home_tagline
-      a.big.green.button(tabindex=0, href="/tournaments", data-html-step_into_the_arena)=coreText.step_into_the_arena
+div(data-controller="home")
+   .carousel-wrapper
+      .carousel
+         .tagline(data-html-home_tagline)!=coreText.home_tagline
+         a.big.green.button(tabindex=0, href="/tournaments", data-html-step_into_the_arena)=coreText.step_into_the_arena
+   .home-post-wrapper
+      each postHtml in posts
+         div!=postHtml

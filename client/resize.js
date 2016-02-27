@@ -1,11 +1,13 @@
 function resize(){
 
+   /*
    // Fix carousel
    $('.carousel').css({
-      height: window.innerWidth*0.51 - 50 + 'px',
+      height: window.innerWidth*0.38 - 50 + 'px',
       // lineHeight: window.innerWidth*0.51 - 50 + 'px',
       maxHeight: window.innerHeight + 'px'
    });
+   */
 
    // Translate fix
    var ho = window.innerHeight*0.95 < 507 ? window.innerHeight*0.95/2 : 254;
@@ -23,9 +25,9 @@ function resize(){
    }
 
    if(window.innerWidth > 530) {
-      $('.tagline').css('font-size', '25px');
+      $('.tagline').css({fontSize: '25px', paddingTop: '18%'});
    } else {
-      $('.tagline').css('font-size', '20px');
+      $('.tagline').css({fontSize: '20px', paddingTop: '18%'});
    }
 
 }

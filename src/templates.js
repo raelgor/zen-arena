@@ -7,7 +7,8 @@ try{
        maintenance: jade.compileFile('./src/templates/maintenance.jade'),
        home: jade.compileFile('./src/templates/home.jade'),
        unsubscribeall: jade.compileFile('./src/templates/unsubscribeall.jade'),
-       verifyemail: jade.compileFile('./src/templates/verifyemail.jade')
+       verifyemail: jade.compileFile('./src/templates/verifyemail.jade'),
+       post: jade.compileFile('./src/templates/post.jade')
    };
 }catch(error){
    console.log(error);

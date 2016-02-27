@@ -1,6 +1,9 @@
 /* global app, api, routes, pageHandlers */
 'use strict';
 
+// Debug
+app.router.use(routes.logger.route);
+
 // Api route
 app.router.post('/api/text/:lang', api.text.route);
 
