@@ -112,8 +112,8 @@ process.on('message', message => co(function*(){
 
     // Start server
     global.app = new Server({
-        bind: appConfig.bind_ip,
-        port: appConfig.port,
+        bind: config.bind_ip,
+        port: config.port,
         ws: true,
         static: path.resolve(__dirname + '/../assets')
     });
