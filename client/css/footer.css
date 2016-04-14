@@ -24,6 +24,15 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.06);
 }
 
+.version a:hover {
+    text-decoration: underline;
+}
+
+.version a {
+    color: #939393;
+    text-decoration: none;
+}
+
 .bottom-line {
     max-width: 1000px;
     margin: auto;
@@ -37,7 +46,8 @@
 .bottom-line {
     color: gray;
     font-size: 11px;
-    padding: 10px 0;
+    padding: 10px;
+    text-shadow: 0 1px white;
 }
 
 .bottom-line .dev a {

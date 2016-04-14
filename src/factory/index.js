@@ -21,7 +21,7 @@ module.exports = (pageData, pageView) => co(function() {
            ]
         },
         global: {
-           fullSiteUrl: appConfig.site_protocol + '://' + appConfig.domain_name,
+           fullSiteUrl: appConfig.site_protocol + '://' + appConfig.domain_name + (/^(80|443)$/.test(appConfig.port)?'':':'+appConfig.port),
            favicon: '/img/favicon.png',
            domain: appConfig.domain_name,
            ga_tracking_code: appConfig.ga_tracking_code,

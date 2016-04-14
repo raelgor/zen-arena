@@ -1,10 +1,10 @@
 .auth-dialogs.hide.ani04
-   form.login-frame.hide.ani04
+   form.login-frame.hide.ani04#loginForm(name="login", action="/")
       .welcome
          span(data-html-loginText)=coreText.loginText
          span.icon-cancel-circle(tabindex=0)
-      input.username(placeholder=coreText.login_username_placeholder, data-placeholder-login_username_placeholder, type="text", required)
-      input.password(placeholder=coreText.login_password_placeholder, data-placeholder-login_password_placeholder, type="password", required)
+      input.username(name="email", placeholder=coreText.login_username_placeholder, data-placeholder-login_username_placeholder, type="text", required)
+      input.password(name="password", placeholder=coreText.login_password_placeholder, data-placeholder-login_password_placeholder, type="password", required)
       .forgot-password
          a(tabindex=0, data-html-forgot_password, class="fpass-btn")=coreText.forgot_password
       .no-robot#login_no_robot
@@ -23,12 +23,12 @@
          span(data-html-no_acc_question)=coreText.no_acc_question
          a.create-acc(tabindex=0, data-html-registerText)=coreText.registerText
       .loader
-   form.register-frame.hide.ani04
+   form.register-frame.hide.ani04(name="register", action="/")
       .welcome
          span(data-html-registerText)=coreText.registerText
          span.icon-cancel-circle(tabindex=0)
-      input.username(placeholder=coreText.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
-      input.password(placeholder=coreText.register_password_placeholder, data-placeholder-register_password_placeholder type="password", required)
+      input.username(name="email", placeholder=coreText.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
+      input.password(name="password", placeholder=coreText.register_password_placeholder, data-placeholder-register_password_placeholder type="password", required)
       .no-robot#register_no_robot
       .checkbox
       .error.ani04
@@ -53,7 +53,7 @@
       .min-height-wrapper
          .not-sent-yet
             .fpass-text(data-html-fpass_main_text)=coreText.fpass_main_text
-            input.username(placeholder=coreText.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
+            input.username(name="email", placeholder=coreText.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
             .no-robot#fpass_no_robot
             .error.ani04
             input(type="submit", data-val-send_email, value=coreText.send_email).done

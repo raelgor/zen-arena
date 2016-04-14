@@ -15,9 +15,7 @@ Core app variables.
 
 `site_name` **string** Application name.
 
-`bind_ip` **string** Address to bind application server.
-
-`port` **number** Port to bind application server.
+`port` **number** Main port that the application is served in.
 
 `geoip_timeout` **number** Time in milliseconds before aborting a request for an address's location.
 
