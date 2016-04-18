@@ -4,16 +4,16 @@
 ```js
 module.exports = {
 
-   // zenx-cache server info
-   cache_server: {
-
-      host: 'localhost',
-      port: 8080,
-      protocol: 'http',
-
-      // Database name
-      db_name: 'my_db_name'
-
+   // MongoDB connection credentials
+   systemDatabase: {
+      "name" : "zen",
+      "host" : "localhost",
+      "port" : 27017,
+      "username" : "",
+      "password" : "",
+      "query" : {
+         "authSource" : "admin"
+      }
    }
 
 }

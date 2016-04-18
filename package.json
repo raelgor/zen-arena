@@ -22,7 +22,8 @@
     "jade": "^1.11.0",
     "mongodb": "^2.1.4",
     "nodemailer": "^2.1.0",
-    "zenx": "0.0.42"
+    "zenx": "0.0.42",
+    "zenx-lb": "^0.1.3"
   },
   "author": {
     "name": "Kosmas Papadatos",

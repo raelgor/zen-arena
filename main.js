@@ -4,48 +4,100 @@ Developed by Kosmas Papadatos
 */
 'use strict';
 
-const zenx = require('zenx');
 const os = require('os');
-const cluster = require('cluster');
-const colors = require('colors/safe');
-const numOfCores = os.cpus().length;
+const numOfCores = global.numOfCores = os.cpus().length;
 const log = require('./src/log');
+const cluster = global.cluster = require('cluster');
+const colors = require('colors/safe');
 const packageInfo = require('./package');
+const uuid = require('./src/fn/uuid');
+const co = require('co');
+const mongodb = require('mongodb');
+const fs = require('fs');
+const make_mongo_url = require('./src/fn/make_mongo_url');
 
-// Load configuration or throw
-// @todo Make an error that points to documentation about the contents
-// of config.json
-const config = require('./config');
-
-config.version = packageInfo.version;
+const roleHandlerMap = {
+   'app' : './src/app.js',
+   'balancer' : './src/balancer.js'
+};
 
 // Set master process title
 process.title = 'zen-arena-cm';
 
-const cacheServerUrl = config.cache_server.host + ':' + config.cache_server.port;
-log(`Connecting to data server at ${colors.magenta(cacheServerUrl)}...`);
+// Client configuration file
+var config;
 
-const transporter = new zenx.cache.Client(config.cache_server);
+// Client ID
+var clientID;
 
-transporter.on('connected', () => {
-   transporter.on('error', log);
+// Persistent connection to the System Database
+var systemDB;
 
-   log('Connected. Forking workers...');
+log(`Initializing zen-arena client ${packageInfo.version} ...`);
 
-   cluster.setupMaster({ exec: __dirname + '/src/cluster.js' });
+try {
 
-   // Start as many workers as the cores we have
-   // @todo Make the number of workers configurable
-   for(let i = 0; i < numOfCores; i++) {
-      let worker = cluster.fork();
+   log(`Loading configuration from config file...`);
 
-      worker.send({ config });
+   config = require('./config');
 
-      worker.on('disconnect', () => {
-         worker.kill('SIGTERM');
-         cluster.fork().send({ config });
-      });
+   log.green(`Configuration loaded.`);
+
+   log(`Loading client ID...`);
+
+   try {
+
+      clientID = fs.readFileSync('./id').toString('utf8');
+      log.magenta(clientID);
+
+   } catch (err) {
+
+      log.warn(`No client ID found. Generating...`);
+
+      clientID = uuid();
+
+      log.magenta(clientID);
+
+      log.warn(`Writing to file...`);
+
+      fs.writeFileSync('./id', clientID);
+
+      log.warn(`Done.`);
+
    }
 
-   log.green('Main process initialized.');
-});
+   co(init);
+
+} catch(err) {
+
+   log(`Load failed: ${colors.red(err)}`);
+   process.exit();
+
+}
+
+function* init() {
+
+   log(`Connecting to system database...`);
+
+   systemDB = yield mongodb.connect(make_mongo_url(config.systemDatabase));
+
+   var clientConfig = yield systemDB.collection('clients').find({id:clientID}).toArray();
+
+   if(!clientConfig.length)
+      yield systemDB.collection('clients').insert({ id: clientID });
+   else
+      clientConfig = clientConfig[0];
+
+   if(!clientConfig.role) {
+      log.warn(`No client configuration in database. Client idle.`);
+      return;
+   }
+
+   log(`Role: ${colors.magenta(clientConfig.role.toUpperCase())}`);
+   log(`Instances: ${colors.magenta(clientConfig.instances)}`);
+
+   require(roleHandlerMap[clientConfig.role])(clientConfig);
+
+   log.green('Master process initialized.');
+
+}

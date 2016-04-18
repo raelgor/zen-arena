@@ -1,4 +1,4 @@
-/* global dataTransporter, fs, co, log, config, appConfig, postman */
+/* global dataTransporter, fs, co, log, config, postman */
 /* global DataTransporter, cacheClient, path */
 'use strict';
 
