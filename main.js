@@ -79,7 +79,13 @@ function* init() {
 
    log(`Connecting to system database...`);
 
-   systemDB = yield mongodb.connect(make_mongo_url(config.systemDatabase));
+   while(!systemDB)
+      try {
+         systemDB = yield mongodb.connect(make_mongo_url(config.systemDatabase));
+      } catch (err) {
+         log.warn('Could not connect to system database. Retrying in 1s...');
+         yield new Promise(r => setTimeout(r, 1e3));
+      }
 
    var clientConfig = yield systemDB.collection('clients').find({id:clientID}).toArray();
 
