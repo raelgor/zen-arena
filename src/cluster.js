@@ -85,7 +85,7 @@ process.on('message', message => co(function*(){
     //global.cacheClient = new cache.Client(config.cache_server);
 try{
     dataTransporter.setMongosClient(make_mongo_url(config.systemDatabase));
-}catch(err){throw err;}
+}catch(err){console.log(err)}
     log('Done. Waiting for connect.');
 
     // Swallow errors
