@@ -1,12 +1,11 @@
 /* global dataTransporter, fs, co, log, config, postman */
-/* global DataTransporter, cacheClient, path */
+/* global DataTransporter, cacheClient, path, fn */
 'use strict';
 
 // Worker process title
 process.title = 'zen-arena-cs';
 
 const Server = require('zenx-server');
-const cache = require('zenx-cache');
 
 var initialized = false;
 
@@ -22,6 +21,7 @@ global.querystring = require('querystring');
 global.fb = require('fb');
 global.mongodb = require('mongodb');
 global.path = require('path');
+global.packageInfo = require('../package');
 
 global.log = require('./log');
 global.GeoIP = require('./GeoIP');
@@ -68,6 +68,7 @@ global.dataTransporter = new DataTransporter();
  */
 global.cacheClient = null;
 global.appConfig = null;
+global.mongos = null;
 global.config = null;
 global.app = null;
 
@@ -81,9 +82,9 @@ process.on('message', message => co(function*(){
       return log.warn('Cluster asked to init more than once. Ignoring...');
 
     global.config = message.config;
-    global.cacheClient = new cache.Client(config.cache_server);
+    //global.cacheClient = new cache.Client(config.cache_server);
 
-    dataTransporter.setClient(cacheClient);
+    dataTransporter.setMongosClient(fn.make_mongo_url(config.systemDatabase));
 
     log('Done. Waiting for connect.');
 

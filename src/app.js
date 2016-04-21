@@ -4,7 +4,7 @@ const cluster = global.cluster;
 
 module.exports = clientConfig => {
 
-   cluster.setupMaster({ exec: __dirname + '/src/cluster.js' });
+   cluster.setupMaster({ exec: __dirname + '/cluster.js' });
 
    var instances = clientConfig.instances || global.numOfCores;
 

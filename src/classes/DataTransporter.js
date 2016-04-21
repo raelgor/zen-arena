@@ -1,4 +1,4 @@
-/* global co, config, User, Timer, log */
+/* global co, config, User, Timer, log, mongodb */
 'use strict';
 
 /**
@@ -24,9 +24,20 @@ module.exports = class DataTransporter {
     * @param {zenx.cache.Client} cacheClient The new cache client object.
     * @returns {boolean}
     */
-   setClient(cacheClient){
-      this._client = cacheClient || this._client || null;
+   setMongosClient(url){
+
+      var dbc;
+
+      mongodb.connect(url, (err, db) => this.dbc = dbc = db);
+
+      this._client = {
+         get: obj => { return new Promise(r => dbc.collection(obj.collection).find(obj.query,obj.options).toArray((err, res) => r(res))); },
+         update: obj => { return new Promise(r => dbc.collection(obj.collection).update(obj.query,obj.update,obj.options, (err, res) => r(res))); },
+         remove: obj => { return new Promise(r => dbc.collection(obj.collection).remove(obj.query,obj.options, (err, res) => r(res))); }
+      };
+
       return typeof cacheClient === 'object';
+
    }
 
    /**
@@ -47,7 +58,7 @@ module.exports = class DataTransporter {
 
          var queryResult = yield transporter._client.get({
             query,
-            database: config.cache_server.db_name,
+            database: config.systemDatabase.name,
             collection: 'users'
          });
 
@@ -87,7 +98,7 @@ module.exports = class DataTransporter {
          var queryResult = yield transporter._client.update({
             query: { id: user.id },
             update,
-            database: config.cache_server.db_name,
+            database: config.systemDatabase.name,
             collection: 'users'
          });
 
@@ -119,7 +130,7 @@ module.exports = class DataTransporter {
          var queryResult = yield transporter._client.update({
             query: { id: user.id },
             update: { upsert: true },
-            database: config.cache_server.db_name,
+            database: config.systemDatabase.name,
             collection: 'users'
          });
 
@@ -169,7 +180,7 @@ module.exports = class DataTransporter {
          var result = yield transporter.get({
             query: { id },
             collection: 'posts',
-            database: config.cache_server.db_name
+            database: config.systemDatabase.name
          });
 
          return result[0];
@@ -192,7 +203,7 @@ module.exports = class DataTransporter {
          var response = yield transporter.get({
             query: { $or: [{id: namespace}, {namespace}] },
             collection: 'namespaces',
-            database: config.cache_server.db_name
+            database: config.systemDatabase.name
          });
 
          log.debug(`dataTransporter.getRecordByNamespace: Done. (${timer.click()}ms) Getting refered record...`);

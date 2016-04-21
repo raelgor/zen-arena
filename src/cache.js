@@ -16,7 +16,7 @@ function get_data(){
 
         var configResponse = yield dataTransporter.get({
             query: {},
-            database: config.cache_server.db_name,
+            database: config.systemDatabase.name,
             collection: 'configuration'
         });
 
@@ -27,7 +27,7 @@ function get_data(){
 
         var textResponse = yield dataTransporter.get({
             query: {},
-            database: config.cache_server.db_name,
+            database: config.systemDatabase.name,
             collection: 'text'
         });
 

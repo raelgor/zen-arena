@@ -86,7 +86,7 @@ module.exports = class DataTransporter {
 
          var queryResult = yield transporter._client.get({
             query,
-            database: config.cache_server.db_name,
+            database: config.systemDatabase.name,
             collection: 'users'
          });
 
@@ -126,7 +126,7 @@ module.exports = class DataTransporter {
          var queryResult = yield transporter._client.update({
             query: { id: user.id },
             update,
-            database: config.cache_server.db_name,
+            database: config.systemDatabase.name,
             collection: 'users'
          });
 
@@ -158,7 +158,7 @@ module.exports = class DataTransporter {
          var queryResult = yield transporter._client.update({
             query: { id: user.id },
             update: { upsert: true },
-            database: config.cache_server.db_name,
+            database: config.systemDatabase.name,
             collection: 'users'
          });
 

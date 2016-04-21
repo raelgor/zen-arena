@@ -8,14 +8,14 @@ module.exports = (collection, id) => co(function*(){
       query: { collection, id },
       update: { $inc: { seq: 1 } },
       options: {},
-      database: config.cache_server.db_name,
+      database: config.systemDatabase.name,
       collection: 'counters'
    });
 
    // Get
    var entry = yield dataTransporter.get({
       query: { collection, id },
-      database: config.cache_server.db_name,
+      database: config.systemDatabase.name,
       collection: 'counters'
    });
 

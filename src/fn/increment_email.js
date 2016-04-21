@@ -13,7 +13,7 @@ module.exports = email => co(function*(){
 
    var record = yield dataTransporter.get({
       query: { email },
-      database: config.cache_server.db_name,
+      database: config.systemDatabase.name,
       collection: 'email_blacklist'
    });
 
@@ -43,7 +43,7 @@ module.exports = email => co(function*(){
       query: { email },
       update: { $set: record },
       options: { upsert: true },
-      database: config.cache_server.db_name,
+      database: config.systemDatabase.name,
       collection: 'email_blacklist'
    });
 

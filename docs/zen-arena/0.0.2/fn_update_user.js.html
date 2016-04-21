@@ -59,7 +59,7 @@ module.exports = user => { return co(function*(){
    yield dataTransporter.update({
       query: { id: user.id },
       update: { $set: user },
-      database: config.cache_server.db_name,
+      database: config.systemDatabase.name,
       collection: 'users'
    });
 
