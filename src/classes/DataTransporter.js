@@ -31,14 +31,7 @@ module.exports = class DataTransporter {
       mongodb.connect(url, (err, db) => this.dbc = dbc = db);
 
       this._client = {
-         get: obj => {
-
-            console.log('getting record...');
-            console.log(obj);
-
-            return new Promise(r => dbc.collection(obj.collection).find(obj.query,obj.options).toArray((err, res) => [console.log({err,res}),r(res)])); 
-
-         },
+         get: obj => { return new Promise(r => dbc.collection(obj.collection).find(obj.query,obj.options).toArray((err, res) => r(res))); },
          update: obj => { return new Promise(r => dbc.collection(obj.collection).update(obj.query,obj.update,obj.options, (err, res) => r(res))); },
          remove: obj => { return new Promise(r => dbc.collection(obj.collection).remove(obj.query,obj.options, (err, res) => r(res))); }
       };
