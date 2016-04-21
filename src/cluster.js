@@ -81,7 +81,7 @@ process.on('message', message => co(function*(){
     if('config' in message && initialized)
       return log.warn('Cluster asked to init more than once. Ignoring...');
 
-    global.config = message.config;
+    global.config = message;
     //global.cacheClient = new cache.Client(config.cache_server);
 
     dataTransporter.setMongosClient(fn.make_mongo_url(config.systemDatabase));
