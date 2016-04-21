@@ -14,7 +14,7 @@ module.exports = (id, coreText) => co(function*(){
 
    log.debug('factory.post: Getting post by id...');
    var data = yield dataTransporter.getPost(id);
-   
+   console.log(data);
    log.debug(`factory.post: Done. (${timer.click()}ms) Getting record by namespace...`);
    var publisher = yield dataTransporter.getRecordByNamespace(data.publisher);
 
