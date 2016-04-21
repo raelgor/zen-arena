@@ -12,7 +12,7 @@ module.exports = coreText => co(function*(){
    var timer = new Timer();
    var posts = [];
 
-   for(let index in appConfig.home_posts)
+   for(let index of appConfig.home_posts)
       posts[index] = yield factory.post(index, coreText);
 
    var result = templates.home({
