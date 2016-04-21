@@ -39,7 +39,7 @@ try {
 
    log(`Loading configuration from config file...`);
 
-   config = require('./config');
+   config = global.config = require('./config');
 
    log.green(`Configuration loaded.`);
 

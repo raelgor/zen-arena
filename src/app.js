@@ -1,3 +1,4 @@
+/* global config */
 'use strict';
 
 const cluster = global.cluster;
@@ -11,11 +12,11 @@ module.exports = clientConfig => {
    for(let i = 0; i < instances; i++) {
       let worker = cluster.fork();
 
-      worker.send(clientConfig);
+      worker.send({config, clientConfig});
 
       worker.on('disconnect', () => {
          worker.kill('SIGTERM');
-         cluster.fork().send(clientConfig);
+         cluster.fork().send({config, clientConfig});
       });
    }
 
