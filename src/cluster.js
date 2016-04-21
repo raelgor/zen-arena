@@ -83,9 +83,9 @@ process.on('message', message => co(function*(){
 
     global.config = message.config;
     //global.cacheClient = new cache.Client(config.cache_server);
-try{
+
     dataTransporter.setMongosClient(make_mongo_url(config.systemDatabase));
-}catch(err){console.log(err)}
+
     log('Done. Waiting for connect.');
 
     // Swallow errors
@@ -112,7 +112,7 @@ try{
     loaddirSync('./api', 'api');
 
     log('Done. Starting server...');
-
+console.log(message.clientConfig);
     // Start server
     global.app = new Server({
         bind: message.clientConfig.bind_ip,
