@@ -115,8 +115,8 @@ try{
 
     // Start server
     global.app = new Server({
-        bind: config.bind_ip,
-        port: config.port,
+        bind: message.clientConfig.bind_ip,
+        port: message.clientConfig.port,
         ws: true,
         static: path.resolve(__dirname + '/../assets')
     });
