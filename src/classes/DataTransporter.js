@@ -36,7 +36,7 @@ module.exports = class DataTransporter {
          remove: obj => { return new Promise(r => dbc.collection(obj.collection).remove(obj.query,obj.options, (err, res) => r(res))); }
       };
 
-      return typeof cacheClient === 'object';
+      return typeof url === 'string';
 
    }
 

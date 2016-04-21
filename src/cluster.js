@@ -89,9 +89,11 @@ process.on('message', message => co(function*(){
     log('Done. Waiting for connect.');
 
     // Swallow errors
-    cacheClient.on('error', () => {});
+    //cacheClient.on('error', () => {});
 
-    yield new Promise(resolve => cacheClient.on('connected', resolve));
+    //yield new Promise(resolve => dataTransporter.on('connected', resolve));
+
+    yield new Promise(r => setTimeout(r, 500));
 
     log('Connected. Getting configuration...');
 
