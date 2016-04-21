@@ -13,7 +13,7 @@ module.exports = coreText => co(function*(){
    var posts = [];
 
    for(let index in appConfig.home_posts)
-      posts[index] = yield factory.post(posts[index], coreText);
+      posts[index] = yield factory.post(index, coreText);
 
    var result = templates.home({
       coreText,
