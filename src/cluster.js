@@ -112,11 +112,11 @@ process.on('message', message => co(function*(){
     loaddirSync('./api', 'api');
 
     log('Done. Starting server...');
-console.log(message.clientConfig);
+
     // Start server
     global.app = new Server({
-        bind: message.clientConfig.bind_ip,
-        port: message.clientConfig.port,
+        bind: message.clientConfig.config.bind_ip,
+        port: message.clientConfig.config.port,
         ws: true,
         static: path.resolve(__dirname + '/../assets')
     });
