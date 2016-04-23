@@ -22,6 +22,7 @@
     "jade": "^1.11.0",
     "mongodb": "^2.1.4",
     "nodemailer": "^2.1.0",
+    "thunk-redis": "^1.5.5",
     "zenx": "0.0.42",
     "zenx-lb": "^0.1.3"
   },

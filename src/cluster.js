@@ -1,5 +1,5 @@
 /* global dataTransporter, fs, co, log, config, postman */
-/* global DataTransporter, path, make_mongo_url */
+/* global DataTransporter, path, make_mongo_url, redis */
 'use strict';
 
 // Worker process title
@@ -22,6 +22,7 @@ global.fb = require('fb');
 global.mongodb = require('mongodb');
 global.path = require('path');
 global.packageInfo = require('../package');
+global.redis = require('thunk-redis');
 
 global.log = require('./log');
 global.GeoIP = require('./GeoIP');
@@ -82,7 +83,9 @@ process.on('message', message => co(function*(){
       return log.warn('Cluster asked to init more than once. Ignoring...');
 
     global.config = message.config;
-    //global.cacheClient = new cache.Client(config.cache_server);
+    global.cache = redis.createClient(message.clientConfig.config.cacheClients, { debugMode: false });
+
+    console.log(yield cache.get('wat'));
 
     dataTransporter.setMongosClient(make_mongo_url(config.systemDatabase));
 
