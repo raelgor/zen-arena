@@ -1,4 +1,4 @@
-/* global appConfig, config, dataTransporter, log, co */
+/* global appConfig, dataTransporter, log, co */
 'use strict';
 
 module.exports = get_data();
@@ -16,7 +16,6 @@ function get_data(){
 
         var configResponse = yield dataTransporter.get({
             query: {},
-            database: config.systemDatabase.name,
             collection: 'configuration'
         });
 
@@ -27,13 +26,11 @@ function get_data(){
 
         var textResponse = yield dataTransporter.get({
             query: {},
-            database: config.systemDatabase.name,
             collection: 'text'
         });
 
         global.text = {};
 
-        // global.text.origin.lang.id
         for(let row of textResponse)
             global.text[row.origin] = global.text[row.origin] || {};
 
@@ -49,7 +46,7 @@ function get_data(){
         global._cache_is_updating = false;
         updated();
 
-        setTimeout(get_data, 6e4);
+        setTimeout(get_data, 5*6e4);
 
     });
 

@@ -1,0 +1,59 @@
+/* global loaddirSync, DataTransporter, log */
+'use strict';
+
+global.log = require('./log');
+
+log('Loading dependencies...');
+
+// Global dependencies
+global.Server = require('zenx-server');
+global.co = require('co');
+global.colors = require('colors');
+global.jade = require('jade');
+global.https = require('https');
+global.http = require('http');
+global.fs = require('fs');
+global.bcrypt = require('bcrypt');
+global.querystring = require('querystring');
+global.fb = require('fb');
+global.mongodb = require('mongodb');
+global.path = require('path');
+global.packageInfo = require('../package');
+global.redis = require('thunk-redis');
+
+global.GeoIP = require('./GeoIP');
+global.postman = require('./postman');
+global.loaddirSync = require('./loaddirSync');
+
+// Load classes
+global.Route = require('./classes/Route');
+global.APIRoute = require('./classes/APIRoute');
+global.PageRoute = require('./classes/PageRoute');
+global.DataTransporter = require('./classes/DataTransporter');
+global.Response = require('./classes/Response');
+global.JSONResponse = require('./classes/JSONResponse');
+global.User = require('./classes/User');
+global.Timer = require('./classes/Timer');
+
+// Compile directories
+loaddirSync('./fn');
+
+/**
+ * Index of the application's request routes.
+ * @namespace routes
+ */
+loaddirSync('./routes', 'routes');
+
+/**
+ * Index of the application's jade controllers.
+ * @namespace factory
+ */
+loaddirSync('./factory', 'factory');
+// Global objects
+
+/**
+ * A data transporter object to handle data exchanges.
+ * @global dataTransporter
+ * @type DataTransporter
+ */
+global.dataTransporter = new DataTransporter();

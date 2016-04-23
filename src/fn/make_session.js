@@ -1,54 +1,62 @@
-/* global appConfig, uuid, co */
+/* global appConfig, uuid, co, dataTransporter, cache */
 'use strict';
 
 module.exports = user => co(function*(){
-
-   // If record has no sessions property, don't freak out
-   if(!user.get('sessions'))
-      user.set('sessions', {});
+   
+   let sessions = yield dataTransporter.get({
+      query: { user_id: user.get('id') },
+      collection: 'sessions'
+   });
 
    // First try to clear expired sessions
-   clear_expired_sessions(user.record.sessions);
+   sessions = sessions.filter(s => { return s.expires > Date.now(); });
 
    // If we reached max_web_sessions, try to make some room
-   if(Object.keys(user.record.sessions).length >= appConfig.max_web_sessions)
-      remove_oldest_web_session(user.record.sessions);
+   if(Object.keys(sessions).length >= appConfig.max_web_sessions)
+      yield dataTransporter.remove({
+         query: {
+            session_token: get_oldest_web_session(sessions)
+         },
+         collection: 'sessions'
+      });
 
    let session_token = uuid();
    let csrf_token = uuid();
 
-   user.record.sessions[session_token] = {
+   let session = {
       session_token,
       csrf_token,
+      user_id: user.get('id'),
+      type: 'web',
       expires: Date.now() + appConfig.web_session_lifespan,
       date_created: Date.now()
    };
 
-   yield user.updateRecord();
+   yield dataTransporter.update({
+      query: {},
+      update: { $set: session },
+      options: { upsert: true },
+      collection: 'sessions'
+   });
 
-   return user.getSession(session_token);
+   yield cache.hmset(`sessions:${session.session_token}`, session);
+
+   return session;
 
 });
 
-// Deletes expired sessions from the index
-function clear_expired_sessions(sessions) {
-   for(let token in sessions)
-      if(sessions[token].expires < Date.now())
-         delete sessions[token];
-}
-
 // Deletes the web session that will expire the soonest
-function remove_oldest_web_session(sessions) {
+function get_oldest_web_session(sessions) {
 
    let min_token;
    let min_expires = Infinity;
 
-   for(let token in sessions)
-      if(sessions[token].expires < min_expires) {
-         min_token = token;
-         min_expires = sessions[token].expires;
+   for(let index in sessions)
+      if(sessions[index].expires < min_expires) {
+         min_token = index;
+         min_expires = sessions[index].expires;
       }
 
-   delete sessions[min_token];
+   return sessions[min_token].session_token;
 
 }

@@ -39,19 +39,6 @@ module.exports = class User {
    }
 
    /**
-    * @method User.getSession
-    * @desc Returns the session record or null.
-    * @param {string} token The session token.
-    * @returns {object}
-    */
-   getSession(token){
-      if(this.record.sessions && this.record.sessions[token])
-         return this.record.sessions[token];
-      else
-         return null;
-   }
-
-   /**
     * @method User.get
     * @desc Returns the key from the record.
     * @param {string} key The key to fetch.

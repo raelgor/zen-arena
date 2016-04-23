@@ -1,4 +1,4 @@
-/* global co, config, User, Timer, log, mongodb */
+/* global co, config, User, Timer, log, mongodb, cache */
 'use strict';
 
 /**
@@ -24,11 +24,9 @@ module.exports = class DataTransporter {
     * @param {zenx.cache.Client} cacheClient The new cache client object.
     * @returns {boolean}
     */
-   setMongosClient(url){
+   connectMongos(url){
 
       var dbc;
-
-      mongodb.connect(url, (err, db) => this.dbc = dbc = db);
 
       this._client = {
          get: obj => { return new Promise(r => dbc.collection(obj.collection).find(obj.query,obj.options).toArray((err, res) => r(res))); },
@@ -36,7 +34,11 @@ module.exports = class DataTransporter {
          remove: obj => { return new Promise(r => dbc.collection(obj.collection).remove(obj.query,obj.options, (err, res) => r(res))); }
       };
 
-      return typeof url === 'string';
+      return new Promise(r =>
+         mongodb.connect(url, (err, db) => {
+            this.dbc = dbc = db;
+            r();
+         }));
 
    }
 
@@ -56,13 +58,26 @@ module.exports = class DataTransporter {
          if(!transporter._client)
             return Promise.resolve(false);
 
-         var queryResult = yield transporter._client.get({
-            query,
-            database: config.systemDatabase.name,
-            collection: 'users'
-         });
+         var user;
+         var queryResult;
 
-         return queryResult[0] && new User(queryResult[0]);
+         if(query.id)
+            user = yield cache.hgetall(`user:${query.id}`);
+
+         if(!user || !user.id) {
+            queryResult = yield transporter._client.get({
+               query,
+               database: config.systemDatabase.name,
+               collection: 'users'
+            });
+
+            user = queryResult[0];
+
+            if(user.id)
+               yield cache.hmset(`user:${user.id}`, user);
+         }
+
+         return user && new User(user);
 
       });
 
@@ -177,13 +192,24 @@ module.exports = class DataTransporter {
       var transporter = this;
 
       return co(function*(){
-         var result = yield transporter.get({
-            query: { id },
-            collection: 'posts',
-            database: config.systemDatabase.name
-         });
 
-         return result[0];
+         var post = yield cache.hgetall(`post:${id}`);
+
+         if(!post || !post.id) {
+
+            var result = yield transporter.get({
+               query: { id },
+               collection: 'posts',
+               database: config.systemDatabase.name
+            });
+
+            post = result[0];
+
+            yield cache.hmset(`post:${id}`, post);
+
+         }
+
+         return post;
       });
     }
 

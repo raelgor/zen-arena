@@ -1,4 +1,4 @@
-/* global Route, co, dataTransporter, appConfig, uuid, Timer, log */
+/* global Route, co, dataTransporter, appConfig, uuid, Timer, log, cache */
 'use strict';
 
 /**
@@ -16,9 +16,23 @@ module.exports = new Route((response, req, res, next) => co(function*(){
    // Auth user if not static
    if(req.cookies && req.cookies.st) {
 
-      let user = yield dataTransporter.getUser({
-         [`sessions.${req.cookies.st}`]: { $exists: 1 }
-      });
+      let user;
+      let session = yield cache.hgetall(`sessions:${req.cookies.st}`);
+
+      if(!session.session_token) {
+         let query = yield dataTransporter.get({
+            session_token: req.cookies.st,
+            collection: 'sessions'
+         });
+
+         session = query[0];
+
+         if(session)
+            yield cache.hmset(`sessions:${session.session_token}`, session);
+      }
+
+      if(session)
+         user = yield dataTransporter.getUser({ id: session.user_id });
 
       if(!user) {
          log.debug('authentication: Cookies were invalid. Clearing...');
@@ -28,7 +42,7 @@ module.exports = new Route((response, req, res, next) => co(function*(){
          log.debug('authentication: User found. Gathering info...');
 
          req.__user = user;
-         req.__session = user.getSession(req.cookies.st);
+         req.__session = session;
 
          // If user has a valid lang setting, set the request's lang
          if(user.get('lang') && ~appConfig.app_languages.indexOf(user.get('lang')))
