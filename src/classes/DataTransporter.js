@@ -1,6 +1,21 @@
 /* global co, config, User, Timer, log, mongodb */
 'use strict';
 
+const redis = require('thunk-redis');
+const cacheClient = redis.createClient([
+   'localhost:7000',
+   'localhost:7001',
+   'localhost:7002',
+   'localhost:7003',
+   'localhost:7004',
+   'localhost:7005',
+],{debugMode:false});
+
+co(function*(){
+   console.log(yield cacheClient.set('wat','sup'));
+   console.log(yield cacheClient.get('wat'));
+});
+
 /**
  * @class DataTransporter
  * @desc Creates a portable transporter object with useful methods for data
