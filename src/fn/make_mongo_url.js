@@ -2,7 +2,7 @@
 
 function make_mongo_url(options) {
 
-    const auth_string = options.user ? options.user + ':' + options.password + '@' : '';
+    const auth_string = options.username ? options.username + ':' + options.password + '@' : '';
 
     var mongoUrl = `mongodb://${auth_string+(options.host||'localhost')}:${options.port||27017}/${options.name}`;
 
