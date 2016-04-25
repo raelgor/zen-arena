@@ -1,0 +1,14 @@
+.comment-container(data-comment-id=comment.id)
+   .icon-cross
+   .comment-user-image(style="background-image:url("+comment.userImage+")")
+   .comment-info
+      .comment-user-display-name=comment.displayName
+      .comment-text=comment.text
+      .inline-stuff
+         .comment-date(data-date=comment.date)
+            span.date-number
+            span.date-text
+         a.comment-like(tabindex=0 class=+comment.selfLiked?"liked":"")
+            .icon-like
+            .like-text(data-html-like)=coreText.like
+            .comment-interaction-pool=+comment.likes||''

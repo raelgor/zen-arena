@@ -1,4 +1,4 @@
-/* global co, dataTransporter, APIRoute, routes */
+/* global co, dataTransporter, APIRoute, routes, cache */
 'use strict';
 
 /**
@@ -11,11 +11,13 @@
 var route = new APIRoute((response, req, res) => co(function*(){
 
    res.clearCookie('st');
+   
+   yield dataTransporter.remove({
+      query: { session_token: req.__session.session_token },
+      collection: 'sessions'
+   });
 
-   yield dataTransporter.updateUser(
-      req.__user,
-      { $unset: { [`sessions.${req.__session.session_token}`]: 1 }}
-   );
+   yield cache.del(`sessions:${req.__session.session_token}`);
 
    response.responseData.message = 'OK';
    response.end();

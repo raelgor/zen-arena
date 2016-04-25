@@ -5,15 +5,16 @@
  * Produces html for the home view and returns it asynchronously.
  * @method factory.home
  * @param {object} coreText The core application text to use.
+ * @param {object} uid The authenticated user.
  * @returns Promise
  */
-module.exports = coreText => co(function*(){
+module.exports = (coreText, uid) => co(function*(){
    log.debug('factory.home: Making...');
    var timer = new Timer();
    var posts = [];
 
    for(let index of appConfig.home_posts)
-      posts[index] = yield factory.post(index, coreText);
+      posts[index] = yield factory.post(index, coreText, uid);
 
    var result = templates.home({
       coreText,

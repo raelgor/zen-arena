@@ -23,6 +23,10 @@ app.router.post('/api/resubscribe/:token', api.resubscribe.route);
 
 // Calls that require authentication
 app.router.post('/api/logout', api.logout.route);
+app.router.post('/api/like/:action/:type/:id', api.like.route);
+app.router.post('/api/comment/create/:post_id', api.commentcreate.route);
+app.router.post('/api/comment/getprevious/:post_id/:earliest_index', api.commentgetprev.route);
+app.router.post('/api/comment/delete/:comment_id', api.commentdelete.route);
 
 // Page routes
 app.router.all(['/','/home'], pageHandlers.home.route);

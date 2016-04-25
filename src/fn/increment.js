@@ -1,24 +1,16 @@
-/* global config, dataTransporter, co */
+/* global dataTransporter, co */
 'use strict';
 
 module.exports = (collection, id) => co(function*(){
 
    // Increment
-   yield dataTransporter.update({
-      query: { collection, id },
-      update: { $inc: { seq: 1 } },
-      options: {},
-      database: config.systemDatabase.name,
-      collection: 'counters'
-   });
-
-   // Get
-   var entry = yield dataTransporter.get({
-      query: { collection, id },
-      database: config.systemDatabase.name,
-      collection: 'counters'
-   });
-
-   return entry[0].seq;
+   var entry = yield dataTransporter.dbc.collection('counters').findAndModify(
+      { collection, id },
+      [],
+      { $inc: { seq: 1 } },
+      {}
+   );
+   
+   return entry.value.seq;
 
 });

@@ -35,22 +35,29 @@ a.post-publisher-name {
 }
 
 a.post-date-published {
-    display: block;
+    display: block !important;
+}
+
+[data-date] {
     text-decoration: none;
     font-size: 12px;
     color: gray;
     cursor: pointer;
 }
 
-a.post-date-published:hover {
+[data-date]:hover {
     text-decoration: underline;
 }
 
-.post-date-published .number {
+span.post-interaction-button.like.liked {
+    color: #7DB632;
+}
+
+[data-date] .date-number {
     padding-right: 4px;
 }
 
-.post-date-published .number:empty {
+[data-date] .date-number:empty {
    padding: 0px !important;
 }
 
@@ -84,4 +91,178 @@ a.post-date-published:hover {
     position: relative;
     top: -3px;
     color: gray;
+}
+.post-interaction-button {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 5px;
+    vertical-align: top;
+    cursor:pointer;
+    user-select:none;
+    -webkit-user-select: none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    -o-user-select:none;
+}
+
+.post-interaction-button > * {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+.post-interaction-button > :first-child {
+    margin-right: 8px;
+}
+
+.post-interaction-button .post-interaction-pool {
+    background: #B3B3B3;
+    border-radius: 3px;
+    padding: 3px 5px;
+    color: white;
+    font-size: 11px;
+    margin-left: 10px;
+    position: relative;
+    top: -2px;
+}
+
+.post-interaction-button .post-interaction-pool:empty {
+    display: none;
+}
+
+.post-comment-section {
+    background: #F5F5F5;
+    border-top: 1px solid #EAEAEA;
+    border-radius: 0 0 4px 4px;
+}
+
+.post-comment-section .user-comment {
+    height: 59px;
+    display: none;
+}
+.logged-in .post-comment-section .user-comment {
+   display: block;
+}
+
+
+.post-comment-section .user-comment input {
+    border: 1px solid #DEDEDE;
+    border-radius: 4px;
+    margin: 11px 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    height: 21px;
+    width: calc(100% - 109px);
+    display: inline-block;
+}
+
+.comment-user-image {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 13px 5px 0 20px;
+    border-radius: 3px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    vertical-align: top;
+}
+
+.comment-container .icon-cross {
+    float: right;
+    margin: 15px 15px 0 0;
+    opacity: .1;
+    font-size: 12px;
+}
+.comment-container [data-date] {
+   pointer-events: none;
+   user-select: none;
+   -webkit-user-select:none;
+}
+
+.comment-container {
+    border-bottom: 1px solid #EAEAEA;
+   padding-bottom: 10px;
+}
+
+.comment-info {
+    display: inline-block;
+    margin-left: 12px;
+    margin-top: 10px;
+}
+
+.comment-user-display-name {
+    font-weight: bold;
+    font-size: 13px;
+    color: #575757;
+}
+
+.comment-user-display-name, .comment-text {
+    display: inline;
+}
+
+.comment-text {
+    font-size: 14px;
+}
+
+.comment-user-display-name {
+    margin-right: 9px;
+    font-size: 14px;
+}
+
+.inline-stuff {
+    margin-top: 3px;
+}
+
+.inline-stuff * {
+    display: inline;
+}
+
+.comment-like {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.like-text {
+    margin: 0 5px;
+    font-size: 14px;
+}
+
+.comment-like .icon-like {
+    font-size: 15px;
+}
+
+.comment-info {
+    max-width: calc(100% - 110px);
+}
+
+.comment-interaction-pool {
+    background: #B3B3B3;
+    color: white;
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 12px;
+    position: relative;
+    top: -1px;
+}
+
+.comment-interaction-pool:empty {
+    display: none;
+}
+
+.comment-like.liked {
+    color: #7db632;
+}
+
+.load-more {
+    border-bottom: 1px solid #EAEAEA;
+    text-align: center;
+    font-size: 12px;
+    padding: 4px;
+    background: #FAFAFA;
+    cursor: pointer;
+}
+
+.load-more:hover {
+    text-decoration: underline;
 }

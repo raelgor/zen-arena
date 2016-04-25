@@ -1,4 +1,4 @@
-/* global appConfig, dataTransporter, log, co */
+/* global appConfig, dataTransporter, log, co, make_core_text */
 'use strict';
 
 module.exports = get_data();

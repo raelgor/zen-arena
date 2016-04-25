@@ -12,8 +12,7 @@
  */
 module.exports = class DataTransporter {
 
-   constructor(cacheClient){
-      this._client = cacheClient || null;
+   constructor(){
    }
 
    /**
@@ -199,8 +198,7 @@ module.exports = class DataTransporter {
 
             var result = yield transporter.get({
                query: { id },
-               collection: 'posts',
-               database: config.systemDatabase.name
+               collection: 'posts'
             });
 
             post = result[0];

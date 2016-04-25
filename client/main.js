@@ -44,6 +44,7 @@ window.za = {
       za.send('/api/logout');
       delete clientData.csrf_token;
       delete clientData.user_data;
+      $('html').removeClass('logged-in');
       za.userBar.setStatus(false);
    },
 
@@ -115,6 +116,9 @@ $(window).ready(function(){
    za.ui.ntFocus('.navigation .search');
 
    za.ui.initControllers('body > .content');
+
+   if(clientData.user_data)
+      $('html').addClass('logged-in');
 
    // Safari fix
    setTimeout(resize, 0);

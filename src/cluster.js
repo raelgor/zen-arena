@@ -1,5 +1,5 @@
 /* global dataTransporter, loaddirSync, co, log, config, postman */
-/* global path, make_mongo_url, redis */
+/* global path, make_mongo_url, redis, cache */
 'use strict';
 
 // Worker process title
@@ -19,6 +19,9 @@ process.on('message', message => co(function*(){
    global.cache = redis.createClient(
    message.clientConfig.config.cacheClients,
    { debugMode: false });
+
+   cache.on('connect', () => log.green('Redis client connected.'));
+   cache.on('error', err => log.error(`Redis client error: ${err}`));
 
    log('Connecting to mongos...');
 

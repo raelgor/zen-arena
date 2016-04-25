@@ -9,9 +9,9 @@
                a&attributes(button.attr).ani01(href=button.href)=button.text
          form.search-box(action="/search", method="get", itemprop="potentialAction", itemscope, itemtype="http://schema.org/SearchAction")
             meta(itemprop="target", content="/search?q={q}")
+            input.search(itemprop="query-input", pattern=".{2,50}", title=coreText.menu_search, data-title-menu_search, data-placeholder-menu_search, name="q", type="text", placeholder=coreText.menu_search, required)
             button(type="submit")
                .icon-search
-            input.search(itemprop="query-input", pattern=".{2,50}", title=coreText.menu_search, data-title-menu_search, data-placeholder-menu_search, name="q", type="text", placeholder=coreText.menu_search, required)
          .player-info
             a.login(tabindex=0, data-html-menu_signin)=coreText.menu_signin
             .or(data-html-menu_or)=coreText.menu_or

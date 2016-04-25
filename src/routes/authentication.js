@@ -32,7 +32,7 @@ module.exports = new Route((response, req, res, next) => co(function*(){
       }
 
       if(session)
-         user = yield dataTransporter.getUser({ id: session.user_id });
+         user = yield dataTransporter.getUser({ id: +session.user_id });
 
       if(!user) {
          log.debug('authentication: Cookies were invalid. Clearing...');

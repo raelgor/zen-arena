@@ -13,7 +13,9 @@ module.exports = new PageRoute(response => co(function*() {
 
    response.responseData = yield factory.index(
       response.pageData,
-      yield factory.home(response.pageData.coreText)
+      yield factory.home(
+         response.pageData.coreText,
+         response.request.__user && response.request.__user.get('id'))
   );
 
   response.end();

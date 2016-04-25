@@ -394,6 +394,8 @@ za._login_response_handler = function(response){
       // Exit login dialogs
       za.login.exitPrompts();
 
+      $('html').addClass('logged-in');
+
       // Set data
       clientData.user_data = response.user_data;
       clientData.csrf_token = response.csrf_token;
@@ -407,6 +409,9 @@ za._login_response_handler = function(response){
 
       // Update navigation bar
       za.userBar.setUser(clientData.user_data);
+
+      // On logged in field
+      $('.user-comment .comment-user-image').css('background-image','url('+clientData.user_data.image+')');
 
    } else {
       register_frame.error(clientData.core_text.error_something_went_wrong);

@@ -2,6 +2,6 @@
 
 za.controllers.home = new za.Controller(function(element){
 
-   element;
+   $(element).find('#stepinarena').click(za.login.promptLogin);
 
 });
