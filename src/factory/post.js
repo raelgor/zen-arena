@@ -111,6 +111,9 @@ module.exports = (id, coreText, uid) => co(function*(){
    for(let index in data.commentsHtml)
       data.commentsHtml[index] = yield factory.comment(data.commentsHtml[index], coreText, uid);
 
+   if(+uid === +data.publisher)
+      data.isOwner = true;
+
    var result = templates.post({
       coreText,
       data

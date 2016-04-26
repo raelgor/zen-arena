@@ -1,4 +1,4 @@
-/* global APIRoute, routes, co, dataTransporter, cache,increment */
+/* global APIRoute, routes, co, dataTransporter, delete_comment */
 'use strict';
 
 /**
@@ -9,29 +9,21 @@
  */
 var route = new APIRoute((response, req) => co(function*(){
 
-   var action = req.params.action;
-   var id = req.params.id;
-   
-   var comment = {
-      user_id: +req.__user.get('id'),
-      id: increment('comments','id'),
-      post_id: +id,
-      text: req.body.message.comment,
-      date: Date.now()
-   };
+   var uid = req.__user.get('id');
+   var id = req.params.comment_id;
+   var comment = yield dataTransporter.getCommentView(id);
 
-   if(!~['create','delete'].indexOf(action))
-      response.error('error_invalid_action');
+   if(+uid === +comment.user_id) {
+      comment.deletable = true;
+   } else {
+      let post = yield dataTransporter.getPost(comment.post_id);
+      +post.publisher === +uid && (comment.deletable = true);
+   }
 
-   if(!id)
-      response.error('error_no_id');
+   if(!comment.deletable)
+      return response.error('error_not_authorized_to_delete');
 
-   yield dataTransporter
-            .dbc
-            .collection(`comments`).insert(comment);
-
-   yield cache.hincrby(`postview:${id}`, 'comments', action == 'create' ? 1 : -1);
-   yield cache.hmset(`commentview:${comment.id}`,comment);
+   yield delete_comment(id);
 
    // Return geo info
    response.responseData = { message: 'OK' };

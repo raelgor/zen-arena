@@ -13,22 +13,8 @@
 module.exports = (id, coreText, uid) => co(function*(){
    log.debug('factory.comment: Making...');
    var timer = new Timer();
-
-   var comment;
-
-   // Get comment info
-   if(+(yield cache.exists(`commentview:${id}`)))
-      comment = yield cache.hgetall(`commentview:${id}`);
-   else {
-      comment = yield dataTransporter.dbc.collection('comments').find({id:+id}).toArray();
-      comment = comment[0];
-      comment.likes = yield dataTransporter
-                           .dbc
-                           .collection('comment_likes')
-                           .find({ comment_id: +id })
-                           .count();
-      yield cache.hmset(`commentview:${id}`, comment);
-   }
+   
+   var comment = yield dataTransporter.getCommentView(id);
 
    // Get poster info
    var user_id = comment.user_id;
@@ -38,7 +24,7 @@ module.exports = (id, coreText, uid) => co(function*(){
    comment.userImage = user.get('image');
    comment.displayName = user.displayName();
 
-   // Check if auth user has liked
+   // Check if auth user has liked and if can delete
    if(uid) {
       if(+(yield cache.exists(`commentselflike:${id}:${uid}`)))
          comment.selfLiked = yield cache.get(`commentselflike:${id}:${uid}`);
@@ -50,8 +36,14 @@ module.exports = (id, coreText, uid) => co(function*(){
          comment.selfLiked = +result;
          yield cache.set(`commentselflike:${id}:${uid}`, comment.selfLiked);
       }
+      if(+uid === +comment.user_id) {
+         comment.deletable = true;
+      } else {
+         let post = yield dataTransporter.getPost(comment.post_id);
+         +post.publisher === +uid && (comment.deletable = true);
+      }
    }
-
+console.log(6);
    // Build
    var result = templates.comment({
       coreText,

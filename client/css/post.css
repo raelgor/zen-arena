@@ -5,6 +5,15 @@
     font-family: Open Sans, sans-serif;
 }
 
+.post-wrapper .icon-cross.post {
+    float: right;
+    font-size: 12px;
+    color: #D5D5D5;
+    position: relative;
+    top: 4px;
+    cursor: pointer;
+}
+
 .post-head {
    margin: 15px 20px 10px;
 }
@@ -171,6 +180,7 @@ span.post-interaction-button.like.liked {
     margin: 15px 15px 0 0;
     opacity: .1;
     font-size: 12px;
+    cursor: pointer;
 }
 .comment-container [data-date] {
    pointer-events: none;
@@ -193,6 +203,11 @@ span.post-interaction-button.like.liked {
     font-weight: bold;
     font-size: 13px;
     color: #575757;
+    text-decoration: none;
+}
+
+.comment-user-display-name:hover {
+   text-decoration: underline;
 }
 
 .comment-user-display-name, .comment-text {

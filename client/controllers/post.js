@@ -10,6 +10,45 @@ za.controllers.post = new za.Controller(function(element){
    if(comIndex===0)
       $(element).find('.load-more').hide();
 
+   $(element).click(function(e){
+      if($(e.target).is('.comment-container .icon-cross')){
+         var comment = $(e.target).parents('.comment-container');
+         var commentId = comment.attr('data-comment-id');
+         za.send('/api/comment/delete/'+commentId).success(function(response){
+            if(response.data.message != 'OK') return;
+            comment.css('overflow','hidden');
+            comment.animate({
+               height: '0px',
+               paddingTop: '0px',
+               paddingBottom: '0px',
+               marginTop: '0px',
+               marginBottom: '0px',
+               opacity: 0
+            }, 400, 'swing', function(){
+               comment.remove();
+               $(element).find('.comment .post-interaction-pool').html(+$(element).find('.comment .post-interaction-pool').html()-1);
+            });
+         });
+      }
+      if($(e.target).is('.icon-cross.post')){
+         za.send('/api/post/delete/'+postId).success(function(response){
+            if(response.data.message != 'OK') return;
+            $(element)
+            .css('overflow','hidden')
+            .animate({
+               height: '0px',
+               paddingTop: '0px',
+               paddingBottom: '0px',
+               marginTop: '0px',
+               marginBottom: '0px',
+               opacity: 0
+            }, 400, 'swing', function(){
+               element.remove();
+            });
+         });
+      }
+   });
+
    $(element).find('.load-more').click(function(){
 
       $(this).css({opacity:0.4,pointerEvents:'none'});
@@ -59,6 +98,11 @@ za.controllers.post = new za.Controller(function(element){
       za.send('/api/comment/create/'+postId, {comment:comment})
       .success(function(response){
          $(element).find('.comment-pool').append(response.data.commentHtml);
+
+         var scrollDown = $(element).find('.comment-pool > :last-child').height()+11;
+         var currentScrollTop = $('html').scrollTop() || $('body').scrollTop();
+         $('html,body').scrollTop(currentScrollTop + scrollDown);
+
          refreshDates();
          trackCommentLike();
          $(element).find('.comment .post-interaction-pool').html(+$(element).find('.comment .post-interaction-pool').html()+1);
@@ -130,6 +174,8 @@ za.controllers.post = new za.Controller(function(element){
 
          if(dif < 14)
             return set('days_ago', dif);
+
+         dif /= 7;
 
          set('weeks_ago', dif);
 

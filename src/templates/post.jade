@@ -1,6 +1,8 @@
 .post-wrapper(data-controller="post", data-post-id=data.id)
    .post-container
       .post-head
+         if(data.isOwner)
+            .icon-cross.post
          a.post-publisher-image(style="background-image: url("+data.publisher_image+")", href="/"+data.publisher_namespace)
          .post-publisher-info
             a.post-publisher-name(href="/"+data.publisher_namespace)=data.publisher_display_name
@@ -19,7 +21,7 @@
             .icon-bubble3
             .post-interaction-action-text(data-html-comment)=coreText.comment
             .post-interaction-pool=+data.comments||''
-         span.post-interaction-button.share(tabindex=0)
+         span.post-interaction-button.share(tabindex=0, style="display:none")
             .icon-paperplane
             .post-interaction-action-text(data-html-share)=coreText.share
             .post-interaction-pool=+data.shares||''

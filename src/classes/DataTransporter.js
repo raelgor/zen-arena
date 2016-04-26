@@ -82,6 +82,34 @@ module.exports = class DataTransporter {
 
    }
 
+   getCommentView(id) {
+
+      var transporter = this;
+
+      return co(function*(){
+
+         var comment;
+
+         // Get comment info
+         if(+(yield cache.exists(`commentview:${id}`)))
+            comment = yield cache.hgetall(`commentview:${id}`);
+         else {
+            comment = yield transporter.dbc.collection('comments').find({id:+id}).toArray();
+            comment = comment[0];
+            comment.likes = yield transporter
+                                 .dbc
+                                 .collection('comment_likes')
+                                 .find({ comment_id: +id })
+                                 .count();
+            yield cache.hmset(`commentview:${id}`, comment);
+         }
+
+         return comment;
+
+      });
+
+   }
+
    /**
     * @method DataTransporter.updateUser
     * @access public
@@ -189,22 +217,24 @@ module.exports = class DataTransporter {
     */
     getPost(id) {
       var transporter = this;
-
+console.log('w1');
       return co(function*(){
-
+console.log('w2');
          var post = yield cache.hgetall(`post:${id}`);
-
+console.log('w3');
          if(!post || !post.id) {
-
+console.log('w4');
             var result = yield transporter.get({
-               query: { id },
+               query: { id: +id },
                collection: 'posts'
             });
-
+console.log('w5');
             post = result[0];
-
+console.log('w6');
+try{ console.log({post,id});
             yield cache.hmset(`post:${id}`, post);
-
+}catch(err){console.log(err);}
+console.log('w7');
          }
 
          return post;
