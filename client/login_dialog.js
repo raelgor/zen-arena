@@ -1,9 +1,17 @@
-/* global clientData, za, grecaptcha, FB, resize */
+/* global clientData, za, grecaptcha, FB */
 za.login = {};
 
-za.login.promptLogin = function() {
+za.login.promptLogin = function(callback) {
 
-    resize();
+   if(typeof callback === 'function')
+      za.onlogin = callback;
+   else
+      za.onlogin = function(){};
+
+   if(clientData.user_data)
+      return za.onlogin && za.onlogin();
+
+    za.resize();
     $('.login-frame')[0].error('');
 
     $('.auth-dialogs').removeClass('hide');
@@ -31,9 +39,15 @@ za.login.promptLogin = function() {
 
 };
 
-za.login.promptRegister = function() {
+za.login.promptRegister = function(callback) {
 
-    resize();
+   if(typeof callback === 'function')
+      za.onlogin = callback;
+
+   if(clientData.user_data)
+      return za.onlogin && za.onlogin();
+
+   za.resize();
     $('.register-frame')[0].error('');
 
     $('.auth-dialogs').removeClass('hide');
@@ -66,7 +80,7 @@ za.login.promptRecoverFrame = function(token) {
    $('.recover-password-frame .not-sent-yet').show();
    $('.recover-password-frame .success').hide();
 
-    resize();
+   za.resize();
     $('.recover-password-frame')[0].error('');
 
     $('.auth-dialogs').removeClass('hide');
@@ -85,7 +99,7 @@ za.login.promptForgotPassword = function() {
    $('.forgot-password-frame .not-sent-yet').show();
    $('.forgot-password-frame .success').hide();
 
-    resize();
+   za.resize();
     $('.forgot-password-frame')[0].error('');
 
     $('.auth-dialogs').removeClass('hide');
@@ -409,6 +423,8 @@ za._login_response_handler = function(response){
 
       // Update navigation bar
       za.userBar.setUser(clientData.user_data);
+
+      za.onlogin && za.onlogin();
 
       // On logged in field
       $('.user-comment .comment-user-image').css('background-image','url('+clientData.user_data.image+')');

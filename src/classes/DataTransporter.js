@@ -217,24 +217,23 @@ module.exports = class DataTransporter {
     */
     getPost(id) {
       var transporter = this;
-console.log('w1');
+
       return co(function*(){
-console.log('w2');
+
          var post = yield cache.hgetall(`post:${id}`);
-console.log('w3');
+
          if(!post || !post.id) {
-console.log('w4');
+
             var result = yield transporter.get({
                query: { id: +id },
                collection: 'posts'
             });
-console.log('w5');
+
             post = result[0];
-console.log('w6');
-try{ console.log({post,id});
+
+
             yield cache.hmset(`post:${id}`, post);
-}catch(err){console.log(err);}
-console.log('w7');
+            
          }
 
          return post;

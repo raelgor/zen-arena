@@ -7,17 +7,26 @@
  * @param {Response} response The response object.
  * @returns undefined
  */
-module.exports = new PageRoute(response => co(function*() {
+var route = new PageRoute(response => co(function*() {
 
    log.debug('pageHandlers.home: Making response...');
 
-   response.responseData = yield factory.index(
-      response.pageData,
-      yield factory.home(
-         response.pageData.coreText,
-         response.request.__user && response.request.__user.get('id'))
-  );
+   if(!response.request.__user)
+      response.responseData = yield factory.index(
+         response.pageData,
+         yield factory.home(
+            response.pageData.coreText
+     ));
+    else
+      response.responseData = yield factory.index(
+          response.pageData,
+          yield factory.feed(
+            response.pageData.coreText,
+            response.request.__user.get('id'))
+     );
 
   response.end();
 
-}));
+}).catch(log.error));
+
+module.exports = route;

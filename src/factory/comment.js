@@ -13,7 +13,7 @@
 module.exports = (id, coreText, uid) => co(function*(){
    log.debug('factory.comment: Making...');
    var timer = new Timer();
-   
+
    var comment = yield dataTransporter.getCommentView(id);
 
    // Get poster info
@@ -43,7 +43,7 @@ module.exports = (id, coreText, uid) => co(function*(){
          +post.publisher === +uid && (comment.deletable = true);
       }
    }
-console.log(6);
+   
    // Build
    var result = templates.comment({
       coreText,

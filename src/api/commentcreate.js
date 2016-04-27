@@ -12,6 +12,9 @@ var route = new APIRoute((response, req) => co(function*(){
 
    var post_id = req.params.post_id;
 
+   if(!req.body.message.comment)
+      return response.error('error_empty_comment');
+
    var comment = {
       user_id: +req.__user.get('id'),
       id: yield increment('comments','id'),

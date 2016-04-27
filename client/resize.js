@@ -1,4 +1,5 @@
-function resize(){
+/* global za */
+za.resize = function resize(){
 
    /*
    // Fix carousel
@@ -30,6 +31,6 @@ function resize(){
       $('.tagline').css({fontSize: '20px', paddingTop: '18%'});
    }
 
-}
+};
 
-$(window).resize(resize).ready(resize);
+$(window).resize(za.resize).ready(za.resize);

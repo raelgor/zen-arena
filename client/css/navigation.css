@@ -125,11 +125,12 @@
     padding: 0px;
     position: relative;
     top: -1px;
+    width: 192px;
 }
 
 .navigation .search-box .icon-search {
     color: white;
-    padding: 0 11px;
+    padding: 0 0 0 11px;
     border: none !important;
     outline: none !important;
 }

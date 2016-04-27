@@ -6,6 +6,9 @@
  */
 window.za = {
 
+   // On login callback
+   onlogin: null,
+
    /**
     * @memberof za
     * @desc Whether we are on a touch device or not.
@@ -41,11 +44,13 @@ window.za = {
     * @type function
     */
    logout: function() {
-      za.send('/api/logout');
-      delete clientData.csrf_token;
-      delete clientData.user_data;
-      $('html').removeClass('logged-in');
-      za.userBar.setStatus(false);
+      za.send('/api/logout').success(function(){
+         delete clientData.csrf_token;
+         delete clientData.user_data;
+         $('html').removeClass('logged-in');
+         za.userBar.setStatus(false);
+         za.goToStateByUrl('/');
+      });
    },
 
    /**
@@ -121,7 +126,7 @@ $(window).ready(function(){
       $('html').addClass('logged-in');
 
    // Safari fix
-   setTimeout(resize, 0);
+   setTimeout(za.resize, 0);
 
    $('.touch-nav .icon-user, .player-info .user-ui').click(function(){
 

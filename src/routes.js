@@ -29,6 +29,9 @@ app.router.post('/api/comment/getprevious/:post_id/:earliest_index', api.comment
 app.router.post('/api/comment/delete/:comment_id', api.commentdelete.route);
 app.router.post('/api/post/delete/:post_id', api.postdelete.route);
 
+// View html factories
+app.router.post('/api/view/index', api.viewindex.route);
+
 // Page routes
 app.router.all(['/','/home'], pageHandlers.home.route);
 app.router.all('/verifyemail/:token', pageHandlers.verifyemail.route);

@@ -9,7 +9,8 @@ try{
        unsubscribeall: jade.compileFile('./src/templates/unsubscribeall.jade'),
        verifyemail: jade.compileFile('./src/templates/verifyemail.jade'),
        post: jade.compileFile('./src/templates/post.jade'),
-       comment: jade.compileFile('./src/templates/comment.jade')
+       comment: jade.compileFile('./src/templates/comment.jade'),
+       feed: jade.compileFile('./src/templates/feed.jade')
    };
 }catch(error){
    console.log(error);

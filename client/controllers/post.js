@@ -68,8 +68,11 @@ za.controllers.post = new za.Controller(function(element){
 
    $(element).find('.like').click(function(){
 
+      var btn = $(this);
       if(!clientData.user_data)
-         return za.login.promptLogin();
+         return za.login.promptLogin(function(){
+            btn.click();
+         });
 
       var action = $(this).is('.liked') ? 'remove' : 'add';
 
@@ -84,14 +87,21 @@ za.controllers.post = new za.Controller(function(element){
    });
 
    $(element).find('.comment').click(function(){
+      var btn = $(this);
       if(!clientData.user_data)
-         return za.login.promptLogin();
+         return za.login.promptLogin(function(){
+            btn.click();
+         });
       else
          $(element).find('.user-comment input').focus();
    });
 
    $(element).find('.user-comment').submit(function(e){
+      e.preventDefault();
+      e.stopPropagation();
+
       var comment = $(element).find('.user-comment input.comment-text').val();
+      if(!comment) return;
 
       $(element).find('.user-comment input.comment-text').val('');
 
@@ -107,9 +117,6 @@ za.controllers.post = new za.Controller(function(element){
          trackCommentLike();
          $(element).find('.comment .post-interaction-pool').html(+$(element).find('.comment .post-interaction-pool').html()+1);
       });
-
-      e.preventDefault();
-      e.stopPropagation();
    });
 
    if(clientData.user_data) {
@@ -125,8 +132,11 @@ za.controllers.post = new za.Controller(function(element){
       targets.each(function(i, e){
 
          $(e).find('.comment-like').click(function(){
+            var btn = $(this);
             if(!clientData.user_data)
-               return za.login.promptLogin();
+               return za.login.promptLogin(function(){
+                  btn.click();
+               });
             var comId = $(this).parents('.comment-container').attr('data-comment-id');
             var action = $(this).is('.liked') ? 'remove' : 'add';
             var currentLikes = +$(this).find('.comment-interaction-pool').html() || 0;

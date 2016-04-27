@@ -1,4 +1,4 @@
-/* global co, templates, appConfig, factory, Timer, log */
+/* global co, templates, log, Timer */
 'use strict';
 
 /**
@@ -9,18 +9,14 @@
  * @returns Promise
  */
 module.exports = (coreText, uid) => co(function*(){
-   log.debug('factory.home: Making...');
+   log.debug('factory.feed: Making...');
    var timer = new Timer();
-   var posts = [];
 
-   for(let index of appConfig.home_posts)
-      posts[index] = yield factory.post(index, coreText, uid);
-
-   var result = templates.home({
+   var result = templates.feed({
       coreText,
-      posts
+      feed:'feed'
    });
 
-   log.debug(`factory.home: Done. (${timer.click()}ms)`);
+   log.debug(`factory.feed: Done. (${timer.click()}ms)`);
    return result;
 }).catch(log.error);
