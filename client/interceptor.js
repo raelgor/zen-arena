@@ -111,7 +111,7 @@ za.goToStateByUrl = function(href){
 $(window).click(interceptor);
 
 window.onpopstate = function(e){
-   if(!e.state) return alert('returning');
+   if(!e.state) return;
 
    e.preventDefault();
    e.stopPropagation();
