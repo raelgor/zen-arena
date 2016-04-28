@@ -26,7 +26,7 @@
             .post-interaction-action-text(data-html-share)=coreText.share
             .post-interaction-pool=+data.shares||''
       .post-comment-section
-         .load-more(data-html-load_previous_comments)=coreText.load_previous_comments
+         .load-more(data-html-load_previous_comments, tabindex=0)=coreText.load_previous_comments
          .comment-pool
             each comment in data.commentsHtml
                div!=comment
