@@ -1,6 +1,6 @@
 .button {
     border-radius: 3px;
-    box-shadow: 0 2px rgba(0, 0, 0, 0.43);
+    box-shadow: 0 2px rgba(0, 0, 0, 0.1);
     width: auto;
     display: inline-block;
     padding: 5px 10px;
@@ -17,6 +17,7 @@
     user-select: none;
     text-decoration: none;
     color: white;
+    border: none !important;
 }
 
 .button:active {

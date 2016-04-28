@@ -1,0 +1,176 @@
+[data-controller="feed"] {
+    max-width: 1000px;
+    margin: 10px auto 0;
+}
+
+.left-column,.right-column {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.white-box {
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px #CFCFCF;
+}
+
+.right-column {
+    width: 300px;
+    position: fixed;
+}
+
+.left-column {
+    width: calc(100% - 320px);
+    margin: 0 10px;
+}
+
+.user-new-post-image {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    margin: 20px 20px 0 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px #BABABA;
+    vertical-align: top;
+}
+
+textarea.new-post-text {
+    margin-top: 20px;
+    width: calc(100% - 120px);
+    border: 0px solid;
+    font-family: Open Sans,sans-serif;
+    font-size: 16px;
+    height: 58px;
+    margin-bottom: 10px;
+    max-width: calc(100% - 120px);
+}
+
+.new-post-interaction {
+    border-top: 1px solid #E7E7E7;
+}
+
+.new-post-interaction > * {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.new-post-interaction {
+    padding: 10px;
+    height: 28px;
+}
+
+.new-post-interaction .post {
+    float: right;
+}
+
+.new-post-interaction .icon-earth {
+    color: #B3B1B1;
+    position: relative;
+    top: 4px;
+    margin-left: 10px;
+}
+
+.new-post-interaction .public-text {
+    position: relative;
+    font-size: 15px;
+    margin-left: 9px;
+    color: #B3B1B1;
+    top: 2px;
+}
+
+.feed-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: gray;
+    font-size: 15px;
+    text-indent: 5px;
+    margin-top: 14px;
+    margin-bottom: 5px;
+}
+
+.perma-option {
+    border-bottom: 1px solid #E7E7E7;
+    padding: 15px 25px;
+    font-size: 14px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.perma-option:last-child {
+    border: none !important;
+}
+
+.perma-option > * {
+    display: inline-block;
+}
+
+.perma-option > :first-child {
+    margin-right: 15px;
+    font-size: 19px;
+    position: relative;
+    top: 3px;
+}
+
+.feed-pool > * {
+    margin-bottom: 16px;
+}
+
+.white-box.tournament-browser {
+    margin-top: 10px;
+}
+
+.tournament-browser .title {
+    text-transform: uppercase;
+    border-bottom: 1px solid #E7E7E7;
+    text-align: center;
+    font-size: 13px;
+    padding: 4px 0px;
+    color: gray;
+}
+
+.white-box.tournament-browser .opts > * {
+   width: 50%;
+   display: inline-block;
+   text-align: center;
+   padding: 17px 0 13px;
+   vertical-align: top;
+   border-right: 1px solid #E7E7E7;
+   box-sizing: border-box;
+   color: #666;
+   font-size: 12px;
+   cursor: pointer;
+}
+
+button.browse-tournaments-btn {
+    border: none;
+    width: 100%;
+    border-radius: 0 0 4px 4px;
+    background: #7DB632;
+    color: white;
+    height: 22px;
+    padding: 5px 0;
+    display: block;
+    box-sizing: content-box;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button.browse-tournaments-btn .icon-search {
+    margin-right: 7px;
+    position: relative;
+    top: 1px;
+}
+
+.white-box.tournament-browser .opts > *:last-child {
+    border: none;
+}
+
+.white-box.tournament-browser .opts > * > :first-child {
+    font-size: 23px;
+    margin-bottom: 9px;
+}

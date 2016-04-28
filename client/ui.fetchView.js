@@ -1,14 +1,38 @@
-/* global za */
-za.ui.fetchView = function(urlPath, targetElementSelector){
+za.ui.fetchView = function(urlPath, handlerInfo){
 
+   var index = 0;
+   var depth;
+   var callback;
+   var targetElementSelector;
+
+   handlerInfo.forEach(function(str){
+      if(typeof str === 'function'){
+         callback = str;
+         return index++;
+      }
+
+      if(str[0]==='/')
+         return index++;
+
+      if($(str).length && !targetElementSelector) {
+         targetElementSelector = str;
+         depth = index;
+      }
+
+      index++;
+   });
+
+   if($(targetElementSelector).is('[data-view-loading]'))
+      return console.log('err_view_request_overlap');
+
+   $(targetElementSelector).attr('data-view-loading', 1);
    var loader = za.ui.loader();
 
    loader.css('opacity',0);
 
    $('body').append(loader);
    setTimeout(function(){loader.animate({opacity:1},400,'swing');},10);
-   positionLoader();
-   window.addEventListener('resize', positionLoader);
+   loader.absBindToElement(targetElementSelector);
 
    $(targetElementSelector + ' > *')
       .css('pointer-events','none')
@@ -18,28 +42,21 @@ za.ui.fetchView = function(urlPath, targetElementSelector){
 
    $('body,html').animate({scrollTop:$(targetElementSelector).offset().top-70},400,'swing');
 
-   za.send(urlPath).success(function(response){
+   za.send(urlPath, {depth: depth}).success(function(response){
       $(targetElementSelector)
          .css('opacity',0)
          .html(response.data.html)
          .animate({opacity:1},300,'swing');
       za.resize();
       za.ui.initControllers(targetElementSelector);
+      callback && callback();
    })
    .always(function(){
-      loader.stop().animate({opacity:0},200,'swing',function(){
-         loader.remove();
-      });
-      window.removeEventListener('resize', positionLoader);
+      $(targetElementSelector).removeAttr('data-view-loading');
+      loader.lazyKill(200);
    })
    .error(function(e){console.log(e);});
 
-   function positionLoader() {
-      loader.css({
-         position: 'absolute',
-         top: $(targetElementSelector).offset().top + 20,
-         left: $(targetElementSelector).offset().left + $(targetElementSelector).width()/2
-      });
-   }
+
 
 };

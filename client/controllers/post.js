@@ -1,5 +1,3 @@
-/* global za, clientData */
-
 za.controllers.post = new za.Controller(function(element){
 
    var postId = $(element).attr('data-post-id');
@@ -7,7 +5,7 @@ za.controllers.post = new za.Controller(function(element){
 
    var comIndex = totalComments-3>=0?totalComments-3:0;
 
-   if(comIndex===0)
+   if(totalComments<=2)
       $(element).find('.load-more').hide();
 
    $(element).click(function(e){
@@ -43,7 +41,7 @@ za.controllers.post = new za.Controller(function(element){
                marginBottom: '0px',
                opacity: 0
             }, 400, 'swing', function(){
-               element.remove();
+               $(element).remove();
             });
          });
       }
@@ -111,6 +109,8 @@ za.controllers.post = new za.Controller(function(element){
 
          var scrollDown = $(element).find('.comment-pool > :last-child').height()+11;
          var currentScrollTop = $('html').scrollTop() || $('body').scrollTop();
+
+         if($(element).find('input.comment-text').offset().top > currentScrollTop + window.innerHeight - 100)
          $('html,body').scrollTop(currentScrollTop + scrollDown);
 
          refreshDates();

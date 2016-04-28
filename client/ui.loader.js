@@ -1,5 +1,5 @@
 za.ui.loader = function() {
-    
+
     var element = $('<div>');
     
     element.html(
@@ -16,6 +16,36 @@ za.ui.loader = function() {
         '</div>'
     );
 
-    return element;
-    
-}
+    element.absBindToElement = function(element) {
+      this.boundElement = $(element);
+      this.positionLoader();
+      window.addEventListener('resize', positionLoader);
+    };
+
+    function positionLoader() {
+      if(!element) return window.removeEventListener('resize', positionLoader);
+      element.css({
+         position: 'absolute',
+         top: this.boundElement.offset().top + 20,
+         left: this.boundElement.offset().left + this.boundElement.width()/2
+      });
+    }
+
+    element.positionLoader = positionLoader;
+
+   element.lazyKill = function(ms) {
+      this.stop().animate({opacity:0},ms||200,'swing',function(){
+         element.remove();
+         element.boundElement &&
+         window.removeEventListener('resize', positionLoader);
+      });
+   };
+
+   element.kill = function(){
+      element.remove();
+      window.removeEventListener('resize', positionLoader);
+   };
+
+   return element;
+
+};

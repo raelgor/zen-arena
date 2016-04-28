@@ -11,7 +11,7 @@
 var route = new APIRoute((response, req, res) => co(function*(){
 
    res.clearCookie('st');
-   
+
    yield dataTransporter.remove({
       query: { session_token: req.__session.session_token },
       collection: 'sessions'
@@ -19,7 +19,15 @@ var route = new APIRoute((response, req, res) => co(function*(){
 
    yield cache.del(`sessions:${req.__session.session_token}`);
 
-   response.responseData.message = 'OK';
+   response.responseData = {
+      message: 'OK',
+      html: yield factory.viewindex(
+         make_core_text(req.lang),
+         null,
+         2
+      )
+   };
+
    response.end();
 
 }));

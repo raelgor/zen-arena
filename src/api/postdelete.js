@@ -23,12 +23,13 @@ var route = new APIRoute((response, req) => co(function*(){
       yield delete_comment(comment.id);
 
    yield dataTransporter.dbc.collection('posts').remove({id:+id});
+   yield dataTransporter.dbc.collection('feeds').remove({post_id:+id});
    yield dataTransporter.dbc.collection('post_likes').remove({post_id:+id},{multi:true});
 
    yield cache.del(`post:${id}`);
    yield cache.del(`postview:${id}`);
    yield cache.del(`commentpool:${id}`);
-   
+
    // Return geo info
    response.responseData = { message: 'OK' };
 

@@ -1,5 +1,3 @@
-/* global za, resize, clientData, FB */
-
 /**
  * @namespace za
  * @desc The za client library.
@@ -44,13 +42,11 @@ window.za = {
     * @type function
     */
    logout: function() {
-      za.send('/api/logout').success(function(){
-         delete clientData.csrf_token;
-         delete clientData.user_data;
-         $('html').removeClass('logged-in');
-         za.userBar.setStatus(false);
-         za.goToStateByUrl('/');
-      });
+      delete clientData.csrf_token;
+      delete clientData.user_data;
+      $('html').removeClass('logged-in');
+      za.userBar.setStatus(false);
+      history.replaceState(history.state, document.title, '/');
    },
 
    /**

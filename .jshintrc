@@ -1,5 +1,23 @@
 {
   "esversion": 6,
+  "predef": [
+     "za",
+     "clientData",
+     "DataTransporter",
+     "dataTransporter",
+     "factory",
+     "co",
+     "cache",
+     "increment",
+     "APIRoute",
+     "make_core_text",
+     "routes",
+     "log",
+     "templates",
+     "Timer",
+     "resize",
+     "FB"
+  ],
   "undef": true,
   "unused": true,
   "node": true,

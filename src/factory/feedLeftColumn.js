@@ -10,12 +10,27 @@
 module.exports = (coreText, user) => co(function*(){
    log.debug('factory.feed: Making...');
    var timer = new Timer();
+   var feedPosts = yield dataTransporter.getFeedHtml(
+      coreText,
+      // Auth user
+      user.get('id'),
+      // Namespace origin
+      'user',
+      // Owner id
+      user.get('id'),
+      // Feed type (wall/feed)
+      'feed',
+      // Skip
+      0,
+      // Limit
+      10
+   );
 
-   var result = templates.feed({
+   var result = templates.feedLeftColumn({
       coreText,
       data: {
-         leftColumn: yield factory.feedLeftColumn(coreText, user),
-         rightColumn: yield factory.rightcol(coreText, user)
+         userImage: user.get('image'),
+         feedPosts
       }
    });
 

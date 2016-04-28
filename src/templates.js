@@ -10,7 +10,10 @@ try{
        verifyemail: jade.compileFile('./src/templates/verifyemail.jade'),
        post: jade.compileFile('./src/templates/post.jade'),
        comment: jade.compileFile('./src/templates/comment.jade'),
-       feed: jade.compileFile('./src/templates/feed.jade')
+       feed: jade.compileFile('./src/templates/feed.jade'),
+       rightcol: jade.compileFile('./src/templates/rightcol.jade'),
+       ad: jade.compileFile('./src/templates/ad.jade'),
+       feedLeftColumn: jade.compileFile('./src/templates/feedLeftColumn.jade')
    };
 }catch(error){
    console.log(error);

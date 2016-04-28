@@ -23,6 +23,11 @@ module.exports = (id, coreText, uid) => co(function*(){
 
       data = yield dataTransporter.getPost(id);
 
+      if(!data) {
+         log.debug('factory.post: Post not found. Returning empty string.');
+         return '';
+      }
+
       data.likes = yield dataTransporter
                            .dbc
                            .collection('post_likes')
@@ -121,4 +126,4 @@ module.exports = (id, coreText, uid) => co(function*(){
 
    log.debug(`factory.post: Done. (${timer.click()}ms)`);
    return result;
-});
+}).catch(log.error);

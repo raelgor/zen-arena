@@ -22,7 +22,7 @@ var route = new PageRoute(response => co(function*() {
           response.pageData,
           yield factory.feed(
             response.pageData.coreText,
-            response.request.__user.get('id'))
+            response.request.__user)
      );
 
   response.end();

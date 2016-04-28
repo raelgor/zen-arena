@@ -1,0 +1,26 @@
+div(data-controller="rightcol")
+   if(data.user)
+      .perma-options.white-box
+         .perma-option(tabindex=0)
+            .icon-flag(style="color:#4e78c5")
+            .perma-text(data-html-tournaments)=coreText.tournaments
+         .perma-option(tabindex=0)
+            .icon-shield(style="color:#dac432")
+            .perma-text(data-html-achievements)=coreText.achievements
+         .perma-option(tabindex=0)
+            .icon-power(style="color:purple")
+            .perma-text(data-html-upcoming_games)=coreText.upcoming_games
+      .white-box.tournament-browser(data-controller="tournamentBrowserSelector")
+         .title(data-html-tournament_browser)=coreText.tournament_browser
+         .opts
+            .opt-location(tabindex=0)
+               .icon-location2
+               .option=data.user.city||(coreText.select+'...')
+            .opt-game(tabindex=0)
+               .icon-dice
+               .option="Tichu"
+         button.browse-tournaments-btn
+            span.icon-search
+            span.text(data-html-browse)=coreText.browse
+   .feed-title(data-html-ads)=coreText.ads
+   div!=data.ads

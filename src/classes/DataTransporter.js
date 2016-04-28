@@ -1,4 +1,4 @@
-/* global co, config, User, Timer, log, mongodb, cache */
+/* global co, config, User, Timer, log, mongodb, cache, factory */
 'use strict';
 
 /**
@@ -41,6 +41,33 @@ module.exports = class DataTransporter {
 
    }
 
+   getRandomAdViews(coreText, uid, amount) {
+
+      var transporter = this;
+      return co(function*(){
+
+         var html = '';
+         var inCache = +(yield cache.exists(`adIds`));
+
+         if(!inCache) {
+            let ads = yield transporter.dbc.collection('ads').find({
+               approved: true,
+               published: true
+            }).toArray();
+            yield cache.sadd(`adIds`, ...ads.map(o => o.id));
+         }
+
+         var adIds = yield cache.srandmember(`adIds`, amount);
+
+         for(let id of adIds)
+            html += yield factory.ad(coreText, id, uid);
+
+         return html;
+
+      }).catch(log.error);
+
+   }
+
    /**
     * @method DataTransporter.getUser
     * @access public
@@ -79,6 +106,40 @@ module.exports = class DataTransporter {
          return user && new User(user);
 
       });
+
+   }
+
+   getFeedHtml(coreText, uid, ns_origin, owner_id, type, skip, limit) {
+
+      var transporter = this;
+      return co(function*(){
+
+         var cacheKey = `feed:${ns_origin}:${owner_id}:${type}`;
+         var html = '';
+         var postIds;
+
+         if(+(yield cache.exists(cacheKey)))
+            postIds = yield cache.zrevrange(cacheKey, skip, +skip + (+limit));
+         else {
+            let posts = yield transporter.dbc.collection('feeds').find({
+               ns_origin,
+               owner_id: +owner_id,
+               type
+            }).sort({date:1}).toArray();
+            //postIds = posts.map(o => +o.post_id);
+            //postIds.reverse();
+            for(let post of posts)
+               yield cache.zadd(cacheKey, post.date_added, post.post_id);
+         }
+
+         postIds = yield cache.zrevrange(cacheKey, skip, +skip + (+limit));
+
+         for(let id of postIds)
+            html += yield factory.post(+id, coreText, +uid);
+
+         return html;
+
+      }).catch(log.error);
 
    }
 
@@ -231,9 +292,13 @@ module.exports = class DataTransporter {
 
             post = result[0];
 
+            if(!post){
+               log.debug(`DataTransporter.getPost(${id}): Post not found.`);
+               return null;
+            }
 
             yield cache.hmset(`post:${id}`, post);
-            
+
          }
 
          return post;

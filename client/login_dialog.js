@@ -1,6 +1,10 @@
 /* global clientData, za, grecaptcha, FB */
 za.login = {};
 
+window.addEventListener('keydown', function(e){
+   e.keyCode === 27 && za.login.exitPrompts();
+});
+
 za.login.promptLogin = function(callback) {
 
    if(typeof callback === 'function')
@@ -425,6 +429,9 @@ za._login_response_handler = function(response){
       za.userBar.setUser(clientData.user_data);
 
       za.onlogin && za.onlogin();
+
+      if($('.right-column').length)
+         za.ui.fetchView('/api/view/rightcol', ['.right-column']);
 
       // On logged in field
       $('.user-comment .comment-user-image').css('background-image','url('+clientData.user_data.image+')');

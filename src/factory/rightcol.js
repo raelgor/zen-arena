@@ -8,17 +8,21 @@
  * @returns Promise
  */
 module.exports = (coreText, user) => co(function*(){
-   log.debug('factory.feed: Making...');
+   log.debug('factory.rightcol: Making...');
    var timer = new Timer();
 
-   var result = templates.feed({
+   var result = templates.rightcol({
       coreText,
       data: {
-         leftColumn: yield factory.feedLeftColumn(coreText, user),
-         rightColumn: yield factory.rightcol(coreText, user)
+         user: user.record,
+         ads: yield dataTransporter.getRandomAdViews(
+            coreText,
+            user && user.get('id'),
+            2
+         )
       }
    });
 
-   log.debug(`factory.feed: Done. (${timer.click()}ms)`);
+   log.debug(`factory.rightcol: Done. (${timer.click()}ms)`);
    return result;
 }).catch(log.error);
