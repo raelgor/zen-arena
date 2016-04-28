@@ -2,7 +2,7 @@
    .post-container
       .post-head
          if(data.isOwner)
-            .icon-cross.post
+            .icon-cross.post(tabindex=0)
          a.post-publisher-image(style="background-image: url("+data.publisher_image+")", href="/"+data.publisher_namespace)
          .post-publisher-info
             a.post-publisher-name(href="/"+data.publisher_namespace)=data.publisher_display_name

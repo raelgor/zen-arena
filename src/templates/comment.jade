@@ -1,6 +1,6 @@
 .comment-container(data-comment-id=comment.id)
    if(comment.deletable)
-      .icon-cross
+      .icon-cross(tabindex=0)
    a.comment-user-image(style="background-image:url("+comment.userImage+")" href=""+comment.user_id)
    .comment-info
       a(href="/"+comment.user_id).comment-user-display-name=comment.displayName
