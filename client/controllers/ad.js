@@ -14,7 +14,7 @@ za.controllers.ad = new za.Controller(function(element){
       });
       $(element).animate({
          opacity:1,
-         height: image.height/image.width*300
+         height: image.height/image.width*$('.right-column').width()
       }, 400, 'swing');
    };
 

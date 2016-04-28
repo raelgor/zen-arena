@@ -18,6 +18,8 @@
 .right-column {
     width: 300px;
     position: fixed;
+    padding-right: 10px;
+    box-sizing: border-box;
 }
 
 .left-column {
