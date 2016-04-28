@@ -113,6 +113,9 @@ $(window).click(interceptor);
 window.onpopstate = function(e){
    if(!e.state) return;
 
+   e.preventDefault();
+   e.stopPropagation();
+
    e.state.isBack=true;
    za.goToState(e.state);
 };
