@@ -25,8 +25,30 @@ module.exports = class Route {
        * @memberof Route
        * @type Array
        */
-      this.pre = [];
+      this._pre = [];
 
+   }
+
+   /**
+    * Sets the name of the route
+    * @function setName
+    * @memberof Route
+    * @param {string} name The name of the route.
+    * @returns function
+    */
+   setName(name) {
+      this.name = name;
+   }
+
+   /**
+    * Sets the route handler
+    * @function setHandler
+    * @memberof Route
+    * @param {function} handler The name of the main handler of this API call.
+    * @returns function
+    */
+   setHandler(handler) {
+      this.handler = handler;
    }
 
    /**
@@ -49,18 +71,29 @@ module.exports = class Route {
     * @type Array
     */
    get route() {
-      return this.pre.concat(this.handle(this.handler));
+      return this._pre.concat(this.handle(this.handler));
    }
 
    /**
-    * Prepends a function to this route's stack.
+    * #DEPRACATED Prepends a function to this route's stack.
     * @function prependRoute
     * @memberof Route
     * @param {function|Array} routeHandler The function to prepend.
     * @returns {APIRoute}
     */
    prependRoute(routeHandler) {
-      return this.pre.push(routeHandler);
+      return this._pre.push(routeHandler);
+   }
+
+   /**
+    * Prepends a function to this route's stack.
+    * @function pre
+    * @memberof Route
+    * @param {function|Array} routeHandler The function to prepend.
+    * @returns {APIRoute}
+    */
+   pre(route) {
+      return this._pre.push(route);
    }
 
    /**

@@ -10,20 +10,6 @@
     font-size: 13px;
 }
 
-.sponsors {
-    background-image: url(/img/sponsors.jpg);
-    background-size: contain;
-    height: 80px;
-    opacity: .5;
-    background-position: 50%;
-    background-repeat: no-repeat;
-}
-
-.supporters-line {
-    background: white;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.06);
-}
-
 .version a:hover {
     text-decoration: underline;
 }
@@ -58,4 +44,128 @@
 
 .copyright {
     float: left;
+}
+
+.footer-white-line {
+    background: white;
+    height: 300px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #D2D2D2;
+}
+
+.belt {
+    max-width: 1000px;
+    height: 100%;
+    margin: auto;
+}
+
+.left-section {
+    width: 410px;
+    border-right: 1px solid #D2D2D2;
+    height: 100%;
+}
+
+.left-section .title {
+    padding-top: 35px;
+    font-size: 20px;
+    text-indent: 10px;
+    margin-bottom: 8px;
+}
+
+.belt > * {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.link-col-container > .link-col {
+    display: inline-block;
+    vertical-align: top;
+    max-width: 250px;
+}
+
+.link-col-container>.link-col>.link {
+    display: block;
+    font-size: 12px;
+    color: gray;
+    margin-right: 20px;
+    margin-bottom: 4px;
+    max-width: 230px;
+    margin-left: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.belt > * {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.right-section {
+    width: calc(100% - 411px);
+    padding-top: 15px;
+    padding-left: 9px;
+    box-sizing: border-box;
+}
+
+.right-section .top-section .text {
+    font-size: 13px;
+    margin-left: 140px;
+}
+
+.right-section .top-section .logo {
+    width: 100px;
+    height: 100px;
+    float: left;
+    background: url(/img/logo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 20px 20px 10px 20px;
+}
+
+.right-section .top-section .title {
+    padding-top: 25px;
+    padding-bottom: 10px;
+    color: #575757;
+    font-weight: bold;
+}
+
+.title.follow-us {
+    margin-left: 137px;
+}
+
+.footer .social-container {
+    margin-left: 121px;
+    line-height: 45px;
+}
+
+.footer .social-container > * {
+    display: inline-block;
+    font-size: 40px;
+    margin: 0 20px 0 0;
+    vertical-align: baseline;
+    cursor: pointer;
+    color: gray;
+    text-decoration: none;
+}
+
+.footer .social-container > .icon-facebook {
+    position: relative;
+    top: -5px;
+}
+
+.footer .social-container > .icon-facebook:hover {
+    color: #0068FF;
+}
+
+.footer .social-container > .icon-google-plus:hover {
+    color: red;
+}
+
+.footer .social-container > .icon-twitter:hover {
+    color: #00E9FF;
+}
+
+.footer .social-container > .icon-instagram:hover {
+    color: brown;
 }

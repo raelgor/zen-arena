@@ -15,8 +15,8 @@ module.exports = class PageRoute extends Route {
 
       super(handler);
 
-      this.pre.push(routes.authentication.route);
-      this.pre.push(routes.sessionInfoMaker.route);
+      this._pre.push(routes.authentication.route);
+      this._pre.push(routes.sessionInfoMaker.route);
 
    }
 

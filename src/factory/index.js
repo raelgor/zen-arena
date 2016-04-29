@@ -1,15 +1,13 @@
-/* global co, templates, appConfig, packageInfo */
 'use strict';
 
-/**
- * Produces html for the index view and returns it asynchronously.
- * @method factory.index
- * @param {object} pageData The default page data including meta and global
- * variables.
- * @param {string} pageView HTML for the current page.
- * @returns Promise
- */
-module.exports = (pageData, pageView) => co(function() {
+var f = new Factory();
+
+f.setName('index');
+f.setGenerator(generator);
+
+module.exports = f;
+
+function generator(req, pageData, pageView) {
      return templates.index({
         navigation: {
            themeImage: '/img/mainbg.jpg',
@@ -30,10 +28,13 @@ module.exports = (pageData, pageView) => co(function() {
            fb_admins: appConfig.fb_app.fb_admins,
            fb_api_version: appConfig.fb_app.api_version,
            clientData: pageData.clientData,
-           version: packageInfo.version
+           version: packageInfo.version,
+           app_contact_email: appConfig.app_contact_email,
+           social_links: appConfig.social_links,
+           copyright_stamp: appConfig.copyright_stamp
         },
         coreText: pageData.coreText,
         meta: pageData.meta,
         pageView
      });
-});
+}

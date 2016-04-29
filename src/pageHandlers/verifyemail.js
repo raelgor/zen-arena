@@ -15,9 +15,10 @@ module.exports = new PageRoute(response => co(function*() {
       token = response.request.params.token;
    } catch(err) {}
 
-  response.responseData = yield factory.index(
+  response.responseData = yield factory.index.make(
+     response.request,
      response.pageData,
-     yield factory.verifyemail(response.pageData.coreText)
+     yield factory.verifyemail.make(response.request, response.pageData.coreText)
   );
 
   if(token) {

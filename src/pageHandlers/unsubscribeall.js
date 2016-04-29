@@ -28,9 +28,10 @@ module.exports = new PageRoute(response => co(function*() {
       }
    }
 
-  response.responseData = yield factory.index(
+  response.responseData = yield factory.index.make(
+     response.request,
      response.pageData,
-     yield factory.unsubscribeall(response.pageData.coreText)
+     yield factory.unsubscribeall.make(response.request, response.pageData.coreText)
   );
 
   response.end();

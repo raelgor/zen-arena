@@ -21,10 +21,12 @@ var route = new APIRoute((response, req, res) => co(function*(){
 
    response.responseData = {
       message: 'OK',
-      html: yield factory.viewindex(
+      html: yield factory.viewindex.make(
+         req,
          make_core_text(req.lang),
          null,
-         2
+         2,
+         req.lang
       )
    };
 

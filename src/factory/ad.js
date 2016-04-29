@@ -1,17 +1,13 @@
 'use strict';
 
-/**
- * Produces html for the home view and returns it asynchronously.
- * @method factory.post
- * @param {object} id The post's id.
- * @param {object} coreText The core application text to use.
- * @param {object} uid The user that owns this post. Used to get data like if
- this post is liked by them or not.
- * @returns Promise
- */
-module.exports = (coreText, id, uid) => co(function*(){
-   log.debug('factory.ad: Making...');
-   var timer = new Timer();
+var f = new Factory();
+
+f.setName('ad');
+f.setGenerator(generator);
+
+module.exports = f;
+
+function* generator(req, coreText, id){
 
    var ad;
 
@@ -31,6 +27,6 @@ module.exports = (coreText, id, uid) => co(function*(){
       ad
    });
 
-   log.debug(`factory.ad: Done. (${timer.click()}ms)`);
    return result;
-});
+
+}

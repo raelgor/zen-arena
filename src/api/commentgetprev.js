@@ -41,7 +41,8 @@ var route = new APIRoute((response, req) => co(function*(){
    }
 
    for(let index in comments)
-      comments[index] = yield factory.comment(
+      comments[index] = yield factory.comment.make(
+         req,
          comments[index],
          make_core_text(req.lang),
          req.__user && +req.__user.get('id')

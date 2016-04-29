@@ -41,7 +41,7 @@ module.exports = class DataTransporter {
 
    }
 
-   getRandomAdViews(coreText, uid, amount) {
+   getRandomAdViews(req, coreText, uid, amount) {
 
       var transporter = this;
       return co(function*(){
@@ -60,7 +60,7 @@ module.exports = class DataTransporter {
          var adIds = yield cache.srandmember(`adIds`, amount);
 
          for(let id of adIds)
-            html += yield factory.ad(coreText, id, uid);
+            html += yield factory.ad.make(req, coreText, id);
 
          return html;
 
@@ -109,7 +109,7 @@ module.exports = class DataTransporter {
 
    }
 
-   getFeedHtml(coreText, uid, ns_origin, owner_id, type, skip, limit) {
+   getFeedHtml(req, coreText, uid, ns_origin, owner_id, type, skip, limit) {
 
       var transporter = this;
       return co(function*(){
@@ -135,7 +135,7 @@ module.exports = class DataTransporter {
          postIds = yield cache.zrevrange(cacheKey, skip, +skip + (+limit));
 
          for(let id of postIds)
-            html += yield factory.post(+id, coreText, +uid);
+            html += yield factory.post.make(req, +id, coreText, +uid);
 
          return html;
 
@@ -157,12 +157,14 @@ module.exports = class DataTransporter {
          else {
             comment = yield transporter.dbc.collection('comments').find({id:+id}).toArray();
             comment = comment[0];
-            comment.likes = yield transporter
-                                 .dbc
-                                 .collection('comment_likes')
-                                 .find({ comment_id: +id })
-                                 .count();
-            yield cache.hmset(`commentview:${id}`, comment);
+            if(comment) {
+               comment.likes = yield transporter
+                                    .dbc
+                                    .collection('comment_likes')
+                                    .find({ comment_id: +id })
+                                    .count();
+               yield cache.hmset(`commentview:${id}`, comment);
+            }
          }
 
          return comment;
@@ -311,11 +313,12 @@ module.exports = class DataTransporter {
     * @param {number} postId The post's Id.
     * @returns {Promise}
     */
-    getRecordByNamespace(namespace) {
+    getRecordByNamespace(req, namespace) {
       var transporter = this;
 
       return co(function*(){
-         log.debug(`dataTransporter.getRecordByNamespace: Getting ns record...`);
+         var i = indent(req, 1);
+         log.debug(`${i}[dt][getRecordByNamespace] Getting ns record...`);
          var timer = new Timer();
 
          var response = yield transporter.get({
@@ -324,13 +327,13 @@ module.exports = class DataTransporter {
             database: config.systemDatabase.name
          });
 
-         log.debug(`dataTransporter.getRecordByNamespace: Done. (${timer.click()}ms) Getting refered record...`);
          var result = response[0];
 
          if(result && result.collection === 'users')
             result = yield transporter.getUser({ id: result.id });
 
-         log.debug(`dataTransporter.getRecordByNamespace: Done. (${timer.click()}ms)`);
+         log.debug(`${i}[dt][getRecordByNamespace] Done. (${timer.click()}ms)`);
+         indent(req, -1);
          return result;
       });
     }

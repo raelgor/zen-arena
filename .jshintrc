@@ -17,7 +17,14 @@
      "Timer",
      "resize",
      "FB",
-     "appConfig"
+     "appConfig",
+     "fs",
+     "jade",
+     "DEBUG_MODE",
+     "indent",
+     "Factory",
+     "User",
+     "packageInfo"
   ],
   "undef": true,
   "unused": true,

@@ -15,6 +15,7 @@ process.on('message', message => co(function*(){
    log('Configuration message received. Initializing...');
 
    global.config = message.config;
+   global.DEBUG_MODE = message.DEBUG_MODE;
 
    global.cache = redis.createClient(
    message.clientConfig.config.cacheClients,
@@ -66,7 +67,7 @@ process.on('message', message => co(function*(){
    /**
    * Index of {@link PageRoute} objects.
    * @namespace pageHandlers
-   */
+   */ 
    loaddirSync('./pageHandlers', 'pageHandlers');
    require('./routes');
 

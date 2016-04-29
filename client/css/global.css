@@ -7,9 +7,18 @@ body {
     padding-bottom: 20px;
 }
 
+/* Firefox fix */
+body > iframe {
+	display: none;
+}
+
 * {
    -webkit-tap-highlight-color: rgba(0,0,0,0);
    /* -webkit-overflow-scrolling: touch; */ /* Nope. causes too many bugs */
+}
+
+.update-lang-letters {
+    text-transform: uppercase;
 }
 
 a[href]:active,
@@ -43,6 +52,7 @@ input, button {
 
 body, html {
     height: 100%;
+    background: #ebebeb;
 }
 
 .disabled {

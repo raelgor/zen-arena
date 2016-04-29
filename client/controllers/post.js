@@ -24,7 +24,7 @@ za.controllers.post = new za.Controller(function(element){
                opacity: 0
             }, 400, 'swing', function(){
                comment.remove();
-               $(element).find('.comment .post-interaction-pool').html(+$(element).find('.comment .post-interaction-pool').html()-1);
+               $(element).find('.comment .post-interaction-pool').html((+$(element).find('.comment .post-interaction-pool').html()-1)||'');
             });
          });
       }
@@ -110,7 +110,7 @@ za.controllers.post = new za.Controller(function(element){
          var scrollDown = $(element).find('.comment-pool > :last-child').height()+11;
          var currentScrollTop = $('html').scrollTop() || $('body').scrollTop();
 
-         if($(element).find('input.comment-text').offset().top > currentScrollTop + window.innerHeight - 100)
+         if($(element).find('input.comment-text').offset().top > currentScrollTop + window.innerHeight - window.innerHeight*0.5)
          $('html,body').scrollTop(currentScrollTop + scrollDown);
 
          refreshDates();

@@ -1,12 +1,12 @@
-/* global templates, co */
 'use strict';
 
-/**
- * Produces html for the verify email view and returns it asynchronously.
- * @method factory.verifyemail
- * @param {object} coreText The core application text to use.
- * @returns Promise
- */
-module.exports = coreText => co(() => {
+var f = new Factory();
+
+f.setName('ad');
+f.setGenerator(generator);
+
+module.exports = f;
+
+function generator(req, coreText){
    return templates.verifyemail({coreText});
-});
+}

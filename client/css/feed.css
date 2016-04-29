@@ -48,6 +48,8 @@ textarea.new-post-text {
     height: 58px;
     margin-bottom: 10px;
     max-width: calc(100% - 120px);
+    min-width: calc(100% - 120px);
+    min-height: 62px;
 }
 
 .new-post-interaction {
@@ -175,4 +177,21 @@ button.browse-tournaments-btn .icon-search {
 .white-box.tournament-browser .opts > * > :first-child {
     font-size: 23px;
     margin-bottom: 9px;
+}
+
+.right-footer-info {
+    color: gray;
+    font-size: 12px;
+    text-shadow: 0 1px #fff;
+    margin: 0 2px;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.right-footer-info .lang {
+    cursor: pointer;
+}
+
+.side-ads > :last-child > :last-child {
+    margin-bottom: 0px;
 }

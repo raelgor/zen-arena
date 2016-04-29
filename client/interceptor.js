@@ -28,10 +28,13 @@ function interceptor(event) {
    var href = target.attr('href') || target.parents('a[href]').attr('href');
 
    if(href) {
-      var resolved = za.goToStateByUrl(href);
-
       event.preventDefault();
       event.stopPropagation();
+
+      if(event.which === 2)
+         return window.open(href, '_blank');
+
+      var resolved = za.goToStateByUrl(href);
 
       if(
          (target.is('.navigation .logo') || target.parents('.navigation .logo').length) &&
@@ -83,34 +86,30 @@ za.goToStateByUrl = function(href){
    var key = exp && exp[1];
 
    if(exp) {
-      if(event.which === 2)
-         window.open(href, '_blank');
-      else {
-         var viewUrl =
-            typeof handler[0] === 'function' ?
-               handler[1]:
-               handler[0];
+      var viewUrl =
+         typeof handler[0] === 'function' ?
+            handler[1]:
+            handler[0];
 
-         var matches = href.match(new RegExp(key));
+      var matches = href.match(new RegExp(key));
 
-         if(viewUrl)
-            for(var i in matches)
-               i && (viewUrl = viewUrl.split('$'+i).join(matches[i]));
+      if(viewUrl)
+         for(var i in matches)
+            i && (viewUrl = viewUrl.split('$'+i).join(matches[i]));
 
-         za.goToState({
-            isBack: false,
-            href: href,
-            key: key,
-            viewUrl: viewUrl
-         });
-      }
+      za.goToState({
+         isBack: false,
+         href: href,
+         key: key,
+         viewUrl: viewUrl
+      });
    }
    return exp;
 };
 
 $(window).click(interceptor);
 
-window.onpopstate = function(e){
+window.addEventListener('popstate', function(e){
    if(!e.state) return;
 
    e.preventDefault();
@@ -118,4 +117,4 @@ window.onpopstate = function(e){
 
    e.state.isBack=true;
    za.goToState(e.state);
-};
+});

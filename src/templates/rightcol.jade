@@ -22,5 +22,13 @@ div(data-controller="rightcol")
          button.browse-tournaments-btn
             span.icon-search
             span.text(data-html-browse)=coreText.browse
-   .feed-title(data-html-ads)=coreText.ads
-   div!=data.ads
+   .side-ads
+      .feed-title(data-html-ads)=coreText.ads
+      div!=data.ads
+   .right-footer-info
+      span.copy=data.copyright_stamp
+      span=" - "
+      a.lang(tabindex=0, onclick="za.changeLanguage()")
+         span(data-html-language)=coreText.language
+         span=" "
+         span.update-lang-letters="("+data.lang+")"

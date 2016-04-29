@@ -13,6 +13,9 @@ var route = new APIRoute((response, req) => co(function*(){
    var id = req.params.comment_id;
    var comment = yield dataTransporter.getCommentView(id);
 
+   if(!comment)
+      return response.error('error_no_such_comment');
+
    if(+uid === +comment.user_id) {
       comment.deletable = true;
    } else {

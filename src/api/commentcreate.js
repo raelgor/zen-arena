@@ -36,7 +36,8 @@ var route = new APIRoute((response, req) => co(function*(){
    // Return geo info
    response.responseData = {
       message: 'OK',
-      commentHtml: yield factory.comment(
+      commentHtml: yield factory.comment.make(
+         req,
          comment.id,
          make_core_text(req.lang),
          +req.__user.get('id'))

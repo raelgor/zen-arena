@@ -27,6 +27,7 @@ global.loaddirSync = require('./loaddirSync');
 
 // Load classes
 global.Route = require('./classes/Route');
+global.Factory = require('./classes/Factory');
 global.APIRoute = require('./classes/APIRoute');
 global.PageRoute = require('./classes/PageRoute');
 global.DataTransporter = require('./classes/DataTransporter');

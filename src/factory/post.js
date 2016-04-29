@@ -1,30 +1,21 @@
-/* global co, templates, dataTransporter, User, log, Timer */
-/* global cache, factory */
 'use strict';
 
-/**
- * Produces html for the home view and returns it asynchronously.
- * @method factory.post
- * @param {object} id The post's id.
- * @param {object} coreText The core application text to use.
- * @param {object} uid The user that owns this post. Used to get data like if
- this post is liked by them or not.
- * @returns Promise
- */
-module.exports = (id, coreText, uid) => co(function*(){
-   log.debug('factory.post: Making...');
-   var timer = new Timer();
+var f = new Factory();
+
+f.setName('post');
+f.setGenerator(generator);
+
+module.exports = f;
+
+function* generator(req, id, coreText, uid){
 
    var data = cache.hgetall(`postview:${id}`);
 
    if(!data.id) {
 
-      log.debug('factory.post: Not in cache. Getting post by id...');
-
       data = yield dataTransporter.getPost(id);
 
       if(!data) {
-         log.debug('factory.post: Post not found. Returning empty string.');
          return '';
       }
 
@@ -42,10 +33,8 @@ module.exports = (id, coreText, uid) => co(function*(){
 
       data.shares = 0;
 
-      log.debug(`factory.post: Done. (${timer.click()}ms) Getting record by namespace...`);
-      var publisher = yield dataTransporter.getRecordByNamespace(+data.publisher);
+      var publisher = yield dataTransporter.getRecordByNamespace(req, +data.publisher);
 
-      log.debug(`factory.post: Done. (${timer.click()}ms) Setting view variables...`);
       data.publisher_namespace = publisher.namespace || publisher.get('id');
 
       if(publisher instanceof User) {
@@ -76,8 +65,6 @@ module.exports = (id, coreText, uid) => co(function*(){
 
       data.selfLiked = +data.selfLiked;
    }
-
-   log.debug(`factory.post: Done. Loading recent comments...`);
 
    var NUM_OF_COMM = 2;
    data.commentsHtml = [];
@@ -111,10 +98,8 @@ module.exports = (id, coreText, uid) => co(function*(){
       data.commentsHtml.reverse();
    }
 
-   log.debug(`factory.post: Done. (${timer.click()}ms) Building html...`);
-
    for(let index in data.commentsHtml)
-      data.commentsHtml[index] = yield factory.comment(data.commentsHtml[index], coreText, uid);
+      data.commentsHtml[index] = yield factory.comment.make(req, data.commentsHtml[index], coreText, uid);
 
    if(+uid === +data.publisher)
       data.isOwner = true;
@@ -124,6 +109,6 @@ module.exports = (id, coreText, uid) => co(function*(){
       data
    });
 
-   log.debug(`factory.post: Done. (${timer.click()}ms)`);
    return result;
-}).catch(log.error);
+
+}

@@ -1,19 +1,18 @@
 'use strict';
 
-/**
- * Produces html for the home view and returns it asynchronously.
- * @method factory.home
- * @param {object} coreText The core application text to use.
- * @param {object} uid The authenticated user.
- * @returns Promise
- */
-module.exports = (coreText, uid) => co(function*(){
-   log.debug('factory.home: Making...');
-   var timer = new Timer();
+var f = new Factory();
+
+f.setName('home');
+f.setGenerator(generator);
+
+module.exports = f;
+
+function* generator(req, coreText, uid){
+
    var posts = [];
 
    for(let index of appConfig.home_posts)
-      posts[index] = yield factory.post(index, coreText, uid);
+      posts[index] = yield factory.post.make(req, index, coreText, uid);
 
    var result = templates.home({
       coreText,
@@ -21,6 +20,6 @@ module.exports = (coreText, uid) => co(function*(){
       partners: appConfig.partners
    });
 
-   log.debug(`factory.home: Done. (${timer.click()}ms)`);
    return result;
-}).catch(log.error);
+
+}

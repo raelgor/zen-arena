@@ -2,7 +2,8 @@
 'use strict';
 
 // Debug
-app.router.use(routes.logger.route);
+if(DEBUG_MODE)
+   app.router.use(routes.logger.route);
 
 // Api route
 app.router.post('/api/text/:lang', api.text.route);

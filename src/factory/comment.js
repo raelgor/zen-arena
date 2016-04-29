@@ -1,18 +1,13 @@
-/* global co, templates, dataTransporter, log, Timer, cache */
 'use strict';
 
-/**
- * Produces html for the home view and returns it asynchronously.
- * @method factory.post
- * @param {object} id The post's id.
- * @param {object} coreText The core application text to use.
- * @param {object} uid The user that owns this post. Used to get data like if
- this post is liked by them or not.
- * @returns Promise
- */
-module.exports = (id, coreText, uid) => co(function*(){
-   log.debug('factory.comment: Making...');
-   var timer = new Timer();
+var f = new Factory();
+
+f.setName('comment');
+f.setGenerator(generator);
+
+module.exports = f;
+
+function* generator(req, id, coreText, uid){
 
    var comment = yield dataTransporter.getCommentView(id);
 
@@ -43,13 +38,13 @@ module.exports = (id, coreText, uid) => co(function*(){
          +post.publisher === +uid && (comment.deletable = true);
       }
    }
-   
+
    // Build
    var result = templates.comment({
       coreText,
       comment
    });
 
-   log.debug(`factory.comment: Done. (${timer.click()}ms)`);
    return result;
-});
+
+}

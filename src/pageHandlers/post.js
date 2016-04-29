@@ -11,9 +11,11 @@ var route = new PageRoute(response => co(function*() {
 
    log.debug('pageHandlers.post: Making response...');
 
-   response.responseData = yield factory.index(
+   response.responseData = yield factory.index.make(
+       response.request,
        response.pageData,
-       yield factory.viewpost(
+       yield factory.viewpost.make(
+         response.request,
          response.pageData.coreText,
          response.request.__user,
          0,

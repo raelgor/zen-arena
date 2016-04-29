@@ -4,6 +4,8 @@ Developed by Kosmas Papadatos
 */
 'use strict';
 
+global.DEBUG_MODE = ~process.argv.indexOf('-d') || ~process.argv.indexOf('--debug');
+
 const os = require('os');
 const numOfCores = global.numOfCores = os.cpus().length;
 const log = require('./src/log');
@@ -34,6 +36,7 @@ var clientID;
 var systemDB;
 
 log(`Initializing zen-arena client ${packageInfo.version} ...`);
+DEBUG_MODE && log.debug('DEBUG_MODE = ON');
 
 try {
 

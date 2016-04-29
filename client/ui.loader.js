@@ -1,8 +1,8 @@
 za.ui.loader = function() {
 
     var element = $('<div>');
-    
-    element.html(
+
+    element.addClass('loader').html(
         '<div class="sk-cube-grid">' +
             '<div class="sk-cube sk-cube1"></div>' +
             '<div class="sk-cube sk-cube2"></div>' +
