@@ -1,4 +1,3 @@
-/* global co, templates, appConfig, factory, Timer, log */
 'use strict';
 
 /**
@@ -18,7 +17,8 @@ module.exports = (coreText, uid) => co(function*(){
 
    var result = templates.home({
       coreText,
-      posts
+      posts,
+      partners: appConfig.partners
    });
 
    log.debug(`factory.home: Done. (${timer.click()}ms)`);

@@ -67,3 +67,27 @@
     font-size: 13px;
     margin: 0 20px;
 }
+
+.partners-title {
+    margin-top: 50px;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.partner-container {
+    max-width: 1000px;
+    text-align: center;
+    margin: auto;
+}
+
+.partner-container .partner-tile {
+    width: 130px;
+    height: 130px;
+    display: inline-block;
+    margin: 5px;
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-color: #EBEBEB;
+    opacity: .8;
+}

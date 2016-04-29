@@ -23,3 +23,7 @@ div(data-controller="home")
    .home-post-wrapper
       each postHtml in posts
          div!=postHtml
+   .partners-title(data-html-sponsors_title)=coreText.sponsors_title
+   .partner-container
+      each partner in partners
+         a.partner-tile(tabindex=0, href=(partner.link||''), title=(partner.title||''), style="background-image:url("+partner.image+")")

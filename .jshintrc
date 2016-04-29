@@ -16,7 +16,8 @@
      "templates",
      "Timer",
      "resize",
-     "FB"
+     "FB",
+     "appConfig"
   ],
   "undef": true,
   "unused": true,
