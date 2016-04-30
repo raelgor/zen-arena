@@ -1,17 +1,12 @@
-/* global Route, co, dataTransporter, appConfig, uuid, Timer, log, cache */
 'use strict';
 
-/**
- * A route that will create `req.__user` and `req.__session` if a
- * valid session is detected.
- * @method routes.authentication
- * @param {Response} response The response object.
- * @returns undefined
- */
-module.exports = new Route((response, req, res, next) => co(function*(){
+var r = new Route();
 
-   log.debug('authentication: Authenticating...');
-   var timer = new Timer();
+r.setName('authentication');
+
+module.exports = r;
+
+r.setHandler((response, req, res, next) => co(function*(){
 
    // Auth user if not static
    if(req.cookies && req.cookies.st) {
@@ -35,11 +30,11 @@ module.exports = new Route((response, req, res, next) => co(function*(){
          user = yield dataTransporter.getUser({ id: +session.user_id });
 
       if(!user) {
-         log.debug('authentication: Cookies were invalid. Clearing...');
+         log.debug(req, 'Cookies were invalid. Clearing...');
          res.clearCookie('st');
       } else {
 
-         log.debug('authentication: User found. Gathering info...');
+         log.debug(req, 'User found. Gathering info...');
 
          req.__user = user;
          req.__session = session;
@@ -70,9 +65,8 @@ module.exports = new Route((response, req, res, next) => co(function*(){
       }
 
    } else
-      log.debug('authentication: No auth.');
+      log.debug(req, 'No auth.');
 
-   log.debug(`authentication: Authentication finished. (${timer.click()}ms)`);
    next();
 
 }));

@@ -1,12 +1,14 @@
-/* global za */
-
 za.controllers.feedpool = new za.Controller(function(element){
 
    var EOF = false;
    var FEED_LOADING = false;
 
+   var stamp = Date.now();
+
+   $(element).attr('data-feed-stamp', stamp);
+
    function scrollListener() {
-      if(!$(element).length || EOF || $('[data-view-loading]').length)
+      if(!$('[data-feed-stamp="'+stamp+'"]').length || EOF || $('[data-view-loading]').length)
          return window.removeEventListener('scroll', scrollListener);
       if(FEED_LOADING) return;
 

@@ -1,17 +1,12 @@
-/* global routes, co, appConfig, GeoIP, Route, Timer, log */
 'use strict';
 
-/**
- * Attempts to fetch, detect and struct information about the session such as
- * country, locality and language.
- * @method routes.sessionInfoMaker
- * @param {Response} response The response object.
- * @returns undefined
- */
-module.exports = new Route((response, req, res, next) => co(function*(){
+var r = new Route();
 
-   log.debug('sessionInfoMaker: Gathering info...');
-   var timer = new Timer();
+r.setName('sessionInfoMaker');
+
+module.exports = r;
+
+r.setHandler((response, req, res, next) => co(function*(){
 
    var geoipInfo;
 
@@ -26,7 +21,7 @@ module.exports = new Route((response, req, res, next) => co(function*(){
          yield routes.detectAddress.take(req, res);
 
       // Get country_code info from GeoIP service
-      geoipInfo = yield GeoIP.get(req._address);
+      geoipInfo = yield GeoIP.get(req, req._address);
 
       if(geoipInfo.country_code) {
          req.__user.set('country', geoipInfo.country_code);
@@ -53,7 +48,7 @@ module.exports = new Route((response, req, res, next) => co(function*(){
             if(!req._address && !geoipInfo)
                yield routes.detectAddress.take(req, res);
             // Get lang info from GeoIP service
-            req.lang = (geoipInfo = geoipInfo || (yield GeoIP.get(req._address))).language;
+            req.lang = (geoipInfo = geoipInfo || (yield GeoIP.get(req, req._address))).language;
          }
 
    // If we didn't manage to find the language, fall back to default
@@ -66,7 +61,6 @@ module.exports = new Route((response, req, res, next) => co(function*(){
       secure: true
    });
 
-   log.debug(`sessionInfoMaker: Done. (${timer.click()}ms)`);
    next();
 
 }));

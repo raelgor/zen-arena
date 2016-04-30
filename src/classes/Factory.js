@@ -23,13 +23,16 @@ module.exports = class Factory {
 
    make() {
       if(DEBUG_MODE) {
-         let i = indent(arguments[0], 1);
+         let dn = `[factory][${this.name}]`;
+         let i = indent(arguments[0], 1, dn);
          let t = new Timer();
-         log.debug(`${i}[factory][${this.name}] Starting...`);
+         log.debug(`${i}${dn} Starting...`);
          let promise = this.generator(...arguments).catch(log.error);
          promise.then(() => {
             indent(arguments[0], -1);
-            log.debug(`${i}[factory][${this.name}] Finished. (${t.click()}ms)`);
+            let d = t.click();
+            msStats.log(`factory.${this.name}`, d);
+            log.debug(`${i}${dn} Finished. (${d}ms)`);
          });
          return promise;
       } else

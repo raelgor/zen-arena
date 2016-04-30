@@ -60,7 +60,22 @@ module.exports = class Route {
     */
    handle(handler) {
       return (req, res, next) => {
-         handler(new Response(req, res), req, res, next);
+         if(DEBUG_MODE && this.name) {
+            let dn = `[route][${this.name}]`;
+            let i = indent(req, 1, dn);
+            let t = new Timer();
+            log.debug(`${i}${dn} Starting...`);
+            let _next = (...a) => {
+               indent(req, -1);
+               let d = t.click();
+               msStats.log(`route.${this.name}`, d);
+               log.debug(`${i}${dn} Finished. (${d}ms)`);
+               next(...a);
+            };
+            handler(new Response(req, res), req, res, _next);
+         }
+         else
+            handler(new Response(req, res), req, res, next);
       };
    }
 

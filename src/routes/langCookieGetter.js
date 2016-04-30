@@ -1,38 +1,32 @@
-/* global Route, appConfig, log, Timer */
 'use strict';
 
-/**
- * Detects the request language.
- * @function routes.langCookieGetter
- * @param {Response} response The response object.
- * @returns undefined
- */
-var route = new Route((response, req, res, next) => {
+var r = new Route();
 
-   var timer = new Timer();
+r.setName('langCookieGetter');
+
+module.exports = r;
+
+r.setHandler((response, req, res, next) => {
 
    if(!req.lang) {
 
-      log.debug('langCookieGetter: No language. Trying to detect...');
+      log.debug(req, 'No language. Trying to detect...');
 
       if(~appConfig.app_languages.indexOf(req.cookies.lang)) {
 
-         log.debug(`langCookieGetter: Set language according to cookie. (${req.cookies.lang})`);
+         log.debug(req, `Set language according to cookie. (${req.cookies.lang})`);
          req.lang = req.cookies.lang;
 
       } else {
 
-         log.debug('langCookieGetter: Absent or invalid lang cookie. Falling back to default.');
+         log.debug(req, 'Absent or invalid lang cookie. Falling back to default.');
          req.lang = appConfig.default_lang;
 
       }
 
    } else
-      log.debug('langCookieGetter: Language exists. Did nothing.');
+      log.debug(req, 'Language exists. Did nothing.');
 
-   log.debug(`langCookieGetter: Done. (${timer.click()}ms)`);
    next();
 
 });
-
-module.exports = route;

@@ -30,9 +30,6 @@ module.exports = class PageRoute extends Route {
    handle(handler) {
       return (req, res, next) => co(function(){
 
-         log.debug('pageHandler: Preparing handler...');
-         var timer = new Timer();
-
          var coreText = make_core_text(req.lang);
 
          var response = new Response(req, res);
@@ -43,10 +40,39 @@ module.exports = class PageRoute extends Route {
             clientData: make_client_data(req, coreText)
          };
 
-         log.debug(`pageHandler: Done. (${timer.click()}ms)`);
-         handler(response, req, res, next);
+         if(DEBUG_MODE && this.name) {
+            let dn = `[pageRoute][${this.name}]`;
+            let i = indent(req, 1, dn);
+            let t = new Timer();
+            let resolved;
+            log.debug(`${i}${dn} Starting...`);
 
-      });
+            let _finished = () => {
+               if(resolved) return;
+               resolved = true;
+               let d = t.click();
+               msStats.log(`pageRoute.${this.name}`, d);
+               indent(req, -1);
+               log.debug(`${i}${dn} Finished. (${d}ms)`);
+            };
+
+            let _next = (...a) => {
+               _finished();
+               next(...a);
+            };
+
+            let result = handler(response, req, res, _next);
+
+            if(result && 'then' in result)
+               result.then(_finished);
+            else
+               _finished();
+
+         }
+         else
+            handler(response, req, res, next);
+
+      }.bind(this));
    }
 
 };

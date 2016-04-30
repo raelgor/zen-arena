@@ -3,9 +3,9 @@
 
 const GeoIP = {
 
-    get: address => {
+    get: (req, address) => {
 
-        log.debug(`GeoIP: Getting ${colors.magenta(address)}...`);
+        log.debug(req, `GeoIP: Getting ${colors.magenta(address)}...`);
 
         let resolved = false;
         let _resolve;

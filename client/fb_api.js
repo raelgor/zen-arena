@@ -1,5 +1,3 @@
-/* global FB, clientData, za, log */
-
 za.fb_ready = new Promise(function(r){ za._fb_resolve = r; });
 za.fb_ready.then(function(){ FB.getLoginStatus(); });
 

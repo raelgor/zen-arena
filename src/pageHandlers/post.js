@@ -1,15 +1,13 @@
 /* global co, PageRoute, factory, log */
 'use strict';
 
-/**
- * Request handler of the home page.
- * @method pageHandlers.home
- * @param {Response} response The response object.
- * @returns undefined
- */
-var route = new PageRoute(response => co(function*() {
+var r = new PageRoute();
 
-   log.debug('pageHandlers.post: Making response...');
+r.setName('post');
+
+module.exports = r;
+
+r.setHandler(response => co(function*() {
 
    response.responseData = yield factory.index.make(
        response.request,
@@ -25,5 +23,3 @@ var route = new PageRoute(response => co(function*() {
   response.end();
 
 }).catch(log.error));
-
-module.exports = route;

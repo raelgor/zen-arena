@@ -8,11 +8,7 @@ if(DEBUG_MODE)
 // Api route
 app.router.post('/api/text/:lang', api.text.route);
 
-app.router.all('/api*', [
-   routes.cacheStaller.route,
-   routes.langCookieGetter.route
-]);
-
+app.router.all('/api*', routes.langCookieGetter.route);
 app.router.post('/api/login', api.login.route);
 app.router.post('/api/goauth', api.goauth.route);
 app.router.post('/api/fblogin', api.fblogin.route);

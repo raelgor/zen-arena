@@ -7,6 +7,7 @@ module.exports = user => {
 	return {
 		id: user.get('id'),
 		display_name: user.displayName(),
+		mini_name: user.miniName(),
 		username: user.get('username'),
 		first_name: user.get('first_name'),
 		last_name: user.get('last_name'),

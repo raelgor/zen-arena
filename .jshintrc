@@ -24,7 +24,12 @@
      "indent",
      "Factory",
      "User",
-     "packageInfo"
+     "packageInfo",
+     "Route",
+     "uuid",
+     "GeoIP",
+     "PageRoute",
+     "msStats"
   ],
   "undef": true,
   "unused": true,

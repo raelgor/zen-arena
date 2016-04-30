@@ -67,10 +67,13 @@ process.on('message', message => co(function*(){
    /**
    * Index of {@link PageRoute} objects.
    * @namespace pageHandlers
-   */ 
+   */
    loaddirSync('./pageHandlers', 'pageHandlers');
    require('./routes');
 
+   log('Loading msStatLogger...');
+   require('./msStatLogger');
+   
    log.green('Done. Worker initialized.');
 
-}));
+}).catch(log.error));

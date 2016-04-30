@@ -125,7 +125,7 @@
 
 .right-section .top-section .title {
     padding-top: 25px;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     color: #575757;
     font-weight: bold;
 }
@@ -168,4 +168,75 @@
 
 .footer .social-container > .icon-instagram:hover {
     color: brown;
+}
+
+@media screen and (max-width: 1000px) {
+
+    .footer-white-line {
+        height: auto;
+    }
+
+    .left-section, .right-section {
+        display: block;
+        border: none;
+        height: auto;
+        margin: auto;
+    }
+
+    .left-section {
+        width: 390px;
+    }
+
+    .right-section {
+       max-width: 600px;
+       min-width: 400px;
+       margin-bottom: 20px;
+    }
+
+}
+
+@media screen and (max-width: 795px) {
+
+   .right-column {
+      display: none;
+   }
+
+   .left-column {
+      width: calc(100% - 20px);
+   }
+
+}
+
+@media screen and (max-width: 436px) {
+
+    .belt .logo {
+        float: none !important;
+        display: inline-block;
+    }
+
+    .left-section .link {
+       font-size: 10px !important;
+    }
+
+    .left-section {
+        width: 320px;
+    }
+
+    .belt {
+        width: 100%;
+    }
+
+    .belt .top-section, .belt .right-section {
+        text-align: center;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .belt .right-section *:not([class^="icon-"]) {
+        margin: 0px !important;
+    }
+
 }

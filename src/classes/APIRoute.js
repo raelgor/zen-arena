@@ -26,7 +26,37 @@ module.exports = class APIRoute extends Route {
     */
    handle(handler) {
       return (req, res, next) => {
-         handler(new JSONResponse(req, res), req, res, next);
+         if(DEBUG_MODE && this.name) {
+            let dn = `[api][${this.name}]`;
+            let i = indent(req, 1, dn);
+            let t = new Timer();
+            let resolved;
+            log.debug(`${i}${dn} Starting...`);
+
+            let _finished = () => {
+               if(resolved) return;
+               resolved = true;
+               indent(req, -1);
+               let d = t.click();
+               msStats.log(`api.${this.name}`, d);
+               log.debug(`${i}${dn} Finished. (${d}ms)`);
+            };
+
+            let _next = (...a) => {
+               _finished();
+               next(...a);
+            };
+
+            let result = handler(new JSONResponse(req, res), req, res, _next);
+
+            if(result && 'then' in result)
+               result.then(_finished);
+            else
+               _finished();
+
+         }
+         else
+            handler(new JSONResponse(req, res), req, res, next);
       };
    }
 

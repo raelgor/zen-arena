@@ -1,13 +1,13 @@
 /* global APIRoute */
 'use strict';
 
-/**
- * Filters API requests that are not authorized by previous middleware.
- * @method routes.authFilter
- * @param {Response} response The response object.
- * @returns undefined
- */
-module.exports = new APIRoute((response, req, res, next) => {
+var r = new APIRoute();
+
+r.setName('authFilter');
+
+module.exports = r;
+
+r.setHandler((response, req, res, next) => {
    if(req.__user)
       next();
    else

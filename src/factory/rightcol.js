@@ -12,7 +12,7 @@ function* generator(req, coreText, user, lang){
    var result = templates.rightcol({
       coreText,
       data: {
-         user: user.record,
+         user: user && user.record,
          lang,
          copyright_stamp: appConfig.copyright_stamp,
          ads: yield dataTransporter.getRandomAdViews(

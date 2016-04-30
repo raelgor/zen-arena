@@ -9,14 +9,16 @@ module.exports = clientConfig => {
 
    var instances = clientConfig.instances || global.numOfCores;
 
-   for(let i = 0; i < instances; i++) {
-      let worker = cluster.fork();
+   for(let i = 0; i < instances; i++)
+      forkOne();
 
+   function forkOne(){
+      let worker = cluster.fork();
       worker.send({config, clientConfig, DEBUG_MODE});
 
       worker.on('disconnect', () => {
          worker.kill('SIGTERM');
-         cluster.fork().send({config, clientConfig, DEBUG_MODE});
+         forkOne();
       });
    }
 

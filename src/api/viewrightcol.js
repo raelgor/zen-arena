@@ -11,7 +11,7 @@
 var route = new APIRoute((response,req) => co(function*(){
 
    response.responseData = {
-      html: yield factory.rightcol(
+      html: yield factory.rightcol.make(
          req,
          make_core_text(req.lang),
          req.__user,

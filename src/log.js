@@ -20,6 +20,21 @@ log.green = function(){ arguments[0] = colors.green(arguments[0]); this(...argum
 log.magenta = function(){ arguments[0] = colors.magenta(arguments[0]); this(...arguments); };
 
 log.warn = function(){ arguments[0] = colors.yellow(arguments[0]); this(...arguments); };
-log.debug = function(){ arguments[0] = colors.yellow(arguments[0]); this(...arguments); };
-   
+
+log.debug = function(){
+
+   var i = arguments[0] && arguments[0]._depth ? arguments[0]._depth : '';
+   var dn = arguments[0] && arguments[0]._depth ? arguments[0]._depth_name + ' ' : '';
+   var d = '';
+
+   if(i)
+      while(i--)
+         d += ' ';
+
+   var message = typeof arguments[0] == 'string' ? arguments[0] : arguments[1];
+   message = colors.yellow(`${d}${dn}${message}`);
+   this(message);
+
+};
+
 module.exports = log;

@@ -2,7 +2,7 @@
 
 var f = new Factory();
 
-f.setName('ad');
+f.setName('verifyemail');
 f.setGenerator(generator);
 
 module.exports = f;
