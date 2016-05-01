@@ -1,13 +1,13 @@
 /* global co, PageRoute, factory, dataTransporter */
 'use strict';
 
-/**
- * Request handler of the unsubscribeall page.
- * @method pageHandlers.unsubscribeall
- * @param {Response} response The response object.
- * @returns undefined
- */
-module.exports = new PageRoute(response => co(function*() {
+var r = new PageRoute();
+
+r.setName('unsubscribeall');
+
+module.exports = r;
+
+r.setHandler(response => co(function*() {
 
    var token;
 

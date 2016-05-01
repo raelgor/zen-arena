@@ -1,5 +1,3 @@
-/* global co, dataTransporter, appConfig, APIRoute */
-/* global log_user_in, make_user_from_go_info, oauth_exploit_check */
 'use strict';
 
 const google = require('googleapis');
@@ -8,14 +6,13 @@ const OAuth2 = google.auth.OAuth2;
 const oauth2Client = new OAuth2(appConfig.google_oauth.client_id,
                                 appConfig.google_oauth.client_secret);
 
-/**
-* Logs the user in or registers using Google+ OAuth 2.
-* @function goauth
-* @param {JSONResponse} response The response object.
-* @memberof api
-* @returns undefined
-*/
-var route = new APIRoute((response, req, res) => co(function*(){
+var r = new APIRoute();
+
+r.setName('goauth');
+
+module.exports = r;
+
+r.setHandler((response, req, res) => co(function*(){
 
    var valid_request =
       req.body &&
@@ -77,5 +74,3 @@ var route = new APIRoute((response, req, res) => co(function*(){
    log_user_in(response, user);
 
 }));
-
-module.exports = route;

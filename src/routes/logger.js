@@ -1,4 +1,3 @@
-/* global Timer, log, Route */
 'use strict';
 
 module.exports = new Route((response, req, res, next) => {

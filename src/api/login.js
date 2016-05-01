@@ -1,15 +1,14 @@
-/* global co, dataTransporter, dataTransporter, bcrypt, routes */
-/* global log_user_in, APIRoute */
 'use strict';
 
-/**
- * Attempts to log the user in.
- * @function login
- * @param {JSONResponse} response The response object.
- * @memberof api
- * @returns undefined
- */
-var route = new APIRoute((response, req) => co(function*(){
+var r = new APIRoute();
+
+r.setName('login');
+
+module.exports = r;
+
+r.prependRoute(routes.grecaptcha.route);
+
+r.setHandler((response, req) => co(function*(){
 
    var valid_request =
       req.body &&
@@ -41,7 +40,3 @@ var route = new APIRoute((response, req) => co(function*(){
    log_user_in(response, user);
 
 }));
-
-route.prependRoute(routes.grecaptcha.route);
-
-module.exports = route;

@@ -1,13 +1,14 @@
-/* global get, APIRoute, routes, co, appConfig */
 'use strict';
 
-/**
- * Returns the core application text for a specified language.
- * @method api.updategeo
- * @param {JSONResponse} response The response object.
- * @returns undefined
- */
-var route = new APIRoute((response, req, res) => co(function*(){
+var r = new APIRoute();
+
+r.setName('updategeo');
+
+module.exports = r;
+
+r.prependRoute(routes.authentication.route);
+
+r.setHandler((response, req, res) => co(function*(){
 
    var valid_request =
       req.body &&
@@ -57,7 +58,7 @@ var route = new APIRoute((response, req, res) => co(function*(){
 
       city = found[0].short_name;
    } catch(e) { }
-   
+
    if(typeof geoInfo !== 'object' || (!country && !city))
       return response.error('error_get_geoinfo_failed');
 
@@ -91,7 +92,3 @@ var route = new APIRoute((response, req, res) => co(function*(){
    response.end();
 
 }));
-
-route.prependRoute(routes.authentication.route);
-
-module.exports = route;

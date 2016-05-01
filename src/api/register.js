@@ -1,15 +1,14 @@
-/* global co, dataTransporter, dataTransporter, bcrypt, on_user_created, uuid */
-/* global log_user_in, increment, postman, APIRoute, routes */
 'use strict';
 
-/**
- * Attempts to create a user record and session.
- * @function register
- * @param {JSONResponse} response The response object.
- * @memberof api
- * @returns undefined
- */
-var route = new APIRoute((response, req) => co(function*(){
+var r = new APIRoute();
+
+r.setName('register');
+
+module.exports = r;
+
+r.prependRoute(routes.grecaptcha.route);
+
+r.setHandler((response, req) => co(function*(){
 
    var valid_request =
       req.body &&
@@ -52,7 +51,3 @@ var route = new APIRoute((response, req) => co(function*(){
    log_user_in(response, user);
 
 }));
-
-route.prependRoute(routes.grecaptcha.route);
-
-module.exports = route;

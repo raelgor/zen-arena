@@ -1,13 +1,14 @@
 'use strict';
 
-/**
- * Returns the core application text for a specified language.
- * @function text
- * @param {JSONResponse} response The response object.
- * @memberof api
- * @returns undefined
- */
-var route = new APIRoute((response,req) => co(function*(){
+var r = new APIRoute();
+
+r.setName('feedrange');
+
+module.exports = r;
+
+r.prependRoute(routes.authentication.route);
+
+r.setHandler((response,req) => co(function*(){
 
    var uid = req.__user && req.__user.get('id');
    var index = req.params.index;
@@ -34,7 +35,3 @@ var route = new APIRoute((response,req) => co(function*(){
    response.end();
 
 }).catch(log.error));
-
-route.prependRoute(routes.authentication.route);
-
-module.exports = route;

@@ -11,13 +11,18 @@
  * @return {undefined}
  */
 function loaddirSync(dir, namespace) {
-   if(namespace) {
-      global[namespace] = {};
-      for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
-         global[namespace][file.split('.js')[0]] = require(`${dir}/${file}`);
-   } else
-      for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
-         global[file.split('.js')[0]] = require(`${dir}/${file}`);
+   try{
+      if(namespace) {
+         global[namespace] = {};
+         for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
+            global[namespace][file.split('.js')[0]] = require(`${dir}/${file}`);
+      } else
+         for(let file of fs.readdirSync(path.resolve(__dirname, dir)))
+            global[file.split('.js')[0]] = require(`${dir}/${file}`);
+   } catch(error) {
+      log.error(error);
+      process.emit('error', error);
+   }
 }
 
 module.exports = loaddirSync;

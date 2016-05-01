@@ -124,7 +124,7 @@ $(window).ready(function(){
    // Safari fix
    setTimeout(za.resize, 0);
 
-   $('.touch-nav .icon-user, .player-info .user-ui').click(function(){
+   $('.touch-nav .icon-user, .player-info .user-ui [class^="user-"]').click(function(){
 
       var offset = $(this).is('.user-ui') ? 120 : 0;
 

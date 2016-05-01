@@ -1,13 +1,15 @@
-/* global APIRoute, routes, co, dataTransporter, delete_comment, cache */
 'use strict';
 
-/**
- * Returns the core application text for a specified language.
- * @method api.updategeo
- * @param {JSONResponse} response The response object.
- * @returns undefined
- */
-var route = new APIRoute((response, req) => co(function*(){
+var r = new APIRoute();
+
+r.setName('postdelete');
+
+module.exports = r;
+
+r.prependRoute(routes.authentication.route);
+r.prependRoute(routes.authFilter.route);
+
+r.setHandler((response, req) => co(function*(){
 
    var uid = req.__user.get('id');
    var id = req.params.post_id;
@@ -36,8 +38,3 @@ var route = new APIRoute((response, req) => co(function*(){
    response.end();
 
 }));
-
-route.prependRoute(routes.authentication.route);
-route.prependRoute(routes.authFilter.route);
-
-module.exports = route;

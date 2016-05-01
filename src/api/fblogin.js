@@ -1,5 +1,3 @@
-/* global co, fb, dataTransporter, appConfig, oauth_exploit_check */
-/* global make_user_from_fb_info, log_user_in, APIRoute */
 'use strict';
 
 var r = new APIRoute();

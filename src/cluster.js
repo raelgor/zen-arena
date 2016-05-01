@@ -1,5 +1,3 @@
-/* global dataTransporter, loaddirSync, co, log, config, postman */
-/* global path, make_mongo_url, redis, cache */
 'use strict';
 
 // Worker process title
@@ -73,7 +71,7 @@ process.on('message', message => co(function*(){
 
    log('Loading msStatLogger...');
    require('./msStatLogger');
-   
+
    log.green('Done. Worker initialized.');
 
 }).catch(log.error));

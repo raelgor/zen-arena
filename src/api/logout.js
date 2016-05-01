@@ -1,14 +1,15 @@
-/* global co, dataTransporter, APIRoute, routes, cache */
 'use strict';
 
-/**
- * Clears the user's session from record and purges auth cookies.
- * @function logout
- * @param {JSONResponse} response The response object.
- * @memberof api
- * @returns undefined
- */
-var route = new APIRoute((response, req, res) => co(function*(){
+var r = new APIRoute();
+
+r.setName('logout');
+
+module.exports = r;
+
+r.prependRoute(routes.authentication.route);
+r.prependRoute(routes.authFilter.route);
+
+r.setHandler((response, req, res) => co(function*(){
 
    res.clearCookie('st');
 
@@ -33,8 +34,3 @@ var route = new APIRoute((response, req, res) => co(function*(){
    response.end();
 
 }));
-
-route.prependRoute(routes.authentication.route);
-route.prependRoute(routes.authFilter.route);
-
-module.exports = route;

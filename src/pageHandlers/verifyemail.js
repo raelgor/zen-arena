@@ -1,13 +1,13 @@
 /* global co, PageRoute, factory, dataTransporter, postman */
 'use strict';
 
-/**
- * Request handler of the verifyemail page.
- * @method pageHandlers.verifyemail
- * @param {Response} response The response object.
- * @returns undefined
- */
-module.exports = new PageRoute(response => co(function*() {
+var r = new PageRoute();
+
+r.setName('verifyemail');
+
+module.exports = r;
+
+r.setHandler(response => co(function*() {
 
    var token;
 
