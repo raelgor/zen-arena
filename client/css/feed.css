@@ -96,7 +96,6 @@ textarea.new-post-text {
 }
 
 .perma-option {
-    border-bottom: 1px solid #E7E7E7;
     padding: 15px 25px;
     font-size: 14px;
     cursor: pointer;
@@ -105,8 +104,12 @@ textarea.new-post-text {
     -ms-user-select: none;
 }
 
-.perma-option:last-child {
+.perma-options > :last-child {
     border: none !important;
+}
+
+.perma-options > div {
+    border-bottom: 1px solid #E7E7E7;
 }
 
 .perma-option > * {
@@ -143,11 +146,14 @@ textarea.new-post-text {
    text-align: center;
    padding: 17px 0 13px;
    vertical-align: top;
-   border-right: 1px solid #E7E7E7;
    box-sizing: border-box;
    color: #666;
    font-size: 12px;
    cursor: pointer;
+}
+
+.white-box.tournament-browser .opts > *:first-child {
+   border-right: 1px solid #E7E7E7;
 }
 
 button.browse-tournaments-btn {
@@ -174,7 +180,7 @@ button.browse-tournaments-btn .icon-search {
     border: none;
 }
 
-.white-box.tournament-browser .opts > * > :first-child {
+.white-box.tournament-browser .opts > * > * > :first-child {
     font-size: 23px;
     margin-bottom: 9px;
 }

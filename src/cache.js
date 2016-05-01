@@ -15,7 +15,7 @@ function get_data(){
 
         var configResponse = yield dataTransporter.get({
             query: {},
-            collection: 'configuration'
+            collection: 'configuration' 
         });
 
         global.appConfig = {};
