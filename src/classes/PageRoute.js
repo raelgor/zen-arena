@@ -1,5 +1,3 @@
-/* global Route, co, routes, Response, make_core_text, Timer, log */
-/* global make_default_meta_data, make_client_data */
 'use strict';
 
 /**

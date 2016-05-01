@@ -40,15 +40,15 @@ function get_data(){
         for(let row of textResponse)
             global.text[row.origin][row.language][row.id] = row;
 
-        log.green('Cache up to date.');
-
         global._cache_is_updating = false;
         updated();
 
         global.coreTextCache = {};
 
         for(let language in global.text.core)
-         coreTextCache[language] = coreTextCache[language];
+         coreTextCache[language] = make_core_text(language);
+
+        log.green('Cache up to date.');
 
         //setTimeout(get_data, 5*6e4);
 

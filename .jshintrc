@@ -30,7 +30,10 @@
      "GeoIP",
      "PageRoute",
      "msStats",
-     "coreTextCache"
+     "coreTextCache",
+     "Response",
+     "make_default_meta_data",
+     "make_client_data"
   ],
   "undef": true,
   "unused": true,
