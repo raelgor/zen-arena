@@ -24,9 +24,13 @@ app.router.post('/api/like/:action/:type/:id', api.like.route);
 app.router.post('/api/comment/create/:post_id', api.commentcreate.route);
 app.router.post('/api/comment/getprevious/:post_id/:earliest_index', api.commentgetprev.route);
 app.router.post('/api/comment/delete/:comment_id', api.commentdelete.route);
+
 app.router.post('/api/post/delete/:post_id', api.postdelete.route);
 app.router.post('/api/post/create', api.postcreate.route);
+
 app.router.post('/api/feed/news/range/:index', api.feedrange.route);
+
+app.router.post('/api/language/list', api.listlanguages.route);
 
 // View html factories
 app.router.post('/api/view/index', api.viewindex.route);

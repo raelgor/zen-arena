@@ -11,6 +11,7 @@ gulp.task('min_js', () => {
       './client/lib/*',
       './client/main.js',
       './client/controllers/*',
+      './client/ui/*',
       './client/*'
   ]);
 

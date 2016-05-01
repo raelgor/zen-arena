@@ -1,4 +1,3 @@
-/* global za, clientData */
 za.userBar = {
 
    // logged or not, defaults to not
