@@ -26,8 +26,8 @@ za.ui.loader = function() {
       if(!element) return window.removeEventListener('resize', positionLoader);
       element.css({
          position: 'absolute',
-         top: this.boundElement.offset().top + 20,
-         left: this.boundElement.offset().left + this.boundElement.width()/2
+         top: element.boundElement.offset().top + 20,
+         left: element.boundElement.offset().left + element.boundElement.width()/2 - 20
       });
     }
 

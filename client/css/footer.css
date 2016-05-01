@@ -64,6 +64,7 @@
     width: 410px;
     border-right: 1px solid #D2D2D2;
     height: 100%;
+    max-width: 100%;
 }
 
 .left-section .title {
