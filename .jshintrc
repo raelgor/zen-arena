@@ -33,6 +33,8 @@
      "coreTextCache",
      "Response",
      "make_default_meta_data",
+     "http",
+     "colors",
      "make_client_data"
   ],
   "undef": true,
