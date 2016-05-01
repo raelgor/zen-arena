@@ -13,7 +13,7 @@ var route = new APIRoute((response,req) => co(function*(){
    response.responseData = {
       html: yield factory.viewpost.make(
          req,
-         make_core_text(req.lang),
+         coreTextCache[req.lang],
          req.__user,
          req.body.message.depth,
          req.params.post_id

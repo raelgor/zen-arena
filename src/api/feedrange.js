@@ -15,7 +15,7 @@ var route = new APIRoute((response,req) => co(function*(){
    response.responseData = {
       html: yield dataTransporter.getFeedHtml(
          req,
-         make_core_text(req.lang),
+         coreTextCache[req.lang],
          // Auth user
          uid,
          // Namespace origin

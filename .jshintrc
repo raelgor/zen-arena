@@ -29,7 +29,8 @@
      "uuid",
      "GeoIP",
      "PageRoute",
-     "msStats"
+     "msStats",
+     "coreTextCache"
   ],
   "undef": true,
   "unused": true,

@@ -44,7 +44,7 @@ var route = new APIRoute((response, req) => co(function*(){
       comments[index] = yield factory.comment.make(
          req,
          comments[index],
-         make_core_text(req.lang),
+         coreTextCache[req.lang],
          req.__user && +req.__user.get('id')
       );
 

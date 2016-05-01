@@ -18,7 +18,7 @@ var route = new APIRoute((response, req) => {
    if(!~appConfig.app_languages.indexOf(req.params.lang))
       return response.error('error_invalid_language');
 
-   response.responseData = make_core_text(req.params.lang);
+   response.responseData = coreTextCache[req.params.lang];
    response.end();
 
 });

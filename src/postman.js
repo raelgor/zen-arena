@@ -24,7 +24,7 @@ postman.init = () => {
 
 postman.verifyAccountEmail = user => {
    user = user.record;
-   let core_text = make_core_text(user.lang);
+   let core_text = coreTextCache[user.lang];
 
    if(!user.email)
       return Promise.resolve(false);
@@ -44,7 +44,7 @@ postman.verifyAccountEmail = user => {
 
 postman.sendForgotPasswordEmail = user => {
    user = user.record;
-   let core_text = make_core_text(user.lang);
+   let core_text = coreTextCache[user.lang];
 
    if(!user.email)
       return Promise.resolve(false);
@@ -64,7 +64,7 @@ postman.sendForgotPasswordEmail = user => {
 
 postman.welcome = user => {
    user = user.record;
-   let core_text = make_core_text(user.lang);
+   let core_text = coreTextCache[user.lang];
 
    if(!user.email || user.unsubscribe_all_email)
       return Promise.resolve(false);

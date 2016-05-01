@@ -30,7 +30,7 @@ module.exports = class PageRoute extends Route {
    handle(handler) {
       return (req, res, next) => co(function(){
 
-         var coreText = make_core_text(req.lang);
+         var coreText = coreTextCache[req.lang];
 
          var response = new Response(req, res);
 

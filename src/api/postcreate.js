@@ -39,7 +39,7 @@ r.setHandler((response, req) => co(function*(){
    // Return geo info
    response.responseData = {
       message: 'OK',
-      html: yield factory.post.make(req, id, make_core_text(req.lang), uid)
+      html: yield factory.post.make(req, id, coreTextCache[req.lang], uid)
    };
 
    response.end();

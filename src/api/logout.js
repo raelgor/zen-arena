@@ -23,7 +23,7 @@ var route = new APIRoute((response, req, res) => co(function*(){
       message: 'OK',
       html: yield factory.viewindex.make(
          req,
-         make_core_text(req.lang),
+         coreTextCache[req.lang],
          null,
          2,
          req.lang

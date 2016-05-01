@@ -1,11 +1,10 @@
-/* global appConfig, dataTransporter, log, co, make_core_text */
 'use strict';
 
 module.exports = get_data();
 
 function get_data(){
 
-    log('Updating cache data...');
+    log('Getting cache data...');
 
     return co(function*(){
 
@@ -46,7 +45,12 @@ function get_data(){
         global._cache_is_updating = false;
         updated();
 
-        setTimeout(get_data, 5*6e4);
+        global.coreTextCache = {};
+
+        for(let language in global.text.core)
+         coreTextCache[language] = coreTextCache[language];
+
+        //setTimeout(get_data, 5*6e4);
 
     });
 
