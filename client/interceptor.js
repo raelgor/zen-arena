@@ -81,9 +81,20 @@ za.getUrlStateHandler = function(href) {
 };
 
 za.goToStateByUrl = function(href){
+   var stateObject = za.makeStateObjectFromUrl(href);
+
+   if(stateObject)
+      za.goToState(stateObject);
+
+   return stateObject;
+};
+
+za.makeStateObjectFromUrl = function(href) {
+
    var exp = za.getUrlStateHandler(href);
    var handler = exp && exp[0];
    var key = exp && exp[1];
+   var stateObject;
 
    if(exp) {
       var viewUrl =
@@ -97,24 +108,33 @@ za.goToStateByUrl = function(href){
          for(var i in matches)
             i && (viewUrl = viewUrl.split('$'+i).join(matches[i]));
 
-      za.goToState({
+      stateObject = {
          isBack: false,
          href: href,
          key: key,
          viewUrl: viewUrl
-      });
+      };
    }
-   return exp;
+
+   return stateObject;
+
 };
 
 $(window).click(interceptor);
+$(window).ready(function(){
+   var path = window.location.pathname;
+   window.history &&
+   history.replaceState(za.makeStateObjectFromUrl(path), document.title, path);
+});
 
 window.addEventListener('popstate', function(e){
-   if(!e.state) return;
 
    e.preventDefault();
    e.stopPropagation();
 
+   if(!e.state || e.virginState) return;
+
    e.state.isBack=true;
    za.goToState(e.state);
+
 });
