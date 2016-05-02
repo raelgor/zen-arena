@@ -1,16 +1,20 @@
 'use strict';
 
+/**
+ * @function listlanguages
+ * @memberof api
+ * @desc Lists all languages available to users.
+ * @returns {APIRoute}
+ */
 var r = new APIRoute();
 
 r.setName('listlanguages');
 
-/* r.prependRoute(route.authentication.route); */
-
 module.exports = r;
 
-r.setHandler((response, req, res) => co(function*(){
+r.setHandler(response => co(function*(){
 
-   console.log('works!');
+   yield console.log('works!');
 
    response.responseData = { message: 'OK' };
    response.end();
