@@ -11,7 +11,7 @@
                span.date-text
       if data.title
          .post-title=data.title
-      .post-text!=data.text
+      .post-text!=data.text.split('\n').join('<br/>')
       .post-interaction-wrapper
          span.post-interaction-button.like(tabindex=0, class=+data.selfLiked?"liked":"")
             .icon-like
