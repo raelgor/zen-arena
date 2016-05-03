@@ -48,7 +48,7 @@ global.msStats = {
 
             dataTransporter.dbc.collection('msStats').update({
                   action: res.value.action,
-                  version: packageInfo.version
+                  version: packageInfo.version 
                },{
                   $set: {
                      avg: Math.ceil(+res.value.ms / +res.value.r)
