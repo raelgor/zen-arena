@@ -1,3 +1,8 @@
+.ani006 {
+	transition-property: all;
+	transition-duration: 60ms;
+}
+
 .ani01 {
 	transition-property: all;
 	transition-duration: 100ms;
