@@ -112,7 +112,6 @@ za.login.promptForgotPassword = function() {
     $('.forgot-password-frame').removeClass('hide');
 
     za.ui.ntFocus('.forgot-password-frame .username');
-
     $('.forgot-password-frame .username').val($('.login-frame .username').val());
 
     window.grecaptcha ?
@@ -144,6 +143,10 @@ za.login.exitPrompts = function(callback) {
 };
 
 $(window).ready(function(){
+
+   $('.auth-dialogs > form').each(function(i,e){
+      new za.ui.Disposable(e).on('disposed', za.login.exitPrompts);
+   });
 
    var termsCheckbox = new za.ui.Checkbox(clientData.core_text.register_accept_terms,{
       'data-html-register_accept_terms':1
