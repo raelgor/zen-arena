@@ -16,6 +16,7 @@
   "dependencies": {
     "bcrypt": "^0.8.5",
     "co": "^4.6.0",
+    "eventemitter2": "^1.0.3",
     "fb": "^1.0.2",
     "forcedomain": "^0.6.0",
     "googleapis": "^2.1.7",
