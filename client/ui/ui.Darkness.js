@@ -11,14 +11,14 @@ za.ui.Darkness = function(){
       $('body').append(element);
 
       object.emit('spawnstart');
-      element.animate({opacity:1}, 400, 'swing', function(){
+      element.animate({opacity:1}, 250, 'swing', function(){
          object.emit('spawnend');
       });
    };
 
    this.fade = function() {
       object.emit('fadestart');
-      element.animate({opacity:0}, 300, 'swing', function(){
+      element.animate({opacity:0}, 200, 'swing', function(){
          element.remove();
          object.emit('fadeend');
       });
