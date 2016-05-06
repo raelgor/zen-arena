@@ -72,6 +72,8 @@ process.on('message', message => co(function*(){
    log('Loading msStatLogger...');
    require('./msStatLogger');
 
+   require('./g_test')();
+
    log.green('Done. Worker initialized.');
 
 }).catch(log.error));
