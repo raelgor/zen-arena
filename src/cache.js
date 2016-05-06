@@ -15,7 +15,7 @@ function get_data(){
 
         var configResponse = yield dataTransporter.get({
             query: {},
-            collection: 'configuration' 
+            collection: 'configuration'
         });
 
         global.appConfig = {};
@@ -30,10 +30,12 @@ function get_data(){
 
         global.text = {};
 
+        global.appLanguagesCodes = appConfig.app_languages.map(l => l.code);
+
         for(let row of textResponse)
             global.text[row.origin] = global.text[row.origin] || {};
 
-        for(let code of global.appConfig.app_languages)
+        for(let code of global.appLanguagesCodes)
             for(let origin in global.text)
                 global.text[origin][code] = {};
 
@@ -52,6 +54,6 @@ function get_data(){
 
         //setTimeout(get_data, 5*6e4);
 
-    });
+    }).catch(log.error);
 
 }

@@ -44,7 +44,7 @@ r.setHandler((response, req, res) => co(function*(){
    var user = yield dataTransporter.getUser({ $or });
 
    var lang_hint;
-   if(req.cookies.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
+   if(req.cookies.lang && ~appLanguagesCodes.indexOf(req.cookies.lang))
       lang_hint = req.cookies.lang;
 
    if(!user)

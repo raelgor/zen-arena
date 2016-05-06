@@ -12,7 +12,7 @@ r.setHandler((response, req, res, next) => {
 
       log.debug(req, 'No language. Trying to detect...');
 
-      if(~appConfig.app_languages.indexOf(req.cookies.lang)) {
+      if(~appLanguagesCodes.indexOf(req.cookies.lang)) {
 
          log.debug(req, `Set language according to cookie. (${req.cookies.lang})`);
          req.lang = req.cookies.lang;

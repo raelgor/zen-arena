@@ -40,12 +40,12 @@ r.setHandler((response, req, res, next) => co(function*(){
          req.__session = session;
 
          // If user has a valid lang setting, set the request's lang
-         if(user.get('lang') && ~appConfig.app_languages.indexOf(user.get('lang')))
+         if(user.get('lang') && ~appLanguagesCodes.indexOf(user.get('lang')))
             req.lang = user.get('lang');
 
          // If the user has no lang setting but we have a lang cookie,
          // set the user's lang
-         if(!user.get('lang') && ~appConfig.app_languages.indexOf(req.cookies.lang))
+         if(!user.get('lang') && ~appLanguagesCodes.indexOf(req.cookies.lang))
             user.set('lang', req.cookies.lang);
 
          // If user still has no language

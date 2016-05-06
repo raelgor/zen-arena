@@ -35,13 +35,13 @@ r.setHandler((response, req, res, next) => co(function*(){
    }
 
    // If we didn't get language info from a user, try to get from cookie
-   if(!req.lang && ~appConfig.app_languages.indexOf(req.cookies.lang))
+   if(!req.lang && ~appLanguagesCodes.indexOf(req.cookies.lang))
       req.lang = req.cookies.lang;
 
    // If we don't know anything about what language to use
    if(!req.lang)
       // Then if we don't have a language cookie, or it is invalid
-      if(!req.cookies.lang || !~appConfig.app_languages.indexOf(req.cookies.lang))
+      if(!req.cookies.lang || !~appLanguagesCodes.indexOf(req.cookies.lang))
          // Then if we can use GeoIP and this looks like a valid request
          if(appConfig.use_geoip && req.headers['user-agent']) {
             // If we have no address, use the detectAddress route
