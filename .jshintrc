@@ -9,7 +9,8 @@
      "make_client_data", "delete_comment", "make_mongo_url", "config", "redis",
      "postman", "loaddirSync", "path", "fb", "get", "make_user_from_fb_info",
      "oauth_exploit_check", "log_user_in", "make_user_from_go_info",
-     "on_user_created", "update_user", "Hammer", "EventEmitter2"
+     "on_user_created", "update_user", "Hammer", "EventEmitter2",
+     "appLanguagesCodes"
   ],
   "undef": true,
   "unused": true,
@@ -17,5 +18,6 @@
   "jquery": true,
   "browser": true,
   "-W083": false,
-  "-W030": false
+  "-W030": false,
+  "-W124": false
 }
