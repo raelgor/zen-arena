@@ -32,6 +32,8 @@ app.router.post('/api/feed/news/range/:index', api.feedrange.route);
 
 app.router.post('/api/selector/language/:index', api.selector.route);
 
+app.router.post('/api/set/language/:lang_code', api.set.route);
+
 // View html factories
 app.router.post('/api/view/index', api.viewindex.route);
 app.router.post('/api/view/post/:post_id', api.viewpost.route);

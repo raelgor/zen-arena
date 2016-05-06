@@ -21,6 +21,11 @@ za.changeLanguage = function(){
             za._language_change_handler(response);
             clientData.lang = selection.code;
             $('.update-lang-letters').html('('+selection.code+')');
+            if($('.logged-in').length)
+               za.send('/api/set/language/' + selection.code).success(function(r){
+                  if(r.message === 'ok')
+                     clientData.user_data.lang = selection.code;
+               });
          });
       }
    });
