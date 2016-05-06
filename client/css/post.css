@@ -8,10 +8,12 @@
 .post-wrapper .icon-cross.post {
     float: right;
     font-size: 12px;
-    color: #D5D5D5;
+    color: #d5d5d5;
     position: relative;
-    top: 4px;
+    top: -4px;
+    padding: 10px;
     cursor: pointer;
+    left: 10px;
 }
 
 .post-head {
@@ -177,7 +179,7 @@ span.post-interaction-button.like.liked {
 
 .comment-container .icon-cross {
     float: right;
-    margin: 15px 15px 0 0;
+    padding: 15px 15px 0 0;
     opacity: .1;
     font-size: 12px;
     cursor: pointer;
