@@ -13,7 +13,7 @@ za.ui.Disposable = function(e){
    }));
 
    h.on('panstart', function(ev){
-      if($(ev.target).is('input,textarea'))
+      if($(ev.target).is('input:focus,textarea:focus'))
          return;
        f
        .addClass('ani006')
@@ -22,22 +22,21 @@ za.ui.Disposable = function(e){
    });
 
    h.on('panmove', function(ev){
-      if($(ev.target).is('input,textarea')){
+      if($(ev.target).is('input:focus,textarea:focus')){
          ev.preventDefault();
          return false;
       }
        var perc = ev.deltaX/(f.width()*CLOSE_THRESHOLD);
-       if(perc <= 1) {
-           f.css({
-               transform:
-                   'translate('+ev.deltaX+'px, '+Math.abs(perc*10)+'px) rotate('+(perc*10)+'deg)',
-               opacity: 1 - perc/1
-           });
-       }
+
+        f.css({
+            transform:
+                'translate('+ev.deltaX+'px, '+Math.abs(perc*10)+'px) rotate('+(perc*10)+'deg)',
+            opacity: 1 - perc/1
+        });
    });
 
    h.on('panend', function(ev){
-      if($(ev.target).is('input,textarea'))
+      if($(ev.target).is('input:focus,textarea:focus'))
          return;
       $('body,html').css('overflow','');
        clearSelection();
