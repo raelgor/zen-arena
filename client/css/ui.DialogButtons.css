@@ -1,0 +1,9 @@
+.dialog-buttons {
+    border-top: 1px solid #EAEAEA;
+    padding: 10px 10px;
+    text-align: right;
+}
+
+.dialog-buttons > button {
+    margin-left: 10px;
+}

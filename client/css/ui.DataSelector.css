@@ -1,0 +1,34 @@
+
+input.selector-search-field {
+    width: 100%;
+    border-right: none;
+    border-left: none;
+    display: block;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #EAEAEA;
+    font-size: 17px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.data-selector-pool {
+    height: 200px;
+    overflow: auto;
+}
+
+.selector-pool-row {
+    padding: 10px 20px;
+    font-size: 17px;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.no-touch .selector-pool-row:hover {
+    background: #F7F7F7;
+    cursor: pointer;
+}
+
+.selector-pool-row .za-checkbox-text {
+    font-size: 12px !important;
+    padding-top: 4px;
+}
