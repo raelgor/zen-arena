@@ -6,7 +6,7 @@ if(DEBUG_MODE)
    app.router.use(routes.logger.route);
 
 // Api route
-app.router.post('/api/text/:lang', api.text.route);
+app.router.post('/api/text/:lang_code', api.text.route);
 
 app.router.all('/api*', routes.langCookieGetter.route);
 app.router.post('/api/login', api.login.route);
