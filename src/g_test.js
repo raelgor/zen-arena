@@ -20,7 +20,7 @@ module.exports = function(){
         'end-date': 'yesterday',
         'sort': '-ga:pageViews',
         'max-results': 10,
-        'filters': 'ga:pagePath~=/$',
+        'filters': 'ga:pagePath=~/$',
       }, function (err, response) {
         if (err) {
           console.log(err);

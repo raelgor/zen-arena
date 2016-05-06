@@ -51,7 +51,7 @@ process.on('message', message => co(function*(){
       ws: true,
       static: path.resolve(__dirname + '/../assets')
    });
-
+   
    yield new Promise(r => global.app.on('start', r));
 
    log('Loading templates...');
