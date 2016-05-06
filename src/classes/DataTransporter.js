@@ -196,6 +196,8 @@ module.exports = class DataTransporter {
 
          update = update || { $set: user };
 
+         yield cache.hmset(`user:${user.id}`, user);
+
          // Remove keys that can't be transported
          delete user._id;
          delete user.date_joined;
