@@ -30,7 +30,7 @@ app.router.post('/api/post/create', api.postcreate.route);
 
 app.router.post('/api/feed/news/range/:index', api.feedrange.route);
 
-app.router.post('/api/language/list', api.listlanguages.route);
+app.router.post('/api/selector/language/:index', api.selector.route);
 
 // View html factories
 app.router.post('/api/view/index', api.viewindex.route);
