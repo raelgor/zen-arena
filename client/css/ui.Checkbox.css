@@ -17,6 +17,9 @@
 
 .za-checkbox * {
     vertical-align: top;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
 
 .za-checkbox, .za-checkbox * {
@@ -33,4 +36,14 @@
 .za-checkbox .za-checkbox-text a {
     color: #69C526;
     text-decoration: none;
+}
+
+.light span.za-checkbox-box {
+    border-color: #9D9D9D;
+    background: #F5F5F5;
+    color: #333;
+}
+
+.light span.za-checkbox-text {
+    color: black;
 }

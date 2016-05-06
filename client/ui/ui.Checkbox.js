@@ -1,5 +1,7 @@
 /* global za */
-za.ui.Checkbox = function(text, attr, isChecked) {
+za.ui.Checkbox = function(text, attr, isChecked, color) {
+
+   var object = this;
 
    var box = $('<span>');
    box
@@ -16,6 +18,7 @@ za.ui.Checkbox = function(text, attr, isChecked) {
 
    element
    .addClass('za-checkbox')
+   .addClass(color ? color : 'dark')
    .attr('tabindex', 0)
    .append([box, textSpan]);
 
@@ -24,18 +27,25 @@ za.ui.Checkbox = function(text, attr, isChecked) {
 
    element.click(function(){
          element.toggleClass('checked');
+         element.is('.checked') ?
+         object.emit('checked') :
+         object.emit('unchecked');
    });
 
+   this.isChecked = function(){
+      return this.element.is('.checked');
+   };
+
+   this.check = function(){
+      this.emit('checked');
+      return this.element.addClass('checked');
+   };
+
+   this.uncheck = function(){
+      this.emit('unchecked');
+      return this.element.removeClass('checked');
+   };
+
 };
 
-za.ui.Checkbox.prototype.isChecked = function(){
-   return this.element.is('.checked');
-};
-
-za.ui.Checkbox.prototype.check = function(){
-   return this.element.addClass('checked');
-};
-
-za.ui.Checkbox.prototype.uncheck = function(){
-   return this.element.removeClass('checked');
-};
+za.ui.Checkbox.prototype = EventEmitter2.prototype;
