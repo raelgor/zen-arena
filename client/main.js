@@ -114,6 +114,9 @@ $(window).ready(function(){
    if(!clientData.geolocation.city || !clientData.geolocation.country)
       za.geoRequest();
 
+   if(!za._touch)
+      $('html').addClass('no-touch');
+
    za.ui.ntFocus('.navigation .search');
 
    za.ui.initControllers('body > .content');
