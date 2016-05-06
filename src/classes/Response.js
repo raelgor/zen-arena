@@ -18,6 +18,8 @@ module.exports = class Response {
 
       this.responseData = '';
 
+      request._response = this; 
+
    }
 
    /**
