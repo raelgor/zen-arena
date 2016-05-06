@@ -1,4 +1,3 @@
-/* global co, PageRoute, factory, log */
 'use strict';
 
 var r = new PageRoute();
@@ -9,9 +8,15 @@ module.exports = r;
 
 r.setHandler(response => co(function*() {
 
-   var post = yield dataTransporter.getPostViewData(+response.request.params.post_id);
+   var post = yield dataTransporter.getPostViewData(
+                     response.request,
+                     +response.request.params.post_id,
+                     response.pageData.coreText,
+                     response.request.__user && response.request.__user.get('id')
+                  );
 
    response.pageData.meta.title =
+   response.pageData.meta.og_title =
       post.title ||
       (response.pageData.coreText.post_by + ' ' +
        post.publisher_display_name + ' - ' +
