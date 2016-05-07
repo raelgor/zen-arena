@@ -51,6 +51,15 @@ function get_data(){
         for(let language in global.text.core)
          coreTextCache[language] = make_core_text(language);
 
+         global.coreDbData = {};
+
+         global.coreDbData.games = yield dataTransporter
+            .dbc
+            .collection('games')
+            .find({})
+            .sort({order:1})
+            .toArray();
+
         log.green('Cache up to date.');
 
         //setTimeout(get_data, 5*6e4);

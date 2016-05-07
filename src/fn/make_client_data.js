@@ -16,6 +16,8 @@ module.exports = (req, core_text) => {
       min_pass_length: appConfig.password_range.min,
       max_pass_length: appConfig.password_range.max,
       page_data: {},
+      games: global.coreDbData.games,
+      app_countries: appConfig.app_countries,
       geolocation: {
          country: (req.__user && req.__user.get('country')) || req.cookies.country_code,
          city: (req.__user && req.__user.get('city')) || req.cookies.city_code

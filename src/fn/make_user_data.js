@@ -2,7 +2,6 @@
 
 module.exports = user => {
 
-
 	// Return user data
 	return {
 		id: user.get('id'),
@@ -14,7 +13,8 @@ module.exports = user => {
 		lang: user.get('lang'),
 		image: user.get('image'),
 		email: user.get('email'),
-		image_type: user.get('image_type')
+		image_type: user.get('image_type'),
+		fav_game: user.get('fav_game')
 	};
 
 };

@@ -5,6 +5,7 @@
 if(DEBUG_MODE)
    app.router.use(routes.logger.route);
 
+// Parameter validators
 app.router.param('lang_code', require('./validators/param.lang_code'));
 
 // Api route
