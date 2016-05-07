@@ -12,6 +12,8 @@ Options:
 
    multiSelect: Boolean whether or not it is possible to select multiple rows.
 
+   image: The key that contains an image path to display on the left of the row.
+
    cancelable: Boolean about whether the window can be disposed or not.
    dataSource: Array of data or string of api url to fetch them. Takes in
       $q if searchable and $i if multipart.
@@ -21,6 +23,8 @@ Options:
 
 */
 za.ui.DataSelector = function(options){
+
+   var NO_RESULTS = '<div class="data-selector-no-results" data-html-no_results>'+clientData.core_text.no_results+'</div>';
 
    options = typeof options === 'object' ? options : {};
    var cancelable = 'cancelable' in options ? options.cancelable : true;
@@ -65,34 +69,109 @@ za.ui.DataSelector = function(options){
          .attr('data-placeholder-'+options.searchPlaceholder, 1)
          .attr('placeholder', clientData.core_text[options.searchPlaceholder]);
 
-      searchElement.keyup(updatePool);
+      searchElement.keyup(function(e){
+         var keycode = e.keyCode;
+
+         (
+            keycode === 8 ||
+         (keycode > 47 && keycode < 58) ||
+         (keycode > 64 && keycode < 91) ||
+         (keycode > 95 && keycode < 112)
+         ) &&
+         updatePool(e);
+
+         if(~[40].indexOf(keycode))
+            pool.find('.selector-pool-row:first-child .za-checkbox').focus();
+
+      });
 
       centeredWindow.updateField('search', searchElement);
    }
 
    function updatePool(){
       lastCall && lastCall.abort();
-      pool.html('');
       $q = centeredWindow.element.find('input.selector-search-field').val();
       dry = false;
-      lastCall =
-         za
-         .send(options.dataSource.replace(/\$i/, $i).replace(/\$q/, encodeURIComponent($q)))
-         .success(function(response){
-            if(response.data.data.length){
-               appendFromRowArray(response.data.data);
-            } else {
-               dry = true;
-               pool.append('<div class="data-selector-no-results" data-html-no_results>'+clientData.core_text.no_results+'</div>');
-            }
+
+      if(typeof options.dataSource === 'string') {
+         pool.html('');
+         lastCall =
+            za
+            .send(options.dataSource.replace(/\$i/, $i).replace(/\$q/, encodeURIComponent($q)))
+            .success(function(response){
+               if(response.data.data.length){
+                  appendFromRowArray(response.data.data);
+               } else {
+                  dry = true;
+                  pool.append(NO_RESULTS);
+               }
+            });
+      } else if(typeof options.dataSource === 'function') {
+
+         options.dataSource($q, $i, function(results){
+            pool.html('');
+            results.length ?
+            appendFromRowArray(results) :
+            pool.append(NO_RESULTS);
          });
+
+      } else {
+
+         var candidates = pool.find('.selector-pool-row .za-checkbox-text');
+         var matches = 0;
+
+         pool.find('.data-selector-no-results').remove();
+
+         candidates.each(function(i,e){
+
+            if(new RegExp($q, 'i').test($(e).text())) {
+               matches++;
+               $(e).parents('.selector-pool-row').show();
+            } else
+               $(e).parents('.selector-pool-row').hide();
+         });
+
+         !matches &&
+         pool.append(NO_RESULTS);
+
+      }
    }
 
    function Row(row) {
       var element = this.element = $('<div>');
+      var rowTitle = typeof options.rowTitle === 'function' ? options.rowTitle(row) : row[options.rowTitle];
+
+      if(options.image)
+         rowTitle = '<img src="'+row[options.image]+'" style="width: 26px" />' + rowTitle;
+
       var checkbox =
          this.checkbox =
-            new za.ui.Checkbox(row[options.rowTitle], {}, false, 'light');
+            new za.ui.Checkbox(rowTitle, {}, false, 'light');
+
+      checkbox.on('focus', function(){ element.addClass('focus'); });
+      checkbox.on('blur', function(){ element.removeClass('focus'); });
+
+      checkbox.element.keydown(function(e){
+
+         if(~[38,40].indexOf(e.keyCode)) {
+
+            element[e.keyCode==38?'prev':'next']('.selector-pool-row')
+               .find('.za-checkbox')
+               .focus();
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            return false;
+
+         }
+
+      });
+
+      element.click(function(e){
+         $(e.target).is(':not(.za-checkbox,.za-checkbox *)') &&
+         element.find('.za-checkbox').click();
+      });
 
       options.selection && options.selection.forEach(function(s){
          Object.keys(s).forEach(function(k){
@@ -142,9 +221,11 @@ za.ui.DataSelector = function(options){
       darkness.spawn();
       centeredWindow.spawn();
       dialogButtons.focus('yes');
+      if(searchElement)
+         za.ui.ntFocus(searchElement);
       if(options.dataSource instanceof Array)
          appendFromRowArray(options.dataSource);
-      else if(typeof options.dataSource === 'string')
+      else if(~['function','string'].indexOf(typeof options.dataSource))
          updatePool();
       return object;
    };
