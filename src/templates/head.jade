@@ -12,6 +12,8 @@ head
  meta(property="og:url", content=meta.url||global.fullSiteUrl)
  meta(property="og:description", content=meta.og_description)
  meta(property="og:locale", content=meta.og_locale)
+ script="function initAutocomplete() { window._g_autoComplete = true; };"
+ script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key="+global.google_maps_client_key+"&libraries=places&callback=initAutocomplete", async, defer)
  link(href="source/styles.css?v="+global.version,	rel="stylesheet",	type="text/css")
  link(href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&subset=latin,greek-ext", rel="stylesheet", type="text/css")
  link(rel="shortcut icon",	href=global.favicon)
