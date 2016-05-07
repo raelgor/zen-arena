@@ -31,7 +31,7 @@ function get_data(){
         global.text = {};
 
         global.appLanguagesCodes = appConfig.app_languages.map(l => l.code);
-        global.languageCodes = new Set(global.appLanguageCodes);
+        global.languageCodes = new Set(global.appLanguagesCodes);
 
         for(let row of textResponse)
             global.text[row.origin] = global.text[row.origin] || {};
