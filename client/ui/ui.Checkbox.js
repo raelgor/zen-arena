@@ -22,6 +22,19 @@ za.ui.Checkbox = function(text, attr, isChecked, color) {
    .attr('tabindex', 0)
    .append([box, textSpan]);
 
+   element.keydown(function(e){
+      e.keyCode === 13 &&
+      $(element).click();
+   });
+
+   element.focus(function(){
+      object.emit('focus');
+   });
+
+   element.blur(function(){
+      object.emit('blur');
+   });
+
    if(isChecked)
       element.addClass('checked');
 
