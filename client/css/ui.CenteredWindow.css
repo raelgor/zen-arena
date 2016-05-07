@@ -17,6 +17,7 @@
 
 .white-box.centered-window [data-field-id="description"] {
     padding: 0 20px 20px;
+    font-size: 14px;
 }
 
 .white-box.centered-window [data-field-id]:empty {

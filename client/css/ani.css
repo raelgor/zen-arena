@@ -1,6 +1,8 @@
 .ani006 {
 	transition-property: all;
 	transition-duration: 60ms;
+	-moz-transition-property: all;
+	-moz-transition-duration: 60px;
 }
 
 .ani01 {

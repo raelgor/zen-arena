@@ -133,23 +133,29 @@ textarea.new-post-text {
 
 .tournament-browser .title {
     text-transform: uppercase;
-    border-bottom: 1px solid #E7E7E7;
+    border-bottom: 1px solid #e7e7e7;
     text-align: center;
     font-size: 13px;
-    padding: 4px 0px;
-    color: gray;
+    padding: 4px 0;
+    color: #494949;
+    background: #F5F5F5;
+   border-radius: 4px 4px 0 0;
 }
 
 .white-box.tournament-browser .opts > * {
-   width: 50%;
-   display: inline-block;
+   width: 145px;
+    display: table-cell;
    text-align: center;
-   padding: 17px 0 13px;
+   padding: 17px 10px 13px;
    vertical-align: top;
    box-sizing: border-box;
    color: #666;
    font-size: 12px;
    cursor: pointer;
+}
+
+.no-touch .white-box.tournament-browser .opts > *:hover {
+   background: #F5F5F5;
 }
 
 .white-box.tournament-browser .opts > *:first-child {
