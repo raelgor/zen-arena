@@ -31,7 +31,8 @@ function generator(req, pageData, pageView) {
            version: packageInfo.version,
            app_contact_email: appConfig.app_contact_email,
            social_links: appConfig.social_links,
-           copyright_stamp: appConfig.copyright_stamp
+           copyright_stamp: appConfig.copyright_stamp,
+           google_maps_client_key: appConfig.google_maps_client_key
         },
         coreText: pageData.coreText,
         meta: pageData.meta,
