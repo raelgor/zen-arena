@@ -8,14 +8,6 @@ module.exports = r;
 
 r.setHandler((response, req, res) => {
 
-   let valid_request = req.params && req.params.lang_code;
-
-   if(!valid_request)
-      return response.error('error_invalid_request');
-
-   if(!~appLanguagesCodes.indexOf(req.params.lang_code))
-      return response.error('error_invalid_language');
-
    response.responseData = coreTextCache[req.params.lang_code];
 
    res.cookie('lang', req.params.lang_code, {
