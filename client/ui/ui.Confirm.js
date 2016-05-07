@@ -21,7 +21,7 @@ za.ui.Confirm = function(options){
    var darkness = new za.ui.Darkness();
    var dialogButtons = new za.ui.DialogButtons([
       { id: 'no', text: 'cancel' },
-      { id: 'yes', text: 'ok' },
+      { id: 'yes', text: 'ok' }
    ]);
    var centeredWindow = new za.ui.CenteredWindow({
       fields: 'title description buttons',
