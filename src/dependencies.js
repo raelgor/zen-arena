@@ -6,7 +6,6 @@ global.log = require('./log');
 log('Loading dependencies...');
 
 // Global dependencies
-global.Server = require('zenx-server');
 global.co = require('co');
 global.colors = require('colors');
 global.jade = require('jade');
@@ -20,12 +19,14 @@ global.mongodb = require('mongodb');
 global.path = require('path');
 global.packageInfo = require('../package');
 global.redis = require('thunk-redis');
+global.EventEmitter2 = require('eventemitter2').EventEmitter2;
 
 global.GeoIP = require('./GeoIP');
 global.postman = require('./postman');
 global.loaddirSync = require('./loaddirSync');
 
 // Load classes
+global.Server = require('./classes/Server');
 global.Route = require('./classes/Route');
 global.Factory = require('./classes/Factory');
 global.APIRoute = require('./classes/APIRoute');

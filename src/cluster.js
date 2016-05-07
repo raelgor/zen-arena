@@ -45,14 +45,14 @@ process.on('message', message => co(function*(){
    log('Starting server...');
 
    // Start server
-   global.app = new global.Server({
+   global.app = new Server({
       bind: message.clientConfig.config.bind_ip,
       port: message.clientConfig.config.port,
       ws: true,
       static: path.resolve(__dirname + '/../assets')
    });
-   
-   yield new Promise(r => global.app.on('start', r));
+
+   yield new Promise(r => global.app.on('listening', r));
 
    log('Loading templates...');
 
