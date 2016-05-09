@@ -1,4 +1,3 @@
-/* global appConfig, fs, make_core_text, co, increment_email */
 'use strict';
 
 const mailer = require('nodemailer');
@@ -23,7 +22,8 @@ postman.init = () => {
 };
 
 postman.verifyAccountEmail = user => {
-   user = user.record;
+   if(user instanceof User)
+      user = user.record;
    let core_text = coreTextCache[user.lang];
 
    if(!user.email)
@@ -43,7 +43,8 @@ postman.verifyAccountEmail = user => {
 };
 
 postman.sendForgotPasswordEmail = user => {
-   user = user.record;
+   if(user instanceof User)
+      user = user.record;
    let core_text = coreTextCache[user.lang];
 
    if(!user.email)
@@ -63,7 +64,8 @@ postman.sendForgotPasswordEmail = user => {
 };
 
 postman.welcome = user => {
-   user = user.record;
+   if(user instanceof User)
+      user = user.record;
    let core_text = coreTextCache[user.lang];
 
    if(!user.email || user.unsubscribe_all_email)
