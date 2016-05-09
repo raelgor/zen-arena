@@ -10,7 +10,9 @@
      "postman", "loaddirSync", "path", "fb", "get", "make_user_from_fb_info",
      "oauth_exploit_check", "log_user_in", "make_user_from_go_info",
      "on_user_created", "update_user", "Hammer", "EventEmitter2",
-     "appLanguagesCodes", "languageCodes", "google", "Server"
+     "appLanguagesCodes", "languageCodes", "google", "Server", "TEST_MODE",
+     "assertBody", "Instance", "instance", "mongodb", "app", "api",
+     "pageHandlers", "mongos", "data"
   ],
   "undef": true,
   "unused": true,
