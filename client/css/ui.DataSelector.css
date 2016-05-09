@@ -12,6 +12,7 @@ input.selector-search-field {
     box-sizing: border-box;
     box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1);
     background: rgba(128, 128, 128, 0.07);
+    border-radius: 0px !important;
 }
 
 .data-selector-pool {
@@ -48,5 +49,5 @@ input.selector-search-field {
 }
 
 .selector-pool-row.focus {
-    background: #BAD992;
+    background: #BAD992 !important;
 }
