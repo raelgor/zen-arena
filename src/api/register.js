@@ -15,6 +15,8 @@ r.prependRoute(assertBody({
    }
 }));
 
+r.setHandler((response, req) => co(function*(){
+
    var valid_request =
       req.body &&
       req.body.message &&
@@ -35,7 +37,12 @@ r.prependRoute(assertBody({
       return response.error('error_bad_email');
 
    var email = req.body.message.uid;
-   user = { verify_email_token: uuid(2), email, unsubscribe_all_token: uuid(), lang: req.lang };
+   user = new User({
+      verify_email_token: uuid(2),
+      email,
+      unsubscribe_all_token: uuid(),
+      lang: req.lang
+   });
 
    var email_attempt = yield postman.verifyAccountEmail(user);
 
@@ -54,5 +61,5 @@ r.prependRoute(assertBody({
    yield on_user_created(user);
 
    log_user_in(response, user);
-
+   
 }));
