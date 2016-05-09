@@ -98,7 +98,7 @@ module.exports = class Server extends EventEmitter2 {
       	// Serve static content
       	this.server.use(
       		libs.express.static(
-      			require('path').resolve(this.config.static)));
+      			path.resolve(this.config.static)));
 
       }
 
