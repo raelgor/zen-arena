@@ -8,7 +8,12 @@ module.exports = r;
 
 r.prependRoute(routes.grecaptcha.route);
 
-r.setHandler((response, req) => co(function*(){
+r.prependRoute(assertBody({
+   message: {
+      uid: '1',
+      password: '1'
+   }
+}));
 
    var valid_request =
       req.body &&
