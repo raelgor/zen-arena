@@ -1,4 +1,3 @@
-/* global loaddirSync, DataTransporter, log */
 'use strict';
 
 global.log = require('./log');
@@ -24,8 +23,10 @@ global.EventEmitter2 = require('eventemitter2').EventEmitter2;
 global.GeoIP = require('./GeoIP');
 global.postman = require('./postman');
 global.loaddirSync = require('./loaddirSync');
+global.assertBody = require('./assertBody');
 
 // Load classes
+global.Instance = require('./classes/Instance');
 global.Server = require('./classes/Server');
 global.Route = require('./classes/Route');
 global.Factory = require('./classes/Factory');
