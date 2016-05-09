@@ -8,7 +8,7 @@ module.exports = r;
 
 r.setHandler(response => co(function*() {
 
-   var post = yield dataTransporter.getPostViewData(
+   var post = yield data.getPostViewData(
                      response.request,
                      +response.request.params.post_id,
                      response.pageData.coreText,

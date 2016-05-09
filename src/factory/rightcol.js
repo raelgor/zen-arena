@@ -15,7 +15,7 @@ function* generator(req, coreText, user, lang){
          user: user && user.record,
          lang,
          copyright_stamp: appConfig.copyright_stamp,
-         ads: yield dataTransporter.getRandomAdViews(
+         ads: yield data.getRandomAdViews(
             req,
             coreText,
             user && user.get('id'),

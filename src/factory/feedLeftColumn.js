@@ -9,7 +9,7 @@ module.exports = f;
 
 function* generator(req, coreText, user){
 
-   var feedPosts = yield dataTransporter.getFeedHtml(
+   var feedPosts = yield data.getFeedHtml(
       req,
       coreText,
       // Auth user

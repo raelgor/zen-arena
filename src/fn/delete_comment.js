@@ -8,12 +8,12 @@
  */
 module.exports = id => co(function*(){
 
-   var comment = yield dataTransporter.getCommentView(id);
+   var comment = yield data.getCommentView(id);
 
    yield cache.zrem(`commentpool:${comment.post_id}`, comment.id);
    yield cache.hincrby(`postview:${comment.post_id}`, 'comments', -1);
-   yield dataTransporter.dbc.collection('comments').remove({id:+id});
-   yield dataTransporter.dbc.collection('comment_likes').remove({comment_id:+id},{multi:true});
+   yield mongos.collection('comments').remove({id:+id});
+   yield mongos.collection('comment_likes').remove({comment_id:+id},{multi:true});
    yield cache.del(`commentview:${id}`);
 
 });

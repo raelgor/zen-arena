@@ -13,7 +13,7 @@ r.setHandler((response, req) => co(function*(){
    if(!valid_request)
       return response.error('error_invalid_request');
 
-   var user = yield dataTransporter.getUser({
+   var user = yield data.getUser({
       unsubscribe_all_token: String(req.params.token)
    });
 

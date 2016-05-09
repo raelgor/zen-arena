@@ -24,9 +24,9 @@ r.setHandler((response, req) => co(function*(){
       publisher: +uid
    };
 
-   yield dataTransporter.dbc.collection('posts').insert(post);
+   yield mongos.collection('posts').insert(post);
 
-   yield dataTransporter.dbc.collection('feeds').insert({
+   yield mongos.collection('feeds').insert({
       ns_origin: 'user',
       type: 'feed',
       date_added: date,

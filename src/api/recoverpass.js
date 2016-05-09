@@ -21,7 +21,7 @@ r.setHandler((response, req) => co(function*(){
    // Find user
    var token = req.body.message.token;
    var password = String(req.body.message.p);
-   var user = yield dataTransporter.getUser({
+   var user = yield data.getUser({
       fpass_token: String(token)
    });
 

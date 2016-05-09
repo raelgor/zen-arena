@@ -33,7 +33,7 @@ global.msStats = {
          schedule();
 
          for(let action in stats) {
-            let res = yield dataTransporter.dbc.collection('msStats').findAndModify(
+            let res = yield mongos.collection('msStats').findAndModify(
                {
                   version: packageInfo.version,
                   action
@@ -46,7 +46,7 @@ global.msStats = {
                }
             );
 
-            dataTransporter.dbc.collection('msStats').update({
+            mongos.collection('msStats').update({
                   action: res.value.action,
                   version: packageInfo.version 
                },{

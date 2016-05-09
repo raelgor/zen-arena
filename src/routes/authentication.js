@@ -27,7 +27,7 @@ r.setHandler((response, req, res, next) => co(function*(){
       }
 
       if(session)
-         user = yield dataTransporter.getUser({ id: +session.user_id });
+         user = yield data.getUser({ id: +session.user_id });
 
       if(!user) {
          log.debug(req, 'Cookies were invalid. Clearing...');

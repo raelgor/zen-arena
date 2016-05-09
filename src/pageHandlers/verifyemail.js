@@ -22,7 +22,7 @@ r.setHandler(response => co(function*() {
   );
 
   if(token) {
-     let user = yield dataTransporter.getUser({
+     let user = yield data.getUser({
         verify_email_token: String(token)
      });
 

@@ -18,7 +18,7 @@ r.setHandler(response => co(function*() {
    response.pageData.clientData.page_data.token = token;
 
    if(token) {
-      var user = yield dataTransporter.getUser({
+      var user = yield data.getUser({
          unsubscribe_all_token: String(token)
       });
 

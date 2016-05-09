@@ -14,7 +14,7 @@ r.setHandler((response,req) => co(function*(){
    var index = req.params.index;
 
    response.responseData = {
-      html: yield dataTransporter.getFeedHtml(
+      html: yield data.getFeedHtml(
          req,
          coreTextCache[req.lang],
          // Auth user

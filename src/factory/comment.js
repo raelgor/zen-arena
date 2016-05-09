@@ -9,12 +9,12 @@ module.exports = f;
 
 function* generator(req, id, coreText, uid){
 
-   var comment = yield dataTransporter.getCommentView(id);
+   var comment = yield data.getCommentView(id);
 
    // Get poster info
    var user_id = comment.user_id;
 
-   var user = yield dataTransporter.getUser({id:+user_id});
+   var user = yield data.getUser({id:+user_id});
 
    comment.userImage = user.get('image');
    comment.displayName = user.displayName();
@@ -24,7 +24,7 @@ function* generator(req, id, coreText, uid){
       if(+(yield cache.exists(`commentselflike:${id}:${uid}`)))
          comment.selfLiked = yield cache.get(`commentselflike:${id}:${uid}`);
       else {
-         let result = yield dataTransporter.dbc.collection('comment_likes').find({
+         let result = yield mongos.collection('comment_likes').find({
             comment_id: +id,
             user_id: +uid
          }).count();
@@ -34,7 +34,7 @@ function* generator(req, id, coreText, uid){
       if(+uid === +comment.user_id) {
          comment.deletable = true;
       } else {
-         let post = yield dataTransporter.getPost(comment.post_id);
+         let post = yield data.getPost(comment.post_id);
          +post.publisher === +uid && (comment.deletable = true);
       }
    }

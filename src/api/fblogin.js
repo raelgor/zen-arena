@@ -35,7 +35,7 @@ r.setHandler((response, req, res) => co(function*(){
    var $or = [{ fbid: user_fb_info.id }];
    user_fb_info.email && $or.push({ email: user_fb_info.email });
 
-   var user = yield dataTransporter.getUser({ $or });
+   var user = yield data.getUser({ $or });
 
    var lang_hint;
    if(req.cookies.lang && ~appLanguagesCodes.indexOf(req.cookies.lang))
@@ -45,7 +45,7 @@ r.setHandler((response, req, res) => co(function*(){
       user = yield make_user_from_fb_info(user_fb_info, lang_hint);
    else
       if(user.get('fbid') != user_fb_info.id)
-         yield dataTransporter.updateUser(
+         yield data.updateUser(
             user,
             { $set: { fbid: user.set('fbid', user_fb_info.id) } }
          );

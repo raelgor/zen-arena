@@ -41,7 +41,7 @@ r.setHandler((response, req, res) => co(function*(){
    user_go_info.emails[0].value &&
    $or.push({ email: user_go_info.emails[0].value });
 
-   var user = yield dataTransporter.getUser({ $or });
+   var user = yield data.getUser({ $or });
 
    var lang_hint;
    if(req.cookies.lang && ~appLanguagesCodes.indexOf(req.cookies.lang))
@@ -51,7 +51,7 @@ r.setHandler((response, req, res) => co(function*(){
       user = yield make_user_from_go_info(user_go_info, lang_hint);
    else
       if(user.get('goid') != user_go_info.id)
-         yield dataTransporter.updateUser(
+         yield data.updateUser(
             user,
             { $set: { goid: user.set('goid', user_go_info.id) } }
          );

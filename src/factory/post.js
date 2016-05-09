@@ -9,11 +9,11 @@ module.exports = f;
 
 function* generator(req, id, coreText, uid){
 
-   var data = yield dataTransporter.getPostViewData(req, id, coreText, uid);
+   var viewData = yield data.getPostViewData(req, id, coreText, uid);
 
-   var result = templates.post({
+   var result = !viewData ? '' : templates.post({
       coreText,
-      data
+      data: viewData
    });
 
    return result;

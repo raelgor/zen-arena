@@ -20,7 +20,7 @@ r.setHandler((response, req) => co(function*(){
       return response.error('error_invalid_request');
 
    // Find user
-   var user = yield dataTransporter.getUser({
+   var user = yield data.getUser({
       email: String(req.body.message.uid)
    });
 

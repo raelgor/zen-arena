@@ -26,7 +26,7 @@ module.exports = class User {
     * @returns {Promise}
     */
    updateRecord(){
-      return dataTransporter.updateUser(this);
+      return data.updateUser(this);
    }
 
    /**
@@ -35,7 +35,7 @@ module.exports = class User {
     * @returns {Promise}
     */
    insertRecord(){
-      return dataTransporter.insertUser(this);
+      return data.insertUser(this);
    }
 
    /**

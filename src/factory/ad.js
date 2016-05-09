@@ -14,7 +14,7 @@ function* generator(req, coreText, id){
    if(+(yield cache.exists(`ad:${id}`))){
       ad = yield cache.hgetall(`ad:${id}`);
    } else {
-      let result = yield dataTransporter.dbc.collection('ads').find({
+      let result = yield mongos.collection('ads').find({
          id: +id
       }).toArray();
       ad = result[0];
