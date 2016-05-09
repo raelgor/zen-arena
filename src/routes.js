@@ -1,4 +1,3 @@
-/* global app, api, routes, pageHandlers */
 'use strict';
 
 // Debug

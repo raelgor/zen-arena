@@ -1,4 +1,3 @@
-/* global fs, path */
 'use strict';
 
 /**
