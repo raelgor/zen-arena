@@ -84,7 +84,7 @@ za.controllers.tournamentBrowserSelector = new za.Controller(function(element){
          },bannedUntil - Date.now()));
 
       // Max of 1 r/2s
-      bannedUntil = Date.now() + 2e3;
+      bannedUntil = Date.now() + 1e3;
 
       if(!$q)
          return callback([]);
