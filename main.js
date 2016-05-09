@@ -5,6 +5,7 @@ Developed by Kosmas Papadatos
 'use strict';
 
 global.DEBUG_MODE = ~process.argv.indexOf('-d') || ~process.argv.indexOf('--debug');
+global.TEST_MODE = ~process.argv.indexOf('-t') || ~process.argv.indexOf('--test');
 
 const os = require('os');
 const numOfCores = global.numOfCores = os.cpus().length;
@@ -37,6 +38,7 @@ var systemDB;
 
 log(`Initializing zen-arena client ${packageInfo.version} ...`);
 DEBUG_MODE && log.debug('DEBUG_MODE = ON');
+TEST_MODE  && log.debug('TEST_MODE = ON');
 
 try {
 

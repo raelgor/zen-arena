@@ -5,7 +5,7 @@ const cluster = global.cluster;
 
 module.exports = clientConfig => {
 
-   cluster.setupMaster({ exec: __dirname + '/cluster.js' });
+   cluster.setupMaster({ exec: __dirname + '/slave.js' });
 
    var instances = clientConfig.instances || global.numOfCores;
 
@@ -14,7 +14,7 @@ module.exports = clientConfig => {
 
    function forkOne(){
       let worker = cluster.fork();
-      worker.send({config, clientConfig, DEBUG_MODE});
+      worker.send({config, clientConfig, DEBUG_MODE, TEST_MODE});
 
       worker.on('disconnect', () => {
          worker.kill('SIGTERM');
