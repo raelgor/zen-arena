@@ -27,7 +27,7 @@ module.exports = class Factory {
          let i = indent(arguments[0], 1, dn);
          let t = new Timer();
          log.debug(`${i}${dn} Starting...`);
-         let promise = this.generator(...arguments).catch(log.error);
+         let promise = this.generator(...arguments).catch(e => instance.emit('error', e));
          promise.then(() => {
             indent(arguments[0], -1);
             let d = t.click();
@@ -36,7 +36,7 @@ module.exports = class Factory {
          });
          return promise;
       } else
-         return this.generator(...arguments).catch(log.error);
+         return this.generator(...arguments).catch(e => instance.emit('error', e));
    }
 
 };

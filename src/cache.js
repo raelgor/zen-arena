@@ -64,6 +64,6 @@ function get_data(){
 
         //setTimeout(get_data, 5*6e4);
 
-    }).catch(log.error);
+    }).catch(e => instance.emit('error', e));
 
 }

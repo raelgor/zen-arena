@@ -58,7 +58,7 @@ global.msStats = {
 
          }
 
-      }.bind(this)).catch(log.error);
+      }.bind(this)).catch(e => instance.emit('error', e));
 
    }
 
