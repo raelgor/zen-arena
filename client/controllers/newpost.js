@@ -1,5 +1,3 @@
-/* global za */
-
 za.controllers.newpost = new za.Controller(function(element){
 
    $(element).find('textarea').keydown(function(e){

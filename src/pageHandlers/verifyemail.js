@@ -1,4 +1,3 @@
-/* global co, PageRoute, factory, dataTransporter, postman */
 'use strict';
 
 var r = new PageRoute();
@@ -33,6 +32,6 @@ r.setHandler(response => co(function*() {
      }
   }
 
-  response.end();
+  response.response.redirect('/');
 
 }));

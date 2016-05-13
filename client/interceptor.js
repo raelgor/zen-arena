@@ -1,27 +1,3 @@
-/* global za, ga */
-za.interceptor_map = {
-   '^/api/logout$': [
-      za.logout,
-      '/api/logout',
-      'body > .content > .page-view'
-   ],
-   '^/$': [
-      '/api/view/index',
-      '.logged-in .page-view .left-column',
-      'body > .content > .page-view'
-   ],
-   '^/([0-9]*)$': [
-      '/api/view/namespace/$1',
-      '.page-view .left-column',
-      'body > .content > .page-view'
-   ],
-   '^/post/([0-9]*)$': [
-      '/api/view/post/$1',
-      '.page-view .left-column',
-      'body > .content > .page-view'
-   ]
-};
-
 function interceptor(event) {
 
    var target = $(event.target);

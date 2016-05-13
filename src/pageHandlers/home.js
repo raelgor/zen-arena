@@ -30,4 +30,4 @@ r.setHandler(response => co(function*() {
 
   response.end();
 
-}).catch(log.error));
+}).catch(e => instance.emit('error', e)));

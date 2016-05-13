@@ -2,7 +2,7 @@
 
 var r = new APIRoute();
 
-r.setName('viewrightcol');
+r.setName('viewindex');
 
 module.exports = r;
 
@@ -11,14 +11,15 @@ r.prependRoute(routes.authentication.route);
 r.setHandler((response,req) => co(function*(){
 
    response.responseData = {
-      html: yield factory.rightcol.make(
+      html: yield factory.view.index.make(
          req,
          coreTextCache[req.lang],
          req.__user,
+         req.body.message.depth,
          req.lang
       )
    };
 
    response.end();
 
-}).catch(log.error));
+}).catch(e => instance.emit('error', e)));

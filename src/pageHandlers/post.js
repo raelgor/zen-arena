@@ -30,7 +30,7 @@ r.setHandler(response => co(function*() {
    response.responseData = yield factory.index.make(
        response.request,
        response.pageData,
-       yield factory.viewpost.make(
+       yield factory.view.post.make(
          response.request,
          response.pageData.coreText,
          response.request.__user,
@@ -40,4 +40,4 @@ r.setHandler(response => co(function*() {
 
   response.end();
 
-}).catch(log.error));
+}).catch(e => instance.emit('error', e)));

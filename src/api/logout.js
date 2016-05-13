@@ -22,7 +22,7 @@ r.setHandler((response, req, res) => co(function*(){
 
    response.responseData = {
       message: 'OK',
-      html: yield factory.viewindex.make(
+      html: yield factory.view.index.make(
          req,
          coreTextCache[req.lang],
          null,

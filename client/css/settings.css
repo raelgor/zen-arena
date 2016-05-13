@@ -1,0 +1,103 @@
+.settings-container {
+    margin: 10px auto;
+    max-width: 1000px;
+}
+
+.settings-selector {
+    display: inline-block;
+    width: 250px;
+}
+
+.settings-selector-group.white-box > * {
+    display: block;
+    border-bottom: 1px solid #F0F0F0;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+}
+
+.no-touch .settings-selector-group.white-box > a:not(.expandable):hover {
+    background: #F0F0F0;
+}
+
+a.settings-option.selected {
+    box-shadow: inset 7px 0px 0 #7DB633;
+}
+
+.settings-selector-group.white-box .title,
+.settings-page-group .title {
+    cursor: default;
+    background: rgba(243, 243, 243, 0.63);
+    padding: 5px 20px;
+    text-transform: uppercase;
+    border-radius: 3px 3px;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.settings-selector-group.white-box > .inner {
+    background: #F9F9F9;
+    padding-left: 40px;
+}
+
+.settings-page {
+    display: inline-block;
+    width: calc(100% - 260px);
+    vertical-align: top;
+}
+
+.settings-selector-group.white-box {
+    margin: 0 10px;
+}
+
+.settings-selector-group.white-box:not(:first-child) {
+    margin-top: 10px;
+}
+
+a.settings-option:last-child {
+    border-radius: 0 0 3px 3px;
+    border-bottom: none;
+}
+
+.settings-page-group.white-box {
+    padding-bottom: 20px;
+}
+
+.prop-desc {
+    padding: 5px 20px 0 20px;
+    font-size: 13px;
+}
+
+.prop-name {
+    font-weight: bold;
+    color: gray;
+    padding: 10px 20px 5px;
+    font-size: 15px;
+}
+
+.prop-input {
+    border: 1px solid #D3D3D3;
+    margin: 0 0 0 20px;
+    border-radius: 3px;
+    width: 350px;
+    height: 20px;
+    padding: 5px 10px;
+    line-height: 20px;
+    font-size: 15px;
+    max-width: calc(100% - 60px);
+    background: #F8F8F8;
+    box-shadow: inset 2px 2px 5px #EFEFEF;
+}
+
+.prop-verified {
+    padding: 5px 0 0 20px;
+    color: #7DB632;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.prop-verified .icon-checkmark {
+    margin-right: 7px;
+}

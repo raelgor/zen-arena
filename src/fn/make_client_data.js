@@ -11,6 +11,8 @@ module.exports = (req, core_text) => {
       fb_app_id: appConfig.fb_app.app_id,
       core_text,
       lang: req.lang,
+      lang_country_code: appLanguageCodeIndex[req.lang].country_code,
+      lang_name: appLanguageCodeIndex[req.lang].name,
       base_url: `${appConfig.site_protocol}://${appConfig.domain_name}/`,
       google_client_id: appConfig.google_oauth.client_id,
       min_pass_length: appConfig.password_range.min,

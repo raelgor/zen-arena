@@ -2,24 +2,24 @@
  * @namespace za
  * @desc The za client library.
  */
-window.za = {
+window.za = function() {
 
    // On login callback
-   onlogin: null,
+   this.onlogin = null;
 
    /**
     * @memberof za
     * @desc Whether we are on a touch device or not.
     * @type boolean
     */
-   _touch: 'ontouchstart' in document.documentElement,
+   this._touch = 'ontouchstart' in document.documentElement;
 
    /**
     * @memberof za
     * @desc An attempt to detect the browser from the userAgent.
     * @type string
     */
-   _browser: (function(){
+   this._browser = (function(){
        var ua= navigator.userAgent, tem,
        M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
        if(/trident/i.test(M[1])){
@@ -33,7 +33,7 @@ window.za = {
        M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
        if((tem= ua.match(/version\/(\d+)/i))!== null) M.splice(1, 1, tem[1]);
        return M.join(' ');
-   })(),
+   })();
 
    /**
     * @memberof za
@@ -41,13 +41,13 @@ window.za = {
     * to delete cookies and tokens.
     * @type function
     */
-   logout: function() {
+   this.logout = function() {
       delete clientData.csrf_token;
       delete clientData.user_data;
       $('html').removeClass('logged-in');
       za.userBar.setStatus(false);
       history.replaceState(history.state, document.title, '/');
-   },
+   };
 
    /**
     * @namespace za.ui
@@ -55,7 +55,7 @@ window.za = {
     * @desc Stores UI functions and classes.
     * @type object
     */
-   ui: {
+   this.ui = {
 
       /**
        * @memberof za.ui
@@ -82,7 +82,7 @@ window.za = {
          });
       }
 
-   },
+   };
 
    /**
     * @namespace za.controllers
@@ -90,14 +90,14 @@ window.za = {
     * @desc Stores controllers.
     * @type object
     */
-   controllers: {},
+   this.controllers = {};
 
    /**
     * View controller class.
     * @class za.Controller
     * @returns {Controller}
     */
-   Controller: function(handlerFunction){
+   this.Controller = function(handlerFunction){
       return {
          init: function(element){
             $(element).attr('data-controller-init', '1');
@@ -105,11 +105,19 @@ window.za = {
             za.ui.initControllers(element);
          }
       };
-   }
+   };
 
 };
 
+za.prototype = EventEmitter2.prototype;
+
+window.za = new za();
+
 $(window).ready(function(){
+
+   $('.auth-dialogs, .auth-dialogs > form')
+     .find('input, textarea, button, [tabindex]')
+     .attr('disabled', true);
 
    if(!clientData.geolocation.city || !clientData.geolocation.country)
       za.geoRequest();

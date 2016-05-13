@@ -15,10 +15,9 @@ r.setHandler((response, req, res, next) => co(function*(){
       let session = yield cache.hgetall(`sessions:${req.cookies.st}`);
 
       if(!session.session_token) {
-         let query = yield dataTransporter.get({
-            session_token: req.cookies.st,
-            collection: 'sessions'
-         });
+         let query = yield mongos.collection('sessions').find({
+            session_token: req.cookies.st
+         }).toArray();
 
          session = query[0];
 

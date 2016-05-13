@@ -1,4 +1,3 @@
-/* global clientData, za, grecaptcha, FB */
 za.login = {};
 
 window.addEventListener('keydown', function(e){
@@ -14,6 +13,10 @@ za.login.promptLogin = function(callback) {
 
    if(clientData.user_data)
       return za.onlogin && za.onlogin();
+
+   $('.auth-dialogs, .auth-dialogs > form')
+     .find('input, textarea, button, [tabindex]')
+     .attr('disabled', false);
 
     za.resize();
     $('.login-frame')[0].error('');
@@ -51,6 +54,10 @@ za.login.promptRegister = function(callback) {
    if(clientData.user_data)
       return za.onlogin && za.onlogin();
 
+   $('.auth-dialogs, .auth-dialogs > form')
+     .find('input, textarea, button, [tabindex]')
+     .attr('disabled', false);
+
    za.resize();
     $('.register-frame')[0].error('');
 
@@ -84,6 +91,10 @@ za.login.promptRecoverFrame = function(token) {
    $('.recover-password-frame .not-sent-yet').show();
    $('.recover-password-frame .success').hide();
 
+   $('.auth-dialogs, .auth-dialogs > form')
+     .find('input, textarea, button, [tabindex]')
+     .attr('disabled', false);
+
    za.resize();
     $('.recover-password-frame')[0].error('');
 
@@ -102,6 +113,10 @@ za.login.promptForgotPassword = function() {
 
    $('.forgot-password-frame .not-sent-yet').show();
    $('.forgot-password-frame .success').hide();
+
+   $('.auth-dialogs, .auth-dialogs > form')
+     .find('input, textarea, button, [tabindex]')
+     .attr('disabled', false);
 
    za.resize();
     $('.forgot-password-frame')[0].error('');
@@ -136,6 +151,10 @@ za.login.promptForgotPassword = function() {
 za.login.exitPrompts = function(callback) {
 
     $('.auth-dialogs, .auth-dialogs > form').addClass('hide');
+
+    $('.auth-dialogs, .auth-dialogs > form')
+      .find('input, textarea, button, [tabindex]')
+      .attr('disabled', true);
 
     if(typeof callback === 'function')
        setTimeout(callback, 400);
@@ -422,11 +441,10 @@ za._login_response_handler = function(response){
       clientData.csrf_token = response.csrf_token;
 
       // Check for language change
-      if(response.user_data.lang !== clientData.lang) {
-         clientData.lang = response.user_data.lang;
+      if(response.user_data.lang !== clientData.lang)
          za.send('/api/text/' + response.user_data.lang)
-            .success(za._language_change_handler);
-      }
+            .success(function(r){
+               za._language_change_handler(r, response.user_data.lang); });
 
       // Update navigation bar
       za.userBar.setUser(clientData.user_data);
@@ -446,12 +464,15 @@ za._login_response_handler = function(response){
 
 };
 
-za._language_change_handler = function(core_text){
+za._language_change_handler = function(core_text, lang_code){
 
    core_text = core_text.data;
 
    if(typeof core_text !== 'object')
       return console.warn('_language_change_handler called with invalid input.');
+
+   clientData.lang = lang_code;
+   $('.update-lang-letters').html('('+lang_code+')');
 
    var keys = Object.keys(core_text);
    clientData.core_text = core_text;

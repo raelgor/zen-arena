@@ -4,12 +4,12 @@ module.exports = skel => {
 
    return (req, res, next) => {
 
-      var result = compareObjects(req.body, skel);
-console.log('assertBody:', result);
+      var result = compareObjects(skel, req.body);
+      
       if(result)
          next();
       else
-         res.end('{"error":"error_invalid_parameters"}');
+         new JSONResponse(req, res).error('error_invalid_parameters');
 
          function compareObjects(a, b) {
             for(let key in a)

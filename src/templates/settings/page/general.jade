@@ -1,0 +1,31 @@
+.settings-page-group.white-box(data-controller="settingsUserGeneral")
+   .title(data-html-general_settings)=coreText.general_settings
+   input(type="hidden", name="country_place_id", value=user.country_place_id||'')
+   input(type="hidden", name="city_place_id", value=user.city_place_id||'')
+   .prop-name(data-html-first_name)=coreText.first_name
+   input.prop-input(value=user.first_name||'')
+   .prop-name(data-html-last_name)=coreText.last_name
+   input.prop-input(value=user.last_name||'')
+   .prop-name(data-html-username)=coreText.username
+   input.prop-input(value=user.username||'')
+   .prop-desc(data-html-settings_username_description)=coreText.settings_username_description
+   .prop-name(data-html-phone_number)=coreText.phone_number
+   input.prop-input(value=user.phone||'')
+   if(user.phone_verified)
+      .prop-verified
+         span.icon-checkmark
+         span(data-html-phone_verified)=coreText.phone_verified
+   .prop-desc(data-html-phone_number_description)=coreText.phone_number_description
+   .prop-name(data-html-email_address)=coreText.email_address
+   input.prop-input(value=user.email||'')
+   if(user.email_verified)
+      .prop-verified
+         span.icon-checkmark
+         span(data-html-email_verified)=coreText.email_verified
+   .prop-name(data-html-default_country)=coreText.default_country
+   .prop-select.country
+   .prop-name(data-html-default_city)=coreText.default_city
+   .prop-select.city
+   .prop-name(data-html-language)=coreText.language
+   .prop-select.language
+   button.green.button(data-html-update_profile, style="margin: 25px 0 0 20px")=coreText.update_profile

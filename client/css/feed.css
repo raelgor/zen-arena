@@ -204,6 +204,6 @@ button.browse-tournaments-btn .icon-search {
     cursor: pointer;
 }
 
-.side-ads > :last-child > :last-child {
-    margin-bottom: 0px;
+.side-ads > :last-child > :first-child {
+    margin-top: 0px;
 }

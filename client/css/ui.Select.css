@@ -1,0 +1,25 @@
+.prop-select {
+    padding: 5px 0 5px 20px;
+}
+
+.ui-select {
+    border-radius: 3px;
+    border: 1px solid #D7D7D7;
+    padding: 5px 10px;
+    display: inline-block;
+    box-shadow: 1px 1px 2px #DFDFDF;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.ui-select .text {
+    margin-right: 12px;
+    font-size: 15px;
+}
+
+.ui-select .icon-list2 {
+    color: gray;
+    font-size: 13px;
+}

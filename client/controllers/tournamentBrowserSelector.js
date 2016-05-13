@@ -53,7 +53,7 @@ za.controllers.tournamentBrowserSelector = new za.Controller(function(element){
          searchPlaceholder: 'type_city_name',
          multiSelect: false,
          cancelable: true,
-         dataSource: gPlaceDataFetcher,
+         dataSource: new za.GooglePlaceDataFetcher('appCities').fn,
          selection: place_id ? [{place_id:place_id}] : null,
          rowTitle: 'description'
       });
@@ -70,61 +70,5 @@ za.controllers.tournamentBrowserSelector = new za.Controller(function(element){
          $('.opt-location').attr('data-selected-location', selection.place_id);
       });
    });
-
-   var bannedUntil = Date.now();
-   var nextTimeout;
-   var r = 0;
-   function gPlaceDataFetcher($q, $i, callback){
-
-      var t_r = ++r;
-      if(bannedUntil > Date.now())
-         return (nextTimeout = setTimeout(function(){
-            t_r == r &&
-            gPlaceDataFetcher($q, $i, callback);
-         },bannedUntil - Date.now()));
-
-      // Max of 1 r/2s
-      bannedUntil = Date.now() + 1e3;
-
-      if(!$q)
-         return callback([]);
-
-      var ac = new google.maps.places.AutocompleteService();
-      var promises = [];
-
-      clientData.app_countries.forEach(function(country_code){
-         promises.push(new Promise(function(resolve){
-            ac.getPlacePredictions({
-               input: $q,
-               types: ['(cities)'],
-               componentRestrictions: {country: country_code}
-            }, function(){
-
-               var responseResults = arguments[0] || [];
-               var results = [];
-
-               responseResults.forEach(function(r){
-                  if(!results.filter(function(p){return p.place_id === r.place_id;})[0])
-                     results.push(r);
-               });
-
-               resolve(results);
-
-            });
-         }));
-      });
-
-      Promise.all(promises).then(function(results){
-         if(t_r != r) return;
-         var result =
-            []
-            .concat
-            .apply([],results)
-            .sort(function(a,b){ return a.description > b.description; });
-
-         callback(result);
-      });
-
-   }
 
 });

@@ -17,15 +17,17 @@ r.prependRoute(assertBody({
 
 r.setHandler((response, req) => co(function*(){
 
-   var valid_request =
-      req.body &&
-      req.body.message &&
-      req.body.message.uid &&
-      req.body.message.password;
+   // Validate email
+   if(!req.body.message.password ||
+      !new RegExp(`^(.){${appConfig.password_range.min},${appConfig.password_range.max}}$`)
+         .test(req.body.message.password))
+      return response.error('error_invalid_password');
 
-   if(!valid_request)
-      return response.error('error_invalid_request');
+   // Validate email
+   if(!/^[^\@\&\_\! ]+\@[^\@\&\_\! ]+$/.test(req.body.message.uid))
+      return response.error('error_bad_email');
 
+   // Check if user exists
    var user = yield data.getUser({
       email: String(req.body.message.uid)
    });
@@ -33,9 +35,7 @@ r.setHandler((response, req) => co(function*(){
    if(user)
       return response.error('error_user_exists');
 
-   if(!/^[^\@\&\_\! ]+\@[^\@\&\_\! ]+$/.test(req.body.message.uid))
-      return response.error('error_bad_email');
-
+   // Create user
    var email = req.body.message.uid;
    user = new User({
       verify_email_token: uuid(2),
@@ -44,10 +44,7 @@ r.setHandler((response, req) => co(function*(){
       lang: req.lang
    });
 
-   var email_attempt = yield postman.verifyAccountEmail(user);
-
-   if(!email_attempt || !email_attempt.accepted.length)
-      return response.error('error_bad_email');
+   postman.verifyAccountEmail(user);
 
    var salt = yield new Promise(resolve => bcrypt.genSalt(10, (err, res) => resolve(res)));
    var password = yield new Promise(resolve => bcrypt.hash(req.body.message.password, salt, (err, res) => resolve(res)));
@@ -60,6 +57,7 @@ r.setHandler((response, req) => co(function*(){
 
    yield on_user_created(user);
 
+   // Create session
    log_user_in(response, user);
-   
+
 }));

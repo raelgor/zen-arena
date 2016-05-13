@@ -18,6 +18,24 @@ module.exports = class PageRoute extends Route {
 
    }
 
+   requiresAuth(bool) {
+      this._reqAuth = bool;
+   }
+
+   noAuthHandler(response){
+      return co(function*(){
+
+         response.responseData = yield factory.index.make(
+             response.request,
+             response.pageData,
+             '<script>$(window).ready(function(){za.login.promptLogin(function(){window.location.reload()})})</script>'
+           );
+
+        response.end();
+
+      }).catch(e => instance.emit('error', e));
+   }
+
    /**
     * Returns the handler function wrapped to include a Response object.
     * @function handle
@@ -32,11 +50,16 @@ module.exports = class PageRoute extends Route {
 
          var response = new Response(req, res);
 
+         req.coreText = coreText;
+
          response.pageData = {
             coreText,
             meta: make_default_meta_data(coreText),
             clientData: make_client_data(req, coreText)
          };
+
+         if(this._reqAuth && !req.__user)
+            handler = this.noAuthHandler;
 
          if(DEBUG_MODE && this.name) {
             let dn = `[pageRoute][${this.name}]`;

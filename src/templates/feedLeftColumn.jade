@@ -1,5 +1,5 @@
 form.new-post.white-box(data-controller="newpost")
-   .user-new-post-image(style="background-image:url("+data.userImage+")")
+   .user-new-post-image(style="background-image:url("+(data.userImage||"/img/defaultusr.jpg")+")")
    textarea.new-post-text(data-placeholder-whats_up, placeholder=coreText.whats_up)
    .new-post-interaction
       .icon-earth

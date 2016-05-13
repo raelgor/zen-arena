@@ -27,6 +27,8 @@ r.setHandler((response, req, res, next) => {
    } else
       log.debug(req, 'Language exists. Did nothing.');
 
+   req.coreText = coreTextCache[req.lang];
+
    next();
 
 });

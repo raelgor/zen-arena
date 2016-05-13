@@ -18,9 +18,7 @@ za.changeLanguage = function(){
    selector.on('new', function(selection){
       if(selection.code != clientData.lang){
          za.send('/api/text/' + selection.code).success(function(response){
-            za._language_change_handler(response);
-            clientData.lang = selection.code;
-            $('.update-lang-letters').html('('+selection.code+')');
+            za._language_change_handler(response, selection.code);
             if($('.logged-in').length)
                za.send('/api/set/language/' + selection.code).success(function(r){
                   if(r.message === 'ok')
