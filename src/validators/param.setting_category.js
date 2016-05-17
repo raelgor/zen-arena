@@ -5,7 +5,8 @@ module.exports = (req, res, next, value) => {
    if(~[
       'accounts',
       'password',
-      'merge'
+      'merge',
+      'configuration'
    ].indexOf(value))
       next();
    else

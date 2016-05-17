@@ -19,6 +19,11 @@ za.interceptor_map = {
       '.logged-in .page-view .settings-container .settings-page',
       'body > .content > .page-view'
    ],
+   '^/settings/([^/]*)/([^/]*)$': [
+      '/settings/$1/$2',
+      '.logged-in .page-view .settings-container .settings-page',
+      'body > .content > .page-view'
+   ],
    '^/([0-9]*)$': [
       '/api/view/namespace/$1',
       '.page-view .left-column',

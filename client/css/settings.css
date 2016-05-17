@@ -92,7 +92,7 @@ a.settings-option:last-child {
 }
 
 .prop-verified {
-    padding: 5px 0 0 20px;
+    padding: 9px 0 0 20px;
     color: #7DB632;
     font-weight: bold;
     font-size: 14px;
@@ -100,4 +100,51 @@ a.settings-option:last-child {
 
 .prop-verified .icon-checkmark {
     margin-right: 7px;
+}
+
+[data-controller=settingsAdminConfiguration] .prop-input {
+    width: calc(50% - 65px);
+    max-width: calc(50% - 65px);
+    margin: 9px 0 9px 20px;
+}
+
+.no-touch .app-config-pair:not(.new):hover {
+    cursor: pointer;
+}
+
+.app-config-pair .icon-cross {
+   color: hsla(0,0%,50%,.26);
+   position: relative;
+   top: 4px;
+   padding: 14px;
+   font-size: 14px;
+   float: right;
+}
+
+.app-config-pair {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+    min-height: 55px;
+}
+
+.app-config-pair.new {
+    border-bottom: 1px solid hsla(0, 0%, 85%, 0.52);
+    background: hsla(0,0%,95%,.5);
+}
+
+.app-config-pair :not(input).key.prop-input {
+    background: none;
+    border: none;
+    box-shadow: none;
+    font-weight: bold;
+    width: calc(50% - 65px);
+    display: inline-block;
+    color: #636363;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: top;
+}
+
+.app-config-pair:nth-child(even) {
+    background: #FBFBFB;
 }

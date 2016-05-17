@@ -35,7 +35,12 @@ r.setHandler((response, req, res) => co(function*() {
 
    states[1] =
       () => co(function*(){
-         return yield factory.settings.user[category].make(req);
+         var target;
+         if(req.params.setting_category_group)
+            target = factory.settings[req.params.setting_category_group];
+         else
+            target = factory.settings.user;
+         return yield target[category].make(req);
       });
 
    states[2] =

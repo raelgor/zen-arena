@@ -1,4 +1,4 @@
-za.ui.loader = function() {
+za.ui.Loader = function() {
 
     var element = $('<div>');
 
@@ -21,6 +21,24 @@ za.ui.loader = function() {
       this.positionLoader();
       window.addEventListener('resize', positionLoader);
     };
+
+    element.spawn = function(){
+      $('body').append(element);
+   };
+
+    element.loaderify = function(target) {
+      element.absBindToElement(target);
+      $('body').append(element);
+      $(target)
+      .css('pointer-events', 'none')
+      .animate({opacity: 0.4}, 100, 'swing');
+   };
+
+   element.unloaderify = function(){
+      element.boundElement.css('pointer-events', 'all')
+                        .animate({opacity: 1}, 100, 'swing');
+      element.lazyKill();
+   };
 
     function positionLoader() {
       if(!element) return window.removeEventListener('resize', positionLoader);

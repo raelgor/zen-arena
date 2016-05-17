@@ -3,10 +3,6 @@ za.controllers.settingsUserGeneral = new za.Controller(function(element){
    var country_place_id = $(element).find('[name="country_place_id"]').val();
    var city_place_id = $(element).find('[name="city_place_id"]').val();
 
-   //var ps = new google.maps.places.PlacesService(document.createElement('div'));
-
-   //ps.getDetails({placeId:"ChIJLe0kpZk1XhMRoIy54iy9AAQ",language:"el_GR"},console.log.bind(console))
-
    if(window._g_autoComplete)
       initSelects();
    else
@@ -68,8 +64,6 @@ za.controllers.settingsUserGeneral = new za.Controller(function(element){
    var langSelect = new za.ui.Select({
       title: 'select_language',
       message: 'select_language_message',
-      search: false,
-      searchPlaceholder: 'search',
       buffered: true,
       cancelable: true,
       dataSource: '/api/selector/language/$i?q=$q',
@@ -91,6 +85,10 @@ za.controllers.settingsUserGeneral = new za.Controller(function(element){
                });
          });
       }
+   });
+
+   $(element).find('button.submit').click(function(){
+      
    });
 
 });

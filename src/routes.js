@@ -9,6 +9,7 @@ if(DEBUG_MODE)
 // Parameter validators
 a.param('lang_code', require('./validators/param.lang_code'));
 a.param('setting_category', require('./validators/param.setting_category'));
+a.param('setting_category_group', require('./validators/param.setting_category_group'));
 
 // Api route
 a.post('/api/text/:lang_code', api.text.route);
@@ -39,6 +40,8 @@ a.post('/api/selector/language/:index', api.selector.route);
 
 a.post('/api/set/language/:lang_code', api.set.route);
 
+a.post('/api/admin/appcfg', api.admin.appcfg.route);
+
 // View html factories
 a.post('/api/view/index', api.view.index.route);
 a.post('/api/view/post/:post_id', api.view.post.route);
@@ -49,7 +52,8 @@ a.all(['/','/home'], pageHandlers.home.route);
 a.all('/post/:post_id', pageHandlers.post.route);
 a.all([
    '/settings',
-   '/settings/:setting_category'
+   '/settings/:setting_category',
+   '/settings/:setting_category_group/:setting_category',
 ], pageHandlers.settings.route);
 a.all('/verifyemail/:token', pageHandlers.verifyemail.route);
 a.all('/unsubscribeall/:token', pageHandlers.unsubscribeall.route);
