@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>main.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="za.Controller.html">Controller</a></li><li><a href="za.ui.Alert.html">Alert</a><ul class='methods'><li data-type='method'><a href="za.ui.Alert.html#.dispose">dispose</a></li><li data-type='method'><a href="za.ui.Alert.html#.fade">fade</a></li><li data-type='method'><a href="za.ui.Alert.html#.spawn">spawn</a></li></ul></li><li><a href="za.ui.BubbleMenu.html">BubbleMenu</a><ul class='methods'><li data-type='method'><a href="za.ui.BubbleMenu.html#.remove">remove</a></li></ul></li><li><a href="za.ui.CenteredWindow.html">CenteredWindow</a><ul class='methods'><li data-type='method'><a href="za.ui.CenteredWindow.html#.dispose">dispose</a></li><li data-type='method'><a href="za.ui.CenteredWindow.html#.position">position</a></li><li data-type='method'><a href="za.ui.CenteredWindow.html#.spawn">spawn</a></li><li data-type='method'><a href="za.ui.CenteredWindow.html#.updateField">updateField</a></li></ul></li><li><a href="za.ui.Checkbox.html">Checkbox</a><ul class='methods'><li data-type='method'><a href="za.ui.Checkbox.html#.check">check</a></li><li data-type='method'><a href="za.ui.Checkbox.html#.isChecked">isChecked</a></li><li data-type='method'><a href="za.ui.Checkbox.html#.uncheck">uncheck</a></li></ul></li><li><a href="za.ui.Confirm.html">Confirm</a></li><li><a href="za.ui.Darkness.html">Darkness</a><ul class='methods'><li data-type='method'><a href="za.ui.Darkness.html#.fade">fade</a></li><li data-type='method'><a href="za.ui.Darkness.html#.spawn">spawn</a></li></ul></li><li><a href="za.ui.DataSelector.html">DataSelector</a><ul class='methods'><li data-type='method'><a href="za.ui.DataSelector.html#.dispose">dispose</a></li><li data-type='method'><a href="za.ui.DataSelector.html#.fade">fade</a></li><li data-type='method'><a href="za.ui.DataSelector.html#.spawn">spawn</a></li></ul></li><li><a href="za.ui.DialogButtons.html">DialogButtons</a><ul class='methods'><li data-type='method'><a href="za.ui.DialogButtons.html#.focus">focus</a></li></ul></li><li><a href="za.ui.Disposable.html">Disposable</a></li><li><a href="za.ui.Select.html">Select</a></li><li><a href="za.ui.SuperFocusable.html">SuperFocusable</a><ul class='methods'><li data-type='method'><a href="za.ui.SuperFocusable.html#.focus">focus</a></li><li data-type='method'><a href="za.ui.SuperFocusable.html#.restore">restore</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="za.ui.Alert.html#event:disposed">disposed</a></li><li><a href="za.ui.CenteredWindow.html#event:change">change</a></li><li><a href="za.ui.CenteredWindow.html#event:disposed">disposed</a></li><li><a href="za.ui.Checkbox.html#event:checked">checked</a></li><li><a href="za.ui.Checkbox.html#event:unchecked">unchecked</a></li><li><a href="za.ui.Darkness.html#event:click">click</a></li><li><a href="za.ui.DataSelector.html#event:disposed">disposed</a></li><li><a href="za.ui.DataSelector.html#event:new">new</a></li><li><a href="za.ui.DialogButtons.html#event:click">click</a></li><li><a href="za.ui.Disposable.html#event:disposed">disposed</a></li><li><a href="za.ui.Select.html#event:change">change</a></li></ul><h3>Namespaces</h3><ul><li><a href="za.html">za</a><ul class='methods'><li data-type='method'><a href="za.html#.geoRequest">geoRequest</a></li><li data-type='method'><a href="za.html#.this.logout">this.logout</a></li></ul></li><li><a href="za.controllers.html">controllers</a></li><li><a href="za.ui.html">ui</a><ul class='methods'><li data-type='method'><a href="za.ui.html#.initControllers">initControllers</a></li><li data-type='method'><a href="za.ui.html#.ntFocus">ntFocus</a></li><li data-type='method'><a href="za.ui.html#.rightColCheck">rightColCheck</a></li><li data-type='method'><a href="za.ui.html#.spawnUserBubbleMenu">spawnUserBubbleMenu</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">main.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace za
+ * @desc The za client library.
+ */
+window.za = function() {
+
+   // On login callback
+   this.onlogin = null;
+
+   /**
+    * @memberof za
+    * @desc Whether we are on a touch device or not.
+    * @type boolean
+    */
+   this._touch = 'ontouchstart' in document.documentElement;
+
+   /**
+    * @memberof za
+    * @desc An attempt to detect the browser from the userAgent.
+    * @type string
+    */
+   this._browser = (function(){
+       var ua= navigator.userAgent, tem,
+       M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+       if(/trident/i.test(M[1])){
+           tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+           return 'IE '+(tem[1] || '');
+       }
+       if(M[1]=== 'Chrome'){
+           tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+           if(tem!== null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+       }
+       M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+       if((tem= ua.match(/version\/(\d+)/i))!== null) M.splice(1, 1, tem[1]);
+       return M.join(' ');
+   })();
+
+   /**
+    * @memberof za
+    * @desc Logs the user out by deleting local data and messaging the server
+    * to delete cookies and tokens.
+    * @type function
+    */
+   this.logout = function() {
+      delete clientData.csrf_token;
+      delete clientData.user_data;
+      $('html').removeClass('logged-in');
+      za.userBar.setStatus(false);
+      history.replaceState(history.state, document.title, '/');
+   };
+
+   /**
+    * @namespace za.ui
+    * @memberof za
+    * @desc Stores UI functions and classes.
+    * @type object
+    */
+   this.ui = {
+
+      /**
+       * @memberof za.ui
+       * @desc Focuses an element only if environment is touch device.
+       * @type function
+       */
+      ntFocus: function(selector){
+         !za._touch &amp;&amp; $(selector).focus();
+      },
+
+      /**
+       * Controllers of the parameter element and all sub-elements with the
+       * data-controller attribute set.
+       * @method za.ui.initControllers
+       */
+      initControllers: function(element) {
+         var controllerName = $(element).attr('data-controller');
+         if(controllerName in za.controllers &amp;&amp; $(element).is(':not([data-controller-init=1])'))
+            za.controllers[controllerName].init(element);
+         $(element).attr('data-controller-init', '1');
+         $(element).find('[data-controller]:not([data-controller-init=1])')
+         .each(function(index,element){
+            za.ui.initControllers(element);
+         });
+      }
+
+   };
+
+   /**
+    * @namespace za.controllers
+    * @memberof za
+    * @desc Stores controllers.
+    * @type object
+    */
+   this.controllers = {};
+
+   /**
+    * View controller class.
+    * @class za.Controller
+    * @returns {Controller}
+    */
+   this.Controller = function(handlerFunction){
+      return {
+         init: function(element){
+            $(element).attr('data-controller-init', '1');
+            handlerFunction(element);
+            za.ui.initControllers(element);
+         }
+      };
+   };
+
+};
+
+za.prototype = EventEmitter2.prototype;
+
+window.za = new za();
+
+$(window).ready(function(){
+
+   $('.auth-dialogs, .auth-dialogs > form')
+     .find('input, textarea, button, [tabindex]')
+     .attr('disabled', true);
+
+   if(!clientData.geolocation.city || !clientData.geolocation.country)
+      za.geoRequest();
+
+   if(!za._touch)
+      $('html').addClass('no-touch');
+
+   za.ui.ntFocus('.navigation .search');
+
+   za.ui.initControllers('body > .content');
+
+   if(clientData.user_data)
+      $('html').addClass('logged-in');
+
+   // Safari fix
+   setTimeout(za.resize, 0);
+
+   $('.touch-nav .icon-user, .player-info .user-ui [class^="user-"]').click(function(){
+
+      var offset = $(this).is('.user-ui') ? 120 : 0;
+
+      if(!clientData.user_data)
+         za.login.promptLogin();
+      else {
+         za.ui.spawnUserBubbleMenu({
+            top: 50,
+            left: $(this).offset().left + offset,
+         });
+      }
+
+   });
+
+   if(/code\=/i.test(window.location.search)) {
+
+      za.login.promptLogin();
+      setTimeout(function(){
+         $('.auth-dialogs .login-frame')[0].loading(true);
+         $('.auth-dialogs .register-frame')[0].loading(true);
+      }, 10);
+
+      za.fb_ready.then(function(){
+
+         FB.getLoginStatus(function(response){
+
+            if(response.status === 'connected')
+               za.fb_login(response.authResponse.accessToken);
+            else {
+               $('.auth-dialogs .login-frame')[0]
+               .loading(false)
+               .error(clientData.core_text.fb_no_perm);
+
+               $('.auth-dialogs .register-frame')[0]
+               .loading(false)
+               .error(clientData.core_text.fb_no_perm);
+            }
+
+         });
+
+      });
+
+   }
+
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed May 18 2016 03:04:49 GMT+0300 (GTB Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

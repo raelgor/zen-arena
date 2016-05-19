@@ -26,7 +26,7 @@ za.ui.fetchView = function(urlPath, handlerInfo){
       return console.warn('err_view_request_overlap');
 
    $(targetElementSelector).attr('data-view-loading', 1);
-   var loader = za.ui.loader();
+   var loader = new za.ui.Loader();
 
    loader.css('opacity',0);
 

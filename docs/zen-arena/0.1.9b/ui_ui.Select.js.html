@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ui/ui.Select.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="za.Controller.html">Controller</a></li><li><a href="za.ui.Alert.html">Alert</a><ul class='methods'><li data-type='method'><a href="za.ui.Alert.html#.dispose">dispose</a></li><li data-type='method'><a href="za.ui.Alert.html#.fade">fade</a></li><li data-type='method'><a href="za.ui.Alert.html#.spawn">spawn</a></li></ul></li><li><a href="za.ui.BubbleMenu.html">BubbleMenu</a><ul class='methods'><li data-type='method'><a href="za.ui.BubbleMenu.html#.remove">remove</a></li></ul></li><li><a href="za.ui.CenteredWindow.html">CenteredWindow</a><ul class='methods'><li data-type='method'><a href="za.ui.CenteredWindow.html#.dispose">dispose</a></li><li data-type='method'><a href="za.ui.CenteredWindow.html#.position">position</a></li><li data-type='method'><a href="za.ui.CenteredWindow.html#.spawn">spawn</a></li><li data-type='method'><a href="za.ui.CenteredWindow.html#.updateField">updateField</a></li></ul></li><li><a href="za.ui.Checkbox.html">Checkbox</a><ul class='methods'><li data-type='method'><a href="za.ui.Checkbox.html#.check">check</a></li><li data-type='method'><a href="za.ui.Checkbox.html#.isChecked">isChecked</a></li><li data-type='method'><a href="za.ui.Checkbox.html#.uncheck">uncheck</a></li></ul></li><li><a href="za.ui.Confirm.html">Confirm</a></li><li><a href="za.ui.Darkness.html">Darkness</a><ul class='methods'><li data-type='method'><a href="za.ui.Darkness.html#.fade">fade</a></li><li data-type='method'><a href="za.ui.Darkness.html#.spawn">spawn</a></li></ul></li><li><a href="za.ui.DataSelector.html">DataSelector</a><ul class='methods'><li data-type='method'><a href="za.ui.DataSelector.html#.dispose">dispose</a></li><li data-type='method'><a href="za.ui.DataSelector.html#.fade">fade</a></li><li data-type='method'><a href="za.ui.DataSelector.html#.spawn">spawn</a></li></ul></li><li><a href="za.ui.DialogButtons.html">DialogButtons</a><ul class='methods'><li data-type='method'><a href="za.ui.DialogButtons.html#.focus">focus</a></li></ul></li><li><a href="za.ui.Disposable.html">Disposable</a></li><li><a href="za.ui.Select.html">Select</a></li><li><a href="za.ui.SuperFocusable.html">SuperFocusable</a><ul class='methods'><li data-type='method'><a href="za.ui.SuperFocusable.html#.focus">focus</a></li><li data-type='method'><a href="za.ui.SuperFocusable.html#.restore">restore</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="za.ui.Alert.html#event:disposed">disposed</a></li><li><a href="za.ui.CenteredWindow.html#event:change">change</a></li><li><a href="za.ui.CenteredWindow.html#event:disposed">disposed</a></li><li><a href="za.ui.Checkbox.html#event:checked">checked</a></li><li><a href="za.ui.Checkbox.html#event:unchecked">unchecked</a></li><li><a href="za.ui.Darkness.html#event:click">click</a></li><li><a href="za.ui.DataSelector.html#event:disposed">disposed</a></li><li><a href="za.ui.DataSelector.html#event:new">new</a></li><li><a href="za.ui.DialogButtons.html#event:click">click</a></li><li><a href="za.ui.Disposable.html#event:disposed">disposed</a></li><li><a href="za.ui.Select.html#event:change">change</a></li></ul><h3>Namespaces</h3><ul><li><a href="za.html">za</a><ul class='methods'><li data-type='method'><a href="za.html#.geoRequest">geoRequest</a></li><li data-type='method'><a href="za.html#.this.logout">this.logout</a></li></ul></li><li><a href="za.controllers.html">controllers</a></li><li><a href="za.ui.html">ui</a><ul class='methods'><li data-type='method'><a href="za.ui.html#.initControllers">initControllers</a></li><li data-type='method'><a href="za.ui.html#.ntFocus">ntFocus</a></li><li data-type='method'><a href="za.ui.html#.rightColCheck">rightColCheck</a></li><li data-type='method'><a href="za.ui.html#.spawnUserBubbleMenu">spawnUserBubbleMenu</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ui/ui.Select.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * A select tag replacement that spawns a {@link za.ui.DataSelector}.
+ * @class za.ui.Select
+ * @param {Object} element A {@link za.ui.DataSelector} options object with an
+ * extra `name` property which will be displayed as the DOM element label.
+ */
+za.ui.Select = function(options){
+
+   var element = this.element = $('&lt;div>');
+
+   element.html('&lt;span class="text">&lt;/span>&lt;span class="icon-list2">&lt;/span>');
+   element.find('.text').html(options.name);
+
+   var object = this;
+
+   element.addClass('ui-select');
+   element.attr('tabindex', 0);
+
+   element.click(function(){
+
+      var selector = new za.ui.DataSelector(options);
+
+      selector.spawn();
+
+      selector.on('new', function(selection){
+         /**
+          * Select has a new value.
+          * @event za.ui.Select#change
+          */
+         object.emit('change', selection);
+         element.find('.text').html(selection[options.rowTitle]);
+      });
+
+   });
+
+};
+
+za.ui.Select.prototype = EventEmitter2.prototype;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed May 18 2016 03:04:49 GMT+0300 (GTB Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

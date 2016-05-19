@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/classes/PageRoute.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIRoute.html">APIRoute</a><ul class='methods'><li data-type='method'><a href="APIRoute.html#.handle">handle</a></li></ul></li><li><a href="DataTransporter.html">DataTransporter</a><ul class='methods'><li data-type='method'><a href="DataTransporter.html#.get">get</a></li><li data-type='method'><a href="DataTransporter.html#.remove">remove</a></li><li data-type='method'><a href="DataTransporter.html#.setClient">setClient</a></li><li data-type='method'><a href="DataTransporter.html#.update">update</a></li></ul></li><li><a href="Factory.html">Factory</a></li><li><a href="JSONResponse.html">JSONResponse</a><ul class='methods'><li data-type='method'><a href="JSONResponse.html#.end">end</a></li><li data-type='method'><a href="JSONResponse.html#.error">error</a></li></ul></li><li><a href="PageRoute.html">PageRoute</a><ul class='methods'><li data-type='method'><a href="PageRoute.html#.handle">handle</a></li></ul></li><li><a href="Response.html">Response</a><ul class='methods'><li data-type='method'><a href="Response.html#.end">end</a></li><li data-type='method'><a href="Response.html#.redirect">redirect</a></li></ul></li><li><a href="Route.html">Route</a><ul class='methods'><li data-type='method'><a href="Route.html#.handle">handle</a></li><li data-type='method'><a href="Route.html#.handler">handler</a></li><li data-type='method'><a href="Route.html#.pre">pre</a></li><li data-type='method'><a href="Route.html#.prependRoute">prependRoute</a></li><li data-type='method'><a href="Route.html#.setHandler">setHandler</a></li><li data-type='method'><a href="Route.html#.setName">setName</a></li><li data-type='method'><a href="Route.html#.take">take</a></li></ul></li><li><a href="Timer.html">Timer</a><ul class='methods'><li data-type='method'><a href="Timer.html#.click">click</a></li></ul></li><li><a href="User.html">User</a><ul class='methods'><li data-type='method'><a href="User.html#.get">get</a></li><li data-type='method'><a href="User.html#.insertRecord">insertRecord</a></li><li data-type='method'><a href="User.html#.set">set</a></li><li data-type='method'><a href="User.html#.updateRecord">updateRecord</a></li></ul></li><li><a href="za.Controller.html">Controller</a></li><li><a href="za.ui.Alert.html">Alert</a></li></ul><h3>Namespaces</h3><ul><li><a href="factory_.html">factory</a></li><li><a href="routes.html">routes</a></li><li><a href="za.html">za</a><ul class='methods'><li data-type='method'><a href="za.html#.geoRequest">geoRequest</a></li><li data-type='method'><a href="za.html#.this.logout">this.logout</a></li></ul></li><li><a href="za.controllers.html">controllers</a></li><li><a href="za.ui.html">ui</a><ul class='methods'><li data-type='method'><a href="za.ui.html#.initControllers">initControllers</a></li><li data-type='method'><a href="za.ui.html#.ntFocus">ntFocus</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#dataTransporter">dataTransporter</a></li><li><a href="global.html#loaddirSync">loaddirSync</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">src/classes/PageRoute.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+/**
+ * @class PageRoute
+ * @desc An express route wrapper with a custom {@link Response} object.
+ * @param {function} handler The main API call handler.
+ * @extends Route
+ * @returns {PageRoute}
+ */
+module.exports = class PageRoute extends Route {
+
+   constructor(handler) {
+
+      super(handler);
+
+      this._pre.push(routes.authentication.route);
+      this._pre.push(routes.sessionInfoMaker.route);
+
+   }
+
+   requiresAuth(bool) {
+      this._reqAuth = bool;
+   }
+
+   noAuthHandler(response){
+      return co(function*(){
+
+         response.responseData = yield factory.index.make(
+             response.request,
+             response.pageData,
+             '&lt;script>$(window).ready(function(){za.login.promptLogin(function(){window.location.reload()})})&lt;/script>'
+           );
+
+        response.end();
+
+      }).catch(e => instance.emit('error', e));
+   }
+
+   /**
+    * Returns the handler function wrapped to include a Response object.
+    * @function handle
+    * @memberof PageRoute
+    * @param {function} handler The name of the main handler of this API call.
+    * @returns function
+    */
+   handle(handler) {
+      return (req, res, next) => co(function(){
+
+         var coreText = coreTextCache[req.lang];
+
+         var response = new Response(req, res);
+
+         req.coreText = coreText;
+
+         response.pageData = {
+            coreText,
+            meta: make_default_meta_data(coreText),
+            clientData: make_client_data(req, coreText)
+         };
+
+         if(this._reqAuth &amp;&amp; !req.__user)
+            handler = this.noAuthHandler;
+
+         if(DEBUG_MODE &amp;&amp; this.name) {
+            let dn = `[pageRoute][${this.name}]`;
+            let i = indent(req, 1, dn);
+            let t = new Timer();
+            let resolved;
+            log.debug(`${i}${dn} Starting...`);
+
+            let _finished = () => {
+               if(resolved) return;
+               resolved = true;
+               let d = t.click();
+               msStats.log(`pageRoute.${this.name}`, d);
+               indent(req, -1);
+               log.debug(`${i}${dn} Finished. (${d}ms)`);
+            };
+
+            let _next = (...a) => {
+               _finished();
+               next(...a);
+            };
+
+            let result = handler(response, req, res, _next);
+
+            if(result &amp;&amp; 'then' in result)
+               result.then(_finished);
+            else
+               _finished();
+
+         }
+         else
+            handler(response, req, res, next);
+
+      }.bind(this));
+   }
+
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed May 18 2016 00:04:07 GMT+0300 (GTB Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,3 +1,7 @@
+/**
+ * Creates a dark background setting.
+ * @class za.ui.Darkness
+ */
 za.ui.Darkness = function(){
 
    var element = this.element = $('<div>');
@@ -5,26 +9,38 @@ za.ui.Darkness = function(){
 
    element.addClass('darkness-container');
 
+   /**
+    * Fades the darkness into existence (what?).
+    * @method za.ui.Darkness.spawn
+    * @returns {za.ui.Darkness}
+    */
    this.spawn = function() {
       if($('.darkness-container').length)
          $('.darkness-container').remove();
       $('body').append(element);
 
-      object.emit('spawnstart');
-      element.animate({opacity:1}, 250, 'swing', function(){
-         object.emit('spawnend');
-      });
+      element.animate({opacity:1}, 250, 'swing');
+      return object;
    };
 
+   /**
+    * Fades the darkness away and removes the element.
+    * @method za.ui.Darkness.fade
+    * @returns {za.ui.Darkness}
+    */
    this.fade = function() {
-      object.emit('fadestart');
       element.animate({opacity:0}, 200, 'swing', function(){
          element.remove();
-         object.emit('fadeend');
       });
+      return object;
    };
 
    element.click(function(e){
+      /**
+       * The shadow element has been clicked directly
+       * @event za.ui.Darkness#click
+       * @type {MouseEvent}
+       */
       object.emit('click', e);
    });
 

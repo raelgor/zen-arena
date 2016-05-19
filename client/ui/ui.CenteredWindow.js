@@ -1,3 +1,15 @@
+/**
+ * Creates a centered window with controlled content size that strives to stay
+ * in the middle of the screen.
+ * @class za.ui.CenteredWindow
+ * @param {Object}  options
+ * @param {String}  [options.fields=''] Space separated list of field
+ * names to be used as Ids for controlled content changes.
+ * @param {Boolean} [options.disposable=true] Whether the window inherits the
+ * {@link za.ui.Disposable} class.
+ * @param {Boolean} [options.cancelable=true] Whether the window can be
+ * dismissed by interaction.
+ */
 za.ui.CenteredWindow = function(options){
 
       var element = this.element = $('<div>');
@@ -15,24 +27,35 @@ za.ui.CenteredWindow = function(options){
          element.append('<div data-field-id="'+field+'"></div>');
       });
 
-      // Updates fields with content
+      /**
+       * Updates fields with content and emits a `change` event that triggers
+       * the repositioning of the window.
+       * @method za.ui.CenteredWindow.updateField
+       * @emits za.CenteredWindow#change
+       */
       this.updateField = function(fieldId, content){
          element.find('[data-field-id="'+fieldId+'"]').html(content);
+
+         /**
+          * Window contents and their size have probably changed.
+          * @event za.ui.CenteredWindow#change
+          */
          object.emit('change');
       };
 
+      /**
+       * Animates the window into existence.
+       * @method za.ui.CenteredWindow.spawn
+       */
       this.spawn = function() {
          $('body').append(element);
          $(window).bind('resize', object.position);
          $(window).bind('keydown', escapeListener);
-         object.emit('spawnstart');
          object.position();
          element.animate({
             opacity:1,
             transform: 'scale(1)'
-         }, 200, 'swing', function(){
-            object.emit('spawnend');
-         });
+         }, 200, 'swing');
       };
 
       function escapeListener(e) {
@@ -41,7 +64,10 @@ za.ui.CenteredWindow = function(options){
          object.dispose();
       }
 
-      // Animates to the correct position
+      /**
+       * Animates to the correct position.
+       * @method za.ui.CenteredWindow.position
+       */
       this.position = function(){
          element.stop().animate({
             top: window.innerHeight/2 - element.outerHeight()/2,
@@ -49,12 +75,23 @@ za.ui.CenteredWindow = function(options){
          }, 200, 'swing');
       };
 
+      /**
+       * Disposes the window and emits `disposed`.
+       * @method za.ui.CenteredWindow.dispose
+       * @emits za.CenteredWindow#disposed
+       */
       this.dispose = function(){
          if(DISPOSED)
             return;
          $(window).unbind('keydown', escapeListener);
          DISPOSED = true;
+
+         /**
+          * The window has been dismissed.
+          * @event za.ui.CenteredWindow#disposed
+          */
          object.emit('disposed');
+
          element.stop().animate({
             opacity:0,
             transform: 'scale(0)'

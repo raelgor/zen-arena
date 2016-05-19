@@ -1,11 +1,13 @@
-/*
-
-Options:
-   title: Window title core text id
-   message: Window message core text id
-   cancelable: Boolean about whether the window can be disposed or not
-
-*/
+/**
+ * Creates a confirm window of the class {@link za.ui.CenteredWindow} and a
+ * background {@link za.ui.Darkness}.
+ * @class za.ui.Confirm
+ * @param {Object}  options
+ * @param {String}  [options.title='']        Text Id of the window's title.
+ * @param {String}  [options.message='']      Text Id of the window's message.
+ * @param {Boolean} [options.cancelable=true] Whether the window can be
+ * dismissed by interaction.
+ */
 za.ui.Confirm = function(options){
 
    options = typeof options === 'object' ? options : {};

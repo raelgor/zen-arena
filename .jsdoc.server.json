@@ -6,7 +6,6 @@
     "source": {
         "include": [
            "src",
-           "client",
            "package.json",
            "README.md"
         ],

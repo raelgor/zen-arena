@@ -1,3 +1,8 @@
+/**
+ * Makes an element disposable by swiping away.
+ * @class za.ui.Disposable
+ * @param {Object} element A jQuery-wrapped or raw DOMElement object.
+ */
 za.ui.Disposable = function(e){
    var CLOSE_THRESHOLD = 0.50;
 
@@ -41,6 +46,10 @@ za.ui.Disposable = function(e){
       $('body,html').css('overflow','');
        clearSelection();
        if(ev.deltaX >= f.width()*CLOSE_THRESHOLD) {
+          /**
+           * The window has been disposed by swiping.
+           * @event za.ui.Disposable#disposed 
+           */
            object.emit('disposed');
            setTimeout(restorePosition,400);
         } else

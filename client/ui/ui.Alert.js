@@ -1,11 +1,13 @@
-/*
-
-Options:
-   title: Window title core text id
-   message: Window message core text id
-   cancelable: Boolean about whether the window can be disposed or not
-
-*/
+/**
+ * Creates an alert window of the class {@link za.ui.CenteredWindow} and a
+ * background {@link za.ui.Darkness}.
+ * @class za.ui.Alert
+ * @param {Object}  options
+ * @param {String}  [options.title='']        Text Id of the window's title.
+ * @param {String}  [options.message='']      Text Id of the window's message.
+ * @param {Boolean} [options.cancelable=true] Whether the window can be
+ * dismissed by interaction.
+ */
 za.ui.Alert = function(options){
 
    options = typeof options === 'object' ? options : {};
@@ -25,11 +27,16 @@ za.ui.Alert = function(options){
       cancelable: true
    });
 
-   centeredWindow.updateField('title', clientData.core_text[options.title]);
-   centeredWindow.updateField('description', clientData.core_text[options.message]);
+   centeredWindow.updateField('title', title);
+   centeredWindow.updateField('description', message);
 
    centeredWindow.updateField('buttons', dialogButtons.element);
 
+   /**
+    * Animates the window into existence.
+    * @method za.ui.Alert.spawn
+    * @returns {za.ui.Alert}
+    */
    this.spawn = function(){
       darkness.spawn();
       centeredWindow.spawn();
@@ -37,17 +44,36 @@ za.ui.Alert = function(options){
       return object;
    };
 
+   /**
+    * Hides the window with a smooth animation.
+    * @method za.ui.Alert.fade
+    * @returns {za.ui.Alert}
+    */
    this.fade = function(){
       darkness.hide();
       centeredWindow.dispose();
       return object;
    };
 
+   /**
+    * Emits `disposed` and calls `fade`.
+    * @method za.ui.Alert.dispose
+    * @emits za.ui.Alert#disposed
+    * @returns {za.ui.Alert}
+    */
    this.dispose = function(){
+
+      /**
+       * The window is disposed.
+       * @event za.ui.Alert#disposed
+       * @type {Object}
+       */
       object.emit('disposed');
+
       darkness.fade();
       centeredWindow.dispose();
       return object;
+
    };
 
    if(cancelable)

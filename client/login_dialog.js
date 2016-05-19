@@ -196,7 +196,7 @@ $(window).ready(function(){
         $(this)[bool?'addClass':'removeClass']('loading');
         $(this).find('input, button').prop('disabled', bool);
         $(this).find('input, button, a').blur();
-        $(this).find('.loader').html(bool?za.ui.loader():'');
+        $(this).find('.loader').html(bool?new za.ui.Loader():'');
         return this;
     }
 

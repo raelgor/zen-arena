@@ -1,3 +1,8 @@
+/**
+ * Creates a focusable object scope and exports two functions that can be
+ * called by the target DOM element.
+ * @class za.ui.SuperFocusable
+ */
 za.ui.SuperFocusable = function() {
 
     var FOCUS;
@@ -18,6 +23,10 @@ za.ui.SuperFocusable = function() {
       }
     }
 
+    /**
+     * Animates an element into super focus mode.
+     * @method za.ui.SuperFocusable.focus
+     */
     function focus(){
 
         if(FOCUS)
@@ -64,6 +73,10 @@ za.ui.SuperFocusable = function() {
 
     }
 
+    /**
+     * Restores the focused element to its original position and size.
+     * @method za.ui.SuperFocusable.restore
+     */
     function restore() {
 
         FOCUS = false;

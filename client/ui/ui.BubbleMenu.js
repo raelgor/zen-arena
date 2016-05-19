@@ -1,4 +1,11 @@
-/* global za, clientData */
+/**
+ * Creates a small bubble window at a specified location with a list of options.
+ * @class za.ui.BubbleMenu
+ * @param {Object}  options
+ * @param {Number}  options.top        Top value of the bubble to spawn.
+ * @param {Number}  options.left       Left value of the bubble to spawn.
+ * @param {Array}   options.options    A list of options to display.
+ */
 za.ui.BubbleMenu = function(options){
 
    var object = this;
@@ -52,6 +59,10 @@ za.ui.BubbleMenu = function(options){
 
 };
 
+/**
+ * Fades away and them removes the bubble window.
+ * @method za.ui.BubbleMenu.remove
+ */
 za.ui.BubbleMenu.prototype.remove = function(){
    window.removeEventListener('click', this._listener);
    window.removeEventListener('touchend', this._listener);
@@ -62,6 +73,11 @@ za.ui.BubbleMenu.prototype.remove = function(){
    });
 };
 
+/**
+ * Spawns a bubble menu under user portrait.
+ * @method za.ui.spawnUserBubbleMenu
+ * @param {Object} options {@link za.ui.BubbleMenu} options object.
+ */
 za.ui.spawnUserBubbleMenu = function(options) {
 
    new za.ui.BubbleMenu({

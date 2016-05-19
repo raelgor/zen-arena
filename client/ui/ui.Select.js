@@ -1,3 +1,9 @@
+/**
+ * A select tag replacement that spawns a {@link za.ui.DataSelector}.
+ * @class za.ui.Select
+ * @param {Object} element A {@link za.ui.DataSelector} options object with an
+ * extra `name` property which will be displayed as the DOM element label.
+ */
 za.ui.Select = function(options){
 
    var element = this.element = $('<div>');
@@ -17,6 +23,10 @@ za.ui.Select = function(options){
       selector.spawn();
 
       selector.on('new', function(selection){
+         /**
+          * Select has a new value.
+          * @event za.ui.Select#change
+          */
          object.emit('change', selection);
          element.find('.text').html(selection[options.rowTitle]);
       });

@@ -1,30 +1,34 @@
-/*
-
-Options:
-   title: Window title core text id.
-   message: Window message core text id.
-
-   search: Boolean about whether or not data options are searchable.
-   searchPlaceholder: Search field's placeholder core text id.
-
-   buffered: Boolean whether or not to query for more data on scroll down
-      if dataSource is a url.
-
-   multiSelect: Boolean whether or not it is possible to select multiple rows.
-
-   image: The key that contains an image path to display on the left of the row.
-
-   cancelable: Boolean about whether the window can be disposed or not.
-   dataSource: Array of data or string of api url to fetch them. Takes in
-      $q if searchable and $i if multipart.
-
-   selection: Array of objects who's key/value pairs, if matched by any row,
-      will make that row selected.
-
-*/
+/**
+ * Creates a {@link za.ui.CenteredWindow} with background {@link za.ui.Darkness}
+ * which contains a data fetching and display mechanism and a
+ * {@link za.ui.DialogButtons} set of options.
+ * @class za.ui.DataSelector
+ * @param {Object} options
+ * @param {String} [options.title=''] Window title core text id.
+ * @param {String} [options.message=''] Window message core text id.
+ * @param {Boolean} [options.search=false] Boolean about whether or not data
+ * options are searchable.
+ * @param {String} [options.searchPlaceholder=''] Search field's placeholder
+ * core text id.
+ * @param {Boolean} [options.buffered=false] Boolean whether or not to query
+ * for more data on scroll down if dataSource is a url.
+ * @param {Boolean} [options.multiSelect=false] Boolean whether or not it is
+ * possible to select multiple rows.
+ * @param {String} [options.image] The key that contains an image path to
+ * display on the left of the row.
+ * @param {Boolean} [options.cancelable=true] Boolean about whether the window
+ * can be disposed or not.
+ * @param {Array|Function|String} options.dataSource Array of data or string
+ * of api url to fetch them. Takes in $q if searchable and $i if multipart.
+ * @param {Array} [options.selection] of objects who's key/value pairs, if
+ * matched by any row, will make that row selected.
+ */
 za.ui.DataSelector = function(options){
 
-   var NO_RESULTS = '<div class="data-selector-no-results" data-html-no_results>'+clientData.core_text.no_results+'</div>';
+   var NO_RESULTS =
+      '<div class="data-selector-no-results" data-html-no_results>' +
+         clientData.core_text.no_results +
+      '</div>';
 
    options = typeof options === 'object' ? options : {};
    var cancelable = 'cancelable' in options ? options.cancelable : true;
@@ -199,6 +203,10 @@ za.ui.DataSelector = function(options){
                   .find('.za-checkbox.checked')
                   .removeClass('checked');
 
+               /**
+                * New selection finalized.
+                * @event za.ui.DataSelector#new
+                */
                object.emit('new', row);
                object.dispose();
             }
@@ -217,6 +225,11 @@ za.ui.DataSelector = function(options){
 
    centeredWindow.updateField('buttons', dialogButtons.element);
 
+   /**
+    * Animates the window into existence.
+    * @method za.ui.DataSelector.spawn
+    * @returns {za.ui.DataSelector}
+    */
    this.spawn = function(){
       darkness.spawn();
       centeredWindow.spawn();
@@ -230,13 +243,28 @@ za.ui.DataSelector = function(options){
       return object;
    };
 
+   /**
+    * Smoothly fades the window out.
+    * @method za.ui.DataSelector.fade
+    * @returns {za.ui.DataSelector}
+    */
    this.fade = function(){
       darkness.hide();
       centeredWindow.dispose();
       return object;
    };
 
+   /**
+    * Animates the window into existence.
+    * @method za.ui.DataSelector.dispose
+    * @emits za.ui.DataSelector#disposed
+    * @returns {za.ui.DataSelector}
+    */
    this.dispose = function(){
+      /**
+       * The window has been disposed.
+       * @event za.ui.DataSelector#disposed
+       */
       object.emit('disposed');
       darkness.fade();
       centeredWindow.dispose();

@@ -19,7 +19,7 @@ za.controllers.feedpool = new za.Controller(function(element){
 
       if(scrollTop + 2*screenHeight > scrollHeight) {
          FEED_LOADING = true;
-         var loader = za.ui.loader();
+         var loader = new za.ui.Loader();
          var anchor = $(element).append('<div class="loader-anchor">').find('.loader-anchor');
 
          anchor.css('height', '100px');

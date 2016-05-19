@@ -1,3 +1,7 @@
+/**
+ * Performs a position check on the right column of a user's feed.
+ * @method za.ui.rightColCheck
+ */
 za.ui.rightColCheck = function(){
 
    var col = $('.right-column');

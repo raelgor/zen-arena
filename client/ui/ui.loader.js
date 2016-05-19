@@ -1,3 +1,7 @@
+/**
+ * Make a DOMElement that serves as a loader with extra methods.
+ * @class za.ui.Loader
+ */
 za.ui.Loader = function() {
 
     var element = $('<div>');
