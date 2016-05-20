@@ -7,8 +7,11 @@ if(DEBUG_MODE)
    a.use(routes.logger.route);
 
 a.use(passport.initialize());
+
+// Add cors header if there is one
+appConfig.cors_header &&
 a.use(function(req, res, next){
-   res.setHeader('access-control-allow-origin', 'https://beta.zenarena.com:8079');
+   res.setHeader('access-control-allow-origin', appConfig.cors_header);
    next();
 });
 
