@@ -6,6 +6,12 @@ const a = app.router;
 if(DEBUG_MODE)
    a.use(routes.logger.route);
 
+a.use(passport.initialize());
+a.use(function(req, res, next){
+   res.setHeader('access-control-allow-origin', 'https://beta.zenarena.com:8079');
+   next();
+});
+
 // Parameter validators
 a.param('lang_code', require('./validators/param.lang_code'));
 a.param('setting_category', require('./validators/param.setting_category'));
@@ -39,6 +45,11 @@ a.post('/api/feed/news/range/:index', api.feedrange.route);
 a.post('/api/selector/language/:index', api.selector.route);
 
 a.post('/api/set/language/:lang_code', api.set.route);
+
+a.all('/api/battlenet/regcb',
+   passport.authenticate('bnet', { failureRedirect: '/' }),
+   api.battlenet.regcb.route);
+a.all('/api/battlenet/auth', passport.authenticate('bnet'));
 
 a.post('/api/admin/appcfg', api.admin.appcfg.route);
 

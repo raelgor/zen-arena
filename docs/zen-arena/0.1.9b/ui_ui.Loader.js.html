@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>ui/ui.Loader.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,29 +28,92 @@
 
 <div id="main">
     
+    <h1 class="page-title">ui/ui.Loader.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Make a DOMElement that serves as a loader with extra methods.
+ * @class za.ui.Loader
+ */
+za.ui.Loader = function() {
 
+    var element = $('&lt;div>');
 
+    element.addClass('loader').html(
+        '&lt;div class="sk-cube-grid">' +
+            '&lt;div class="sk-cube sk-cube1">&lt;/div>' +
+            '&lt;div class="sk-cube sk-cube2">&lt;/div>' +
+            '&lt;div class="sk-cube sk-cube3">&lt;/div>' +
+            '&lt;div class="sk-cube sk-cube4">&lt;/div>' +
+            '&lt;div class="sk-cube sk-cube5">&lt;/div>' +
+            '&lt;div class="sk-cube sk-cube6">&lt;/div>' +
+            '&lt;div class="sk-cube sk-cube7">&lt;/div>' +
+            '&lt;div class="sk-cube sk-cube8">&lt;/div>' +
+            '&lt;div class="sk-cube sk-cube9">&lt;/div>' +
+        '&lt;/div>'
+    );
 
+    element.absBindToElement = function(element) {
+      this.boundElement = $(element);
+      this.positionLoader();
+      window.addEventListener('resize', positionLoader);
+    };
 
+    element.spawn = function(){
+      $('body').append(element);
+   };
 
+    element.loaderify = function(target) {
+      element.absBindToElement(target);
+      $('body').append(element);
+      $(target)
+      .css('pointer-events', 'none')
+      .animate({opacity: 0.4}, 100, 'swing');
+   };
 
+   element.unloaderify = function(){
+      element.boundElement.css('pointer-events', 'all')
+                        .animate({opacity: 1}, 100, 'swing');
+      element.lazyKill();
+   };
 
+    function positionLoader() {
+      if(!element) return window.removeEventListener('resize', positionLoader);
+      element.css({
+         position: 'absolute',
+         top: element.boundElement.offset().top + 20,
+         left: element.boundElement.offset().left + element.boundElement.width()/2 - 20
+      });
+    }
 
+    element.positionLoader = positionLoader;
 
-    
+   element.lazyKill = function(ms) {
+      this.stop().animate({opacity:0},ms||200,'swing',function(){
+         element.remove();
+         element.boundElement &amp;&amp;
+         window.removeEventListener('resize', positionLoader);
+      });
+   };
 
+   element.kill = function(){
+      element.remove();
+      window.removeEventListener('resize', positionLoader);
+   };
 
-    <section class="readme">
-        <article><h1>zen-arena</h1><p>The <a href="https://zenarena.com">zenarena.com</a> website.</p></article>
+   return element;
+
+};
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

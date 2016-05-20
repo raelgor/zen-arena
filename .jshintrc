@@ -13,7 +13,7 @@
      "appLanguagesCodes", "languageCodes", "google", "Server", "TEST_MODE",
      "assertBody", "Instance", "instance", "mongodb", "app", "api",
      "pageHandlers", "mongos", "data", "verify_grecaptcha", "JSONResponse",
-     "make_user_data", "ga", "grecaptcha", "appLanguageCodeIndex"
+     "make_user_data", "ga", "grecaptcha", "appLanguageCodeIndex", "passport"
   ],
   "undef": true,
   "unused": true,

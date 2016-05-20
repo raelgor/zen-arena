@@ -24,7 +24,7 @@ za.controllers.settingsAdminConfiguration = new za.Controller(function(element){
                      '<span class="icon-cross" tabindex=0></span>' +
                   '</div>');
 
-            $(element).find('.app-config-pair:last-child input').val(value);
+            $(element).find('.app-config-pair:last-child textarea').val(value);
 
             $(element)
                .find('.app-config-pair:last-child .icon-cross')

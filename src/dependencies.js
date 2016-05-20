@@ -19,6 +19,7 @@ global.path = require('path');
 global.packageInfo = require('../package');
 global.redis = require('thunk-redis');
 global.EventEmitter2 = require('eventemitter2').EventEmitter2;
+global.passport = require('passport');
 
 global.GeoIP = require('./GeoIP');
 global.postman = require('./postman');

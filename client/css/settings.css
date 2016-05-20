@@ -148,3 +148,17 @@ a.settings-option:last-child {
 .app-config-pair:nth-child(even) {
     background: #FBFBFB;
 }
+
+.prop-hr {
+    border-top: 1px solid #E5E5E5;
+    margin-top: 15px;
+}
+
+.settings-page .acc {
+    padding: 10px 0;
+}
+
+.settings-page .acc button {
+    float: right;
+    margin: 0 10px 0 0px;
+}
