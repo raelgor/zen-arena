@@ -18,6 +18,6 @@ passport.use(new BnetStrategy({
 
 r.setHandler((response, req, res) => co(function*(){
 
-   res.redirect('/bnet-success');
+   response.end('Success!');
 
 }).catch(error => instance.emit('error', error)));
