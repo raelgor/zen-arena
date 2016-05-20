@@ -7,6 +7,7 @@ if(DEBUG_MODE)
    a.use(routes.logger.route);
 
 a.use(passport.initialize());
+a.use(passport.session());
 
 // Add cors header if there is one
 appConfig.cors_header &&
