@@ -51,7 +51,7 @@ a.post('/api/selector/language/:index', api.selector.route);
 a.post('/api/set/language/:lang_code', api.set.route);
 
 a.all('/api/battlenet/regcb',
-   passport.authenticate('bnet', { failureRedirect: '/' }),
+   //passport.authenticate('bnet', { failureRedirect: '/' }),
    api.battlenet.regcb.route);
 a.all('/api/battlenet/auth', passport.authenticate('bnet'));
 
