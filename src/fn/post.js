@@ -9,6 +9,7 @@
 module.exports = (url, data, headers) => {
    let lib = /^https/.test(url) ? https : http;
    let r;
+   let promise = new Promise(resolve => r = resolve);
    var rdata = querystring.stringify(data);
    var request = lib.request('https://eu.battle.net/oauth/token', {
       method: 'post',
@@ -23,5 +24,5 @@ module.exports = (url, data, headers) => {
    request.on('error', r);
    request.write(rdata);
    request.end();
-   return new Promise(resolve => r = resolve);
+   return promise;
 };
