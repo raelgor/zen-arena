@@ -13,6 +13,8 @@ passport.use(new BnetStrategy({
     clientSecret: appConfig.battle_net.secret,
     callbackURL: appConfig.battle_net.callbackUrl
 }, function(accessToken, refreshToken, profile, done) {
+   console.log('passport itself:');
+   console.log({accessToken, profile});
     return done(null, profile);
 }));
 
