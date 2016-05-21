@@ -8,6 +8,8 @@
  */
 module.exports = (url, data, headers) => {
 
+   data = data || {};
+
    let lib = /^https/.test(url) ? https : http;
 
    let port =  url.match(/^http[s]{0,1}:\/\/[^\/\:]*\:([0-9]{1,5})/);
@@ -21,6 +23,10 @@ module.exports = (url, data, headers) => {
    let r;
    let promise = new Promise(resolve => r = resolve);
    var rdata = querystring.stringify(data);
+
+   headers = headers || {};
+   headers['Content-Type'] = 'application/x-www-form-urlencoded';
+   headers['Content-Length'] = Buffer.byteLength(rdata);
 
    var request = lib.request({
       method: 'post',
