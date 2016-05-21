@@ -14,7 +14,7 @@ module.exports = (url, data, headers) => {
 
    port = port && port[1] ? +port[1] : /^https/.test(url) ? 443 : 80;
 
-   let path = url.match(/^http[s]{0,1}:\/\/[^\/]*(\/.*)$/);
+   let path = url.match(/^http[s]{0,1}:\/\/[^\/]*(\/[^\?]*).*$/);
 
    path = path && path[1] ? path[1] : undefined;
 
