@@ -24,7 +24,7 @@ module.exports = code => co(function*(){
    if(authResponse && authResponse.access_token)
       result =
          yield get(`https://eu.api.battle.net/account/user?access_token=${authResponse.access_token}`);
-console.log({code, authResponse, result});
+
    try {
       result = JSON.parse(result);
    } catch (err) { }

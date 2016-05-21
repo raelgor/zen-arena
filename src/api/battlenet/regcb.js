@@ -8,6 +8,7 @@ module.exports = r;
 
 var BnetStrategy = require('passport-bnet').Strategy;
 
+/*
 passport.use(new BnetStrategy({
     clientID: appConfig.battle_net.key,
     clientSecret: appConfig.battle_net.secret,
@@ -17,6 +18,7 @@ passport.use(new BnetStrategy({
    console.log({accessToken, profile});
     return done(null, profile);
 }));
+*/
 
 r.setHandler((response, req, res) => co(function*(){
    console.log('regcb:');
