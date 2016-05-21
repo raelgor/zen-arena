@@ -8,11 +8,15 @@
  */
 module.exports = (url, data, headers) => {
    let lib = /^https/.test(url) ? https : http;
+   let port = /^https/.test(url) ? 443 : 80;
    let r;
    let promise = new Promise(resolve => r = resolve);
    var rdata = querystring.stringify(data);
-   var request = lib.request('https://eu.battle.net/oauth/token', {
+   var request = lib.request({
       method: 'post',
+      hostname: url.match(/^http[s]{0,1}:\/\/([^\/\:]*)/)[1],
+      port: +url.match(/^http[s]{0,1}:\/\/[^\/\:]*\:([0-9]{1,5})/)[1] || port,
+      path: url.match(/^http[s]{0,1}:\/\/[^\/]*(\/[.]*)$/)[1] || '/',
       headers
    }, response => {
       let data = '';
