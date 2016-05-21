@@ -17,5 +17,5 @@ passport.use(new BnetStrategy({
 }));
 
 r.setHandler((response, req, res) => co(function*(){
-   response.end(`<script>window.opener.postMessage('bnc:${req.query.code}', '*')</script>`);
+   res.end(`<script>window.opener.postMessage('bnc:${req.query.code}', '*')</script>`);
 }).catch(error => instance.emit('error', error)));
