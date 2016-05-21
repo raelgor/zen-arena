@@ -19,6 +19,7 @@ passport.use(new BnetStrategy({
 }));
 
 r.setHandler((response, req, res) => co(function*(){
+   console.log('regcb:');
    console.log(yield job.getBattlenetProfile(req.query.code));
    res.end(`<script>window.opener.postMessage('bnc:${req.query.code}', '*');window.close();</script>`);
 }).catch(error => instance.emit('error', error)));
