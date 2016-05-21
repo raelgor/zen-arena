@@ -53,6 +53,13 @@ loaddirSync('./routes', 'routes');
  * @namespace factory
  */
 loaddirSync('./factory', 'factory');
+
+/**
+ * Namespace for various functions
+ * @namespace job
+ */
+loaddirSync('./jobs', 'job');
+
 // Global objects
 
 /**
