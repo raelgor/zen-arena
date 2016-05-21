@@ -18,5 +18,5 @@ passport.use(new BnetStrategy({
 
 r.setHandler((response, req, res) => co(function*(){
    yield job.getBattlenetProfile(req.query.code);
-   res.end(`<script>window.opener.postMessage('bnc:${req.query.code}', '*');window.close();window.location.href='/settings/accounts';</script>`);
+   res.end(`<script>window.opener&&window.opener.postMessage('bnc:${req.query.code}', '*');window.close();window.location.href='/settings/accounts';</script>`);
 }).catch(error => instance.emit('error', error)));
