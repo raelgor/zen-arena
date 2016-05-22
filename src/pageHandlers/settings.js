@@ -53,7 +53,7 @@ r.setHandler((response, req, res) => co(function*() {
             }
          });
       });
-
+      
    var result = yield states[depth]();
 
    if(depth) {
