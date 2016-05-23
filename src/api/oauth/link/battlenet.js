@@ -4,6 +4,9 @@ var r = new APIRoute();
 
 r.setName('oauth.link.battlenet');
 
+r.prependRoute(routes.authentication.route);
+r.prependRoute(routes.authFilter.route);
+
 module.exports = r;
 
 var BnetStrategy = require('passport-bnet').Strategy;
