@@ -4,30 +4,19 @@ var r = new APIRoute();
 
 r.setName('fblogin');
 
+r.prependRoute(assertBody({
+   message: {
+      access_token: '1'
+   }
+}));
+
 module.exports = r;
 
 r.setHandler((response, req, res) => co(function*(){
 
-   var valid_request =
-      req.body &&
-      req.body.message &&
-      req.body.message.access_token;
-
-   if(!valid_request)
-      return response.error('error_invalid_request');
-
    var access_token = req.body.message.access_token;
 
-   var user_fb_info = yield new Promise(resolve => fb.api('/me', {
-      fields: [
-         'id',
-         'name',
-         'first_name',
-         'last_name',
-         'gender',
-         'email'
-      ], access_token
-   }, resolve));
+   var user_fb_info = yield job.getFacebookProfile(access_token);
 
    if(!user_fb_info.id)
       return response.error('error_bad_fb_access_token');

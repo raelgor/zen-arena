@@ -155,10 +155,81 @@ a.settings-option:last-child {
 }
 
 .settings-page .acc {
-    padding: 10px 0;
+    padding: 10px 20px;
 }
 
-.settings-page .acc button {
+.settings-page .acc .connection-status {
     float: right;
-    margin: 0 10px 0 0px;
+}
+
+.acc .img {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    display: inline-block;
+    vertical-align: top;
+    background-repeat: no-repeat;
+    float:left;
+    position:relative;
+    top:2px;
+}
+
+.acc .prop-desc {
+   font-size: 12px;
+}
+
+.no-touch .acc span.dc:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.acc .connected {
+   text-align: right;
+}
+
+.acc span.dc {
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+    color: gray;
+}
+
+.settings-toggler {
+    display: none;
+    /*position: fixed;*/
+    background: white;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    border-radius: 3px;
+    text-align: center;
+    padding: 9px;
+    box-sizing: border-box;
+    border: 1px solid #D6D6D6;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.settings-toggler .icon-circle-left {
+    margin-right: 7px;
+}
+
+@media screen and (max-width: 674px) {
+
+    .hide {
+        display: none !important;
+    }
+
+    .settings-toggler {
+      display: block;
+   }
+
+   .settings-selector {
+      width: 100%;
+   }
+
+    .settings-page {
+       width: calc(100% - 20px);
+       margin: 0px 10px 0;
+    }
+
 }

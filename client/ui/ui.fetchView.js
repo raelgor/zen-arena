@@ -40,7 +40,11 @@ za.ui.fetchView = function(urlPath, handlerInfo){
          opacity: 0
       }, 150, 'swing');
 
-   $('body,html').animate({scrollTop:$(targetElementSelector).offset().top-70},400,'swing');
+   var mt = $(targetElementSelector).css('margin-top');
+
+   mt = mt ? +mt.match(/^([0-9]*)px$/)[1] : 0;
+
+   $('body,html').animate({scrollTop:$(targetElementSelector).offset().top-70-mt},400,'swing');
 
    za.send(urlPath, {depth: depth}).success(function(response){
       $(targetElementSelector)
