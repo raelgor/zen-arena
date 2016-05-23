@@ -1,6 +1,8 @@
 'use strict';
 module.exports = token => co(function*(){
 
+   fb.setAccessToken(token);
+
    return new Promise(resolve => fb.api('/me', {
       fields: [
          'id',
@@ -9,7 +11,7 @@ module.exports = token => co(function*(){
          'last_name',
          'gender',
          'email'
-      ], token
+      ]
    }, resolve));
 
 }).catch(error => instance.emit('error', error));

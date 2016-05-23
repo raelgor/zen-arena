@@ -22,7 +22,8 @@ za.ui.fetchView = function(urlPath, handlerInfo){
       index++;
    });
 
-   if($(targetElementSelector).is('[data-view-loading]'))
+   // if($(targetElementSelector).is('[data-view-loading]'))
+   if($('[data-view-loading]').length)
       return console.warn('err_view_request_overlap');
 
    $(targetElementSelector).attr('data-view-loading', 1);

@@ -15,6 +15,11 @@ module.exports = (user, update) => co(function*(){
 
    user.id = +user.id;
 
+   if(user.email_verified && user.email_verified !== 'false')
+      user.email_verified = true;
+   else
+      user.email_verified = false;
+
    var queryResult = yield mongos.collection('users')
       .update({ id: +user.id }, update);
 

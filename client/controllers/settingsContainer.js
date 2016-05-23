@@ -17,6 +17,8 @@ za.controllers.settingsContainer = new za.Controller(function(element){
 
       if(target.is(':not(.settings-selector-group a:not(.expandable))')) return;
 
+      if($('[data-view-loading]').length) return;
+
       $(element).find('.settings-selector .selected').removeClass('selected');
 
       target.addClass('selected');

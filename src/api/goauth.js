@@ -1,9 +1,9 @@
 'use strict';
 
-const google = require('googleapis');
-const plus = google.plus('v1');
-const OAuth2 = google.auth.OAuth2;
-const oauth2Client = new OAuth2(appConfig.google_oauth.client_id,
+global.google = require('googleapis');
+global.plus = google.plus('v1');
+global.OAuth2 = google.auth.OAuth2;
+global.oauth2Client = new OAuth2(appConfig.google_oauth.client_id,
                                 appConfig.google_oauth.client_secret);
 
 var r = new APIRoute();

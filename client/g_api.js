@@ -16,32 +16,38 @@ $(window).ready(function(){
          cookiepolicy: 'single_host_origin'
       });
 
-      attachSignin(document.getElementById('g_log'));
-      attachSignin(document.getElementById('g_reg'));
+      attachSignin(document.getElementById('g_log'), authSuccess, authFail);
+      attachSignin(document.getElementById('g_reg'), authSuccess, authFail);
 
-      function attachSignin(element) {
+      function authSuccess(response) {
+         register_frame.loading(true);
+         login_frame.loading(true);
+         za.send('/api/goauth', {
+            access_token: response.hg.access_token
+         })
+         .success(za._login_response_handler)
+         .fail(function(){
+            register_frame.error(clientData.core_text.error_something_went_wrong);
+            login_frame.error(clientData.core_text.error_something_went_wrong);
+         })
+         .always(function(){
+            register_frame.loading(false);
+            login_frame.loading(false);
+         });
+      }
+
+      function authFail() {
+         register_frame.error(clientData.core_text.gauth_no_perm);
+         login_frame.error(clientData.core_text.gauth_no_perm);
+      }
+
+      function attachSignin(element, authSuccess, authFail) {
          auth2.attachClickHandler(element, {},
-            function(response) {
-               register_frame.loading(true);
-               login_frame.loading(true);
-               za.send('/api/goauth', {
-                  access_token: response.hg.access_token
-               })
-               .success(za._login_response_handler)
-               .fail(function(){
-                  register_frame.error(clientData.core_text.error_something_went_wrong);
-                  login_frame.error(clientData.core_text.error_something_went_wrong);
-               })
-               .always(function(){
-                  register_frame.loading(false);
-                  login_frame.loading(false);
-               });
-            }, function() {
-               register_frame.error(clientData.core_text.gauth_no_perm);
-               login_frame.error(clientData.core_text.gauth_no_perm);
-            }
+            authSuccess, authFail
          );
       }
+
+      za.attachGoogleSignin = attachSignin;
 
       za._gapi_resolve();
       log('gapi loaded.');

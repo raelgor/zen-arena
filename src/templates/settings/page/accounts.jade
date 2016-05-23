@@ -12,7 +12,7 @@
                .prop-verified
                   span.icon-checkmark
                   span(data-html-connected)=coreText.connected
-                  span.dc(data-html-disconnect)=coreText.disconnect
+                  span.dc(tabindex=0, data-html-disconnect)=coreText.disconnect
          .img(style="background-image: url("+option.image+");")
          span.prop-name=option.name
          br

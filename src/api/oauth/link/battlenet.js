@@ -23,6 +23,7 @@ r.setHandler((response, req, res) => co(function*(){
    var profile = yield job.getBattlenetProfile(req.query.code);
    if(profile && profile.id) {
       req.__user.set('bnetid', profile.id);
+      req.__user.set('_bnet_id', profile.id);
       req.__user.set('_bnet_battletag', profile.battletag);
       req.__user.updateRecord();
    }

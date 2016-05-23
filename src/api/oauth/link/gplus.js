@@ -19,16 +19,21 @@ r.setHandler((response, req) => co(function*(){
 
    var access_token = req.body.message.access_token;
 
-   var profile = yield job.getFacebookProfile(access_token);
+   oauth2Client.setCredentials({ access_token });
+
+   var profile = yield new Promise(resolve =>
+      plus.people.get(
+         { userId: 'me', auth: oauth2Client },
+         (err, response) => resolve(response)));
 
    if(!profile.id)
-      return response.error('error_bad_fb_access_token');
+      return response.error('error_bad_go_access_token');
 
-   yield job.updateUserFacebookData(req.__user, profile);
+   yield job.updateUserGoogleData(req.__user, profile);
 
    response.responseData = {
       message: 'ok',
-      name: profile.name
+      name: profile.displayName
    };
 
    response.end();
