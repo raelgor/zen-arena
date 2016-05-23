@@ -52,9 +52,10 @@ a.post('/api/set/language/:lang_code', api.set.route);
 
 a.post('/api/oauth/link/fb', api.oauth.link.fb.route);
 a.all('/api/battlenet/regcb', api.oauth.link.battlenet.route);
-a.all('/api/oauth/link/battlenet', passport.authenticate('bnet'));
-
-a.all('/api/battlenet/auth', passport.authenticate('bnet'));
+a.all('/api/oauth/link/battlenet',
+   routes.authenticate.route,
+   routes.authFilter.route,
+   passport.authenticate('bnet'));
 
 a.post('/api/admin/appcfg', api.admin.appcfg.route);
 

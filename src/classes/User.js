@@ -1,4 +1,3 @@
-/* global dataTransporter */
 'use strict';
 
 /**

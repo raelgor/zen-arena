@@ -18,5 +18,10 @@ passport.use(new BnetStrategy({
 
 r.setHandler((response, req, res) => co(function*(){
    var profile = yield job.getBattlenetProfile(req.query.code);
+   if(profile && profile.id) {
+      req.__user.set('bnetid', profile.id);
+      req.__user.set('_bnet_battletag', profile.battletag);
+      req.__user.updateRecord();
+   }
    res.end(`<script>window.opener&&window.opener.postMessage('${JSON.stringify(profile)}', '*');window.close();window.location.href='/settings/accounts';</script>`);
 }).catch(error => instance.emit('error', error)));

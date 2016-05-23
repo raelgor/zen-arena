@@ -16,5 +16,11 @@
          .img(style="background-image: url("+option.image+");")
          span.prop-name=option.name
          br
+         span.acc-id
+            if option.accDisplayInfo && user[option.accDisplayInfo]
+               span(data-html-connected)=coreText.connected
+               span :&nbsp;
+               span=user[option.accDisplayInfo]
+         br
          span.prop-desc(`data-html-${option.descKey}`=1)=coreText[option.descKey]
       .prop-hr

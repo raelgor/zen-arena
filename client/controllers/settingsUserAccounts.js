@@ -1,10 +1,3 @@
-window.addEventListener('message', bnetCodeListener);
-
-function bnetCodeListener(msg) {
-   if(!/^bnc:/.test(msg.data)) return;
-   else console.log(msg);
-}
-
 za.controllers.settingsUserAccounts = new za.Controller(function(element){
 
    $(element).find('[data-option-id="bnet"]').click(function(){
@@ -15,6 +8,21 @@ za.controllers.settingsUserAccounts = new za.Controller(function(element){
             window.open('/api/oauth/link/battlenet',
                         'Battle.net Authentication',
                         'width=400,height=400');
+
+      window.removeEventListener('message', bnetCodeListener);
+      window.addEventListener('message', bnetCodeListener);
    });
+
+   function bnetCodeListener(msg) {
+      console.log(msg);
+
+      try {
+         msg = JSON.parse(msg.data);
+      } catch(err) { }
+
+      if(!msg.battletag) return new za.ui.Alert({title:'oops', message:'something_went_wrong'}).spawn();
+
+      window.removeEventListener('message', bnetCodeListener);
+   }
 
 });
