@@ -14,7 +14,6 @@ module.exports = (user, update) => co(function*(){
    delete user.date_joined;
 
    user.id = +user.id;
-   console.log(user);
 
    var queryResult = yield mongos.collection('users')
       .update({ id: +user.id }, update);

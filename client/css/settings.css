@@ -155,7 +155,7 @@ a.settings-option:last-child {
 }
 
 .settings-page .acc {
-    padding: 10px 20px;
+    padding: 10px 20px 0;
 }
 
 .settings-page .acc .connection-status {
@@ -175,7 +175,9 @@ a.settings-option:last-child {
 }
 
 .acc .prop-desc {
-   font-size: 12px;
+    font-size: 12px;
+    padding-left: 60px !important;
+    display: block;
 }
 
 .no-touch .acc span.dc:hover {
@@ -232,4 +234,13 @@ a.settings-option:last-child {
        margin: 0px 10px 0;
     }
 
+}
+
+span.acc-id {
+    display: inline;
+    font-size: 11px;
+    color: gray;
+    padding: 0 0 0 20px;
+    position: relative;
+    top: -2px;
 }

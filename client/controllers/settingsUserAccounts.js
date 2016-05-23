@@ -20,7 +20,13 @@ za.controllers.settingsUserAccounts = new za.Controller(function(element){
          msg = JSON.parse(msg.data);
       } catch(err) { }
 
-      if(!msg.battletag) return new za.ui.Alert({title:'oops', message:'something_went_wrong'}).spawn();
+      if(!msg.battletag)
+         return;
+
+      $('[data-option-id="bnet"]').find('.acc-id').html('<span>'+msg.battletag+'</span>');
+
+      $('[data-option-id="bnet"]').find('.connected').show();
+      $('[data-option-id="bnet"]').find('.not-connected').hide();
 
       window.removeEventListener('message', bnetCodeListener);
    }

@@ -9,10 +9,13 @@ module.exports = user => co(function*(){
       namespace: null
    });
 
+   user.set('coc_verification_code', uuid().substr(0,8).toUpperCase());
+
    if(!user.get('unsubscribe_all_token')) {
       user.set('unsubscribe_all_token', uuid());
-      yield user.updateRecord();
    }
+
+   yield user.updateRecord();
 
    if(user.email_verified)
       yield postman.welcome(user);

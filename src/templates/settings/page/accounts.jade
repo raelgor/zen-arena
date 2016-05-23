@@ -17,10 +17,13 @@
          span.prop-name=option.name
          br
          span.acc-id
-            if option.accDisplayInfo && user[option.accDisplayInfo]
-               span(data-html-connected)=coreText.connected
-               span :&nbsp;
-               span=user[option.accDisplayInfo]
+            if user[option.connectedKey]
+               if option.accDisplayInfo && user[option.accDisplayInfo]
+                  span=user[option.accDisplayInfo]
+               else
+                  span(data-html-connected)=coreText.connected
+            else
+               span(data-html-not_connected)=coreText.not_connected
          br
          span.prop-desc(`data-html-${option.descKey}`=1)=coreText[option.descKey]
       .prop-hr
