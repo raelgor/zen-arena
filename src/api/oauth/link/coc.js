@@ -23,6 +23,10 @@ r.setHandler((response, req) => co(function*(){
       Authorization: `Bearer ${appConfig.coc_token}`
    });
 
+   try {
+      apiResponse = JSON.parse(apiResponse);
+   } catch(err) { }
+
    if(apiResponse.members == 1 &&
       new RegExp(req.__user.get('coc_verification_code'), 'i').test(apiResponse.description)) {
       req.__user.set('cocid', apiResponse.memberList[0].tag);
