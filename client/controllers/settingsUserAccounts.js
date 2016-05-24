@@ -111,6 +111,8 @@ za.controllers.settingsUserAccounts = new za.Controller(function(element){
                      .html('<span>'+response.data.name+'</span>');
                   $('[data-option-id="coc"]').find('.connected').show();
                   $('[data-option-id="coc"]').find('.not-connected').hide();
+                  d.fade();
+                  w.dispose();
                }
             })
             .always(function(){
