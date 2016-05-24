@@ -53,6 +53,7 @@ a.post('/api/set/language/:lang_code', api.set.route);
 
 a.post('/api/oauth/unlink/:oauth_account_id_key', api.oauth.unlink.route);
 a.post('/api/oauth/link/fb', api.oauth.link.fb.route);
+a.post('/api/oauth/link/coc', api.oauth.link.coc.route);
 a.post('/api/oauth/link/gplus', api.oauth.link.gplus.route);
 a.all('/api/battlenet/regcb', api.oauth.link.battlenet.route);
 a.all('/api/oauth/link/battlenet',

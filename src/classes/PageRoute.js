@@ -43,9 +43,10 @@ module.exports = class PageRoute extends Route {
     * @param {function} handler The name of the main handler of this API call.
     * @returns function
     */
-   handle(handler) {
+   handle(registeredHandler) {
       return (req, res, next) => co(function(){
 
+         var handler;
          var coreText = coreTextCache[req.lang];
 
          var response = new Response(req, res);
@@ -60,6 +61,8 @@ module.exports = class PageRoute extends Route {
 
          if(this._reqAuth && !req.__user)
             handler = this.noAuthHandler;
+         else
+            handler = registeredHandler;
 
          if(DEBUG_MODE && this.name) {
             let dn = `[pageRoute][${this.name}]`;

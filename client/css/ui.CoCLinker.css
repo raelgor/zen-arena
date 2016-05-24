@@ -1,0 +1,41 @@
+.coc-linker .title {
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.coc-linker .text {
+    padding: 5px 15px;
+    font-size: 13px;
+}
+
+.coc-linker input.clanid {
+   margin-bottom: 20px !important;
+}
+
+.coc-linker input.code {
+    margin: auto;
+    display: block;
+    border: 1px solid #B8B8B8;
+    border-radius: 4px;
+    padding: 5px;
+    text-align: center;
+    width: 131px;
+    font-size: 18px;
+    background: rgba(240, 240, 240, 0.49);
+}
+
+.coc-linker .caption {
+    display: block;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.coc-linker .image {
+    background-size: cover;
+    width: 100%;
+    height: 190px;
+    background-position: 50%;
+}

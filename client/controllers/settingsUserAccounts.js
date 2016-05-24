@@ -77,6 +77,66 @@ za.controllers.settingsUserAccounts = new za.Controller(function(element){
 
    });
 
+   $(element).find('[data-option-id="coc"] button').click(function(){
+
+      var d = new za.ui.Darkness();
+      var w = new za.ui.CenteredWindow({ fields: 'container buttons' });
+      var db = new za.ui.DialogButtons([
+         { id: 'no', text: 'cancel' },
+         { id: 'link', text: 'link' }
+      ]);
+
+      d.spawn();
+      d.on('click', function(){
+         d.fade();
+         w.dispose();
+      });
+
+      var e = $('<div>');
+
+      db.on('click', function(option){
+         if(option.id === 'no') {
+            d.fade();
+            w.dispose();
+         }
+         if(option.id === 'link') {
+            var clanId = $(w.element).find('.clanid').val();
+            if(!clanId) return;
+            var loader = new za.ui.Loader();
+            loader.loaderify(w.element);
+            za.send('/api/oauth/link/coc', {clanId:clanId})
+            .success(function(response){
+               if(response.data.name) {
+                  $('[data-option-id="coc"]').find('.acc-id')
+                     .html('<span>'+response.data.name+'</span>');
+                  $('[data-option-id="coc"]').find('.connected').show();
+                  $('[data-option-id="coc"]').find('.not-connected').hide();
+               }
+            })
+            .always(function(){
+               loader.unloaderify();
+            });
+         }
+      });
+
+      e
+      .addClass('coc-linker')
+      .html(
+         '<div class="title" data-html-coc_linker_title>' + clientData.core_text.coc_linker_title + '</div>' +
+         '<div class="text" data-html-coc_linker_message>' + clientData.core_text.coc_linker_message + '</div>' +
+         '<div class="caption" data-html-code>'+clientData.core_text.code+'</div>'+
+         '<input type="text" class="code" value="' + clientData.user_data.coc_verification_code + '" />'+
+         '<div class="caption">Clan ID</div>'+
+         '<input type="text" class="code clanid" value="" placeholder="Clan ID" />'+
+         '<div class="image" style="background-image:url(/img/cocclanid.jpg)"></div>'
+      );
+
+      w.updateField('container', e);
+      w.updateField('buttons', db.element);
+      w.spawn();
+
+   });
+
    za.gapi_ready.then(function(){
       za.attachGoogleSignin($(element).find('[data-option-id="gplus"] button')[0],
          function(response){

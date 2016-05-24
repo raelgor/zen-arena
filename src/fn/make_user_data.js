@@ -14,7 +14,8 @@ module.exports = user => {
 		image: user.get('image'),
 		email: user.get('email'),
 		image_type: user.get('image_type'),
-		fav_game: user.get('fav_game')
+		fav_game: user.get('fav_game'),
+		coc_verification_code: user.get('coc_verification_code')
 	};
 
 };
