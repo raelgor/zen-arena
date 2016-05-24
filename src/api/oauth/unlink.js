@@ -13,7 +13,7 @@ var oauthKeyIndex = {
    fb: 'fbid',
    gplus: 'goid',
    bnet: 'bnetid',
-   cocid: 'cocid'
+   coc: 'cocid'
 };
 
 r.setHandler((response, req) => co(function*(){
