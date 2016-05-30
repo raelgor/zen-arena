@@ -30,10 +30,8 @@ r.setHandler((response, req) => co(function*(){
    if(!user || !user.get('password'))
       return response.error('error_unknown_auth_combo');
 
-   var correct_password = yield new Promise(
-      resolve => bcrypt.compare(req.body.message.password, user.get('password'),
-         (error, result) => resolve(result)));
-
+   var correct_password = yield user.testPassword(req.body.message.password);
+   
    if(!correct_password)
       return response.error('error_unknown_auth_combo');
 

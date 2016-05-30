@@ -20,6 +20,35 @@ module.exports = class User {
    }
 
    /**
+    * @method User.testPassword
+    * @desc Tests a password against the current one.
+    * @returns {Boolean}
+    */
+   testPassword(pwd){
+      return new Promise(
+         resolve => bcrypt.compare(pwd, this.get('password'),
+            (error, result) => resolve(result)));
+   }
+
+   /**
+    * @method User.setPassword
+    * @desc Hashes and sets the user's password.
+    * @returns {Boolean}
+    */
+   setPassword(pwd){
+
+      return co(function*(){
+
+         var salt = yield new Promise(resolve => bcrypt.genSalt(10, (err, res) => resolve(res)));
+         var password = yield new Promise(resolve => bcrypt.hash(pwd, salt, (err, res) => resolve(res)));
+
+         this.set('password', password);
+
+      }.bind(this));
+
+   }
+
+   /**
     * @method User.updateRecord
     * @desc Updates the user's record using the `dataTransporter` object.
     * @returns {Promise}

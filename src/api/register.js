@@ -46,11 +46,9 @@ r.setHandler((response, req) => co(function*(){
 
    postman.verifyAccountEmail(user);
 
-   var salt = yield new Promise(resolve => bcrypt.genSalt(10, (err, res) => resolve(res)));
-   var password = yield new Promise(resolve => bcrypt.hash(req.body.message.password, salt, (err, res) => resolve(res)));
+   user.setPassword(req.body.message.password);
 
    user.set('id', yield increment('ns_id', 'id'));
-   user.set('password', password);
    user.set('date_joined', new Date().toISOString());
 
    yield user.insertRecord();

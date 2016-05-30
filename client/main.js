@@ -4,6 +4,15 @@
  */
 window.za = function() {
 
+   /**
+    * @memberof za
+    * @desc Shortcut for `clientData.core_text[key]`.
+    * @type String
+    */
+   this.txt = function(key){
+      return clientData.core_text[key];
+   };
+
    // On login callback
    this.onlogin = null;
 

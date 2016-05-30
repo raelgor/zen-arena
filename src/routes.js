@@ -51,6 +51,8 @@ a.post('/api/selector/language/:index', api.selector.route);
 
 a.post('/api/set/language/:lang_code', api.set.route);
 
+a.post('/api/settings/user/password', api.settings.user.password.route);
+
 a.post('/api/oauth/unlink/:oauth_account_id_key', api.oauth.unlink.route);
 a.post('/api/oauth/link/fb', api.oauth.link.fb.route);
 a.post('/api/oauth/link/coc', api.oauth.link.coc.route);
