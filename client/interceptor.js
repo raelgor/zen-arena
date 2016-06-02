@@ -98,7 +98,7 @@ za.makeStateObjectFromUrl = function(href) {
 
 $(window).click(interceptor);
 $(window).ready(function(){
-   var path = window.location.pathname;
+   var path = window.location.pathname + window.location.search;
    window.history &&
    history.replaceState(za.makeStateObjectFromUrl(path), document.title, path);
 });
