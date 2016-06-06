@@ -1,0 +1,45 @@
+.footer
+   .footer-white-line
+      .belt
+         .left-section
+            .title(data-html-links)=coreText.links
+            .link-col-container
+               .link-col
+                  a.link(tabindex=0, data-html-home, href=global.fullSiteUrl)=coreText.home
+                  a.link(tabindex=0, data-html-login, onclick="za.login.promptLogin()")=coreText.login
+                  a.link(tabindex=0, data-html-sign_up, onclick="za.login.promptRegister()")=coreText.sign_up
+                  a.link(tabindex=0, data-html-news, href="/news")=coreText.news
+                  a.link(tabindex=0, data-html-faqs, href="/faq")=coreText.faqs
+                  a.link(tabindex=0, data-html-privacy_policy, href="/privacy-policy")=coreText.privacy_policy
+                  a.link(tabindex=0, data-html-terms_of_service, href="/terms-of-service")=coreText.terms_of_service
+                  a.link(tabindex=0, data-html-cookies, href="/cookies")=coreText.cookies
+                  a.link(tabindex=0, data-html-developers, href="/developers")=coreText.developers
+               .link-col
+                  a.link(tabindex=0, data-html-partners, href="/partners")=coreText.partners
+                  a.link(tabindex=0, data-html-about_us, href="/about")=coreText.about_us
+                  a.link(tabindex=0, data-html-want_to_host_a_tournament, href="/host-a-tournament")=coreText.want_to_host_a_tournament
+                  a.link(tabindex=0, data-html-want_to_sign_up_for_a_tournament, href="/how-to-sign-up")=coreText.want_to_sign_up_for_a_tournament
+                  a.link(tabindex=0, data-html-dont_see_your_game_on_zenarena, href="/submit-your-game")=coreText.dont_see_your_game_on_zenarena
+                  a.link(tabindex=0, onclick="za.changeLanguage()")
+                     span(data-html-language)=coreText.language
+                     span=" "
+                     span.update-lang-letters="("+global.clientData.lang+")"
+                  a.link(tabindex=0, href="mailto:"+global.app_contact_email)=global.app_contact_email
+         .right-section
+            .top-section
+               .logo
+               .title(data-html-what_is_zenarena)=coreText.what_is_zenarena
+               .text(data-html-what_zenarena_is)=coreText.what_zenarena_is
+               .title.follow-us(data-html-follow_us)=coreText.follow_us
+               .social-container
+                  a(tabindex=0, href=global.social_links.facebook).icon-facebook
+                  a(tabindex=0, href=global.social_links.google_plus).icon-google-plus
+                  a(tabindex=0, href=global.social_links.twitter).icon-twitter
+                  a(tabindex=0, href=global.social_links.instagram).icon-instagram
+   .bottom-line
+      .dev
+         span conjured by 
+         a(href="https://fb.com/kosmas.papadatos") raelgor
+      .copyright=global.copyright_stamp
+      .version
+         a(href="https://github.com/raelgor/zen-arena")='v'+global.version

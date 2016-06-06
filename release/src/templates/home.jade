@@ -1,0 +1,29 @@
+div(data-controller="home")
+   .carousel-wrapper
+      .carousel
+         .tagline(data-html-home_tagline)!=coreText.home_tagline
+         a.big.green.button#stepinarena(tabindex=0, data-html-step_into_the_arena)=coreText.step_into_the_arena
+   .brand-info
+      .info-container
+         .info-icon(style="background-image: url(/img/users.png)")
+         .info-title(data-html-home_brand_info_1_title)!=coreText.home_brand_info_1_title
+         .info-description(data-html-home_brand_info_1_description)!=coreText.home_brand_info_1_description
+      .info-container
+         .info-icon(style="background-image: url(/img/games.png)")
+         .info-title(data-html-home_brand_info_2_title)!=coreText.home_brand_info_2_title
+         .info-description(data-html-home_brand_info_2_description)!=coreText.home_brand_info_2_description
+      .info-container
+         .info-icon(style="background-image: url(/img/money.png)")
+         .info-title(data-html-home_brand_info_3_title)!=coreText.home_brand_info_3_title
+         .info-description(data-html-home_brand_info_3_description)!=coreText.home_brand_info_3_description
+      .info-container
+         .info-icon(style="background-image: url(/img/crown.png)")
+         .info-title(data-html-home_brand_info_4_title)!=coreText.home_brand_info_4_title
+         .info-description(data-html-home_brand_info_4_description)!=coreText.home_brand_info_4_description               
+   .home-post-wrapper
+      each postHtml in posts
+         div!=postHtml
+   .partners-title(data-html-sponsors_title)=coreText.sponsors_title
+   .partner-container
+      each partner in partners
+         a.partner-tile(tabindex=0, href=(partner.link||''), title=(partner.title||''), style="background-image:url("+partner.image+")")

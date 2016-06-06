@@ -1,0 +1,29 @@
+.settings-page-group.white-box(data-controller="settingsUserAccounts")
+   .title(data-html-accounts)=coreText.accounts
+   .prop-name(data-html-connect_services)=coreText.connect_services
+   .prop-desc(data-html-connect_services_description)=coreText.connect_services_description
+   .prop-hr
+   each option in oauthOptions
+      .acc(data-option-id=option.id)
+         .connection-status
+            .not-connected(style=user[option.connectedKey]?"display:none":"")
+               button.green.button(data-html-connect)=coreText.connect
+            .connected(style=!user[option.connectedKey]?"display:none":"")
+               .prop-verified
+                  span.icon-checkmark
+                  span(data-html-connected)=coreText.connected
+                  span.dc(tabindex=0, data-html-disconnect)=coreText.disconnect
+         .img(style="background-image: url("+option.image+");")
+         span.prop-name=option.name
+         br
+         span.acc-id
+            if user[option.connectedKey]
+               if option.accDisplayInfo && user[option.accDisplayInfo]
+                  span=user[option.accDisplayInfo]
+               else
+                  span(data-html-connected)=coreText.connected
+            else
+               span(data-html-not_connected)=coreText.not_connected
+         br
+         span.prop-desc=coreText[option.descKey]
+      .prop-hr

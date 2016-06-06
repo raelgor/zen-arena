@@ -48,7 +48,7 @@ module.exports = class Instance extends EventEmitter2 {
             bind: message.clientConfig.config.bind_ip,
             port: message.clientConfig.config.port,
             ws: true,
-            static: path.resolve(__dirname + '/../../assets')
+            static: path.resolve(__dirname + '/../../../assets')
          });
 
          yield new Promise(r => app.on('listening', r));

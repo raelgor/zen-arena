@@ -1,0 +1,10 @@
+.settings-page-group.white-box(data-controller="settingsAdminConfiguration")
+   .title(data-html-configuration)=coreText.configuration
+   .app-config-pair.new
+      input.key.prop-input(placeholder="New key")
+      input.val.prop-input(placeholder="Value")
+   each value, key in appConfig
+      .app-config-pair
+         .key.prop-input=key
+         textarea.prop-input(placeholder="Value")!=JSON.stringify(value)
+         span.icon-cross(tabindex=0)

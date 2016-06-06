@@ -5,10 +5,10 @@
     "jquery"
   ],
   "loadEagerly": [
-    "path/to/your/js/**/*.js"
+    "./**/*.js"
   ],
   "dontLoad": [
-    "path/to/your/js/**/*.js"
+    "./**/*.js"
   ],
   "plugins": {
     "complete_strings": {},

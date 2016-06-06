@@ -1,0 +1,9 @@
+form.new-post.white-box(data-controller="newpost")
+   .user-new-post-image(style="background-image:url("+(data.userImage||"/img/defaultusr.jpg")+")")
+   textarea.new-post-text(data-placeholder-whats_up, placeholder=coreText.whats_up)
+   .new-post-interaction
+      .icon-earth
+      .public-text(data-html-public)=coreText.public
+      button.green.button.post.standard-button(data-html-post, type="submit")=coreText.post
+.news-feed.feed-title(data-html-news_feed)=coreText.news_feed
+.feed-pool(data-controller="feedpool")!=data.feedPosts

@@ -12,7 +12,7 @@ const numOfCores = global.numOfCores = os.cpus().length;
 const log = require('./src/log');
 const cluster = global.cluster = require('cluster');
 const colors = require('colors/safe');
-const packageInfo = require('./package');
+const packageInfo = require('./../package');
 const uuid = require('./src/fn/uuid');
 const co = require('co');
 const mongodb = require('mongodb');
@@ -36,7 +36,7 @@ var clientID;
 // Persistent connection to the System Database
 var systemDB;
 
-log(`Initializing zen-arena client ${packageInfo.version} ...`);
+log(`Initializing zen-arena client ${packageInfo.version}...`);
 DEBUG_MODE && log.debug('DEBUG_MODE = ON');
 TEST_MODE  && log.debug('TEST_MODE = ON');
 
@@ -44,7 +44,7 @@ try {
 
    log(`Loading configuration from config file...`);
 
-   config = global.config = require('./config');
+   config = global.config = require('./../config');
 
    log.green(`Configuration loaded.`);
 
@@ -71,7 +71,7 @@ try {
 
    }
 
-   co(init);
+   init();
 
 } catch(err) {
 
@@ -80,22 +80,22 @@ try {
 
 }
 
-function* init() {
+async function init() {
 
    log(`Connecting to system database...`);
 
    while(!systemDB)
       try {
-         systemDB = yield mongodb.connect(make_mongo_url(config.systemDatabase));
+         systemDB = await mongodb.connect(make_mongo_url(config.systemDatabase));
       } catch (err) {
          log.warn('Could not connect to system database. Retrying in 1s...');
-         yield new Promise(r => setTimeout(r, 1e3));
+         await new Promise(r => setTimeout(r, 1e3));
       }
 
-   var clientConfig = yield systemDB.collection('clients').find({id:clientID}).toArray();
+   var clientConfig = await systemDB.collection('clients').find({id:clientID}).toArray();
 
    if(!clientConfig.length)
-      yield systemDB.collection('clients').insert({ id: clientID });
+      await systemDB.collection('clients').insert({ id: clientID });
    else
       clientConfig = clientConfig[0];
 

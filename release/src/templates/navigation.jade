@@ -1,0 +1,31 @@
+.navigation
+   .background
+   .foreground
+      .wrapper
+         a.logo(href=global.fullSiteUrl)
+            img.ani04(src=navigation.logo)
+         .buttons
+            each button in navigation.buttons
+               a&attributes(button.attr).ani01(href=button.href)=button.text
+         form.search-box(action="/search", method="get", itemprop="potentialAction", itemscope, itemtype="http://schema.org/SearchAction")
+            meta(itemprop="target", content="/search?q={q}")
+            input.search(itemprop="query-input", pattern=".{2,50}", title=coreText.menu_search, data-title-menu_search, data-placeholder-menu_search, name="q", type="text", placeholder=coreText.menu_search, required)
+            button(type="submit")
+               .icon-search
+         .player-info
+            a.login(tabindex=0, data-html-menu_signin)=coreText.menu_signin
+            .or(data-html-menu_or)=coreText.menu_or
+            a.signup(tabindex=0, data-html-menu_signup)=coreText.menu_signup
+            .icon-user
+            .user-ui(tabindex=0, style="display:none")
+               a(tabindex=0).icon-earth
+               a(tabindex=0).icon-bubbles2
+               .user-display-name
+               .user-image
+         .touch-nav
+            a(href="/", tabindex=0).icon-newspaper
+            a(tabindex=0).icon-search
+            a(tabindex=0).icon-earth
+            a(tabindex=0).icon-bubbles2
+            a(tabindex=0).icon-user
+            

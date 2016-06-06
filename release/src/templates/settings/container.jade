@@ -1,0 +1,6 @@
+.settings-container(data-controller="settingsContainer")
+   .settings-toggler.hide(tabindex=0)
+      span.icon-circle-left
+      span.text(data-html-back)=coreText.back
+   .settings-selector!=data.selector
+   .settings-page.hide!=data.page

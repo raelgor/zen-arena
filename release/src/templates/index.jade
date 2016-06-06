@@ -1,0 +1,9 @@
+doctype html
+html(lang=global.language)
+    include head.jade
+    body
+        .content
+            include auth_dialogs.jade
+            include navigation.jade
+            .page-view!=pageView
+        include footer.jade

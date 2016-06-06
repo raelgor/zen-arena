@@ -1,0 +1,84 @@
+.auth-dialogs.hide.ani04
+   form.login-frame.hide.ani04#loginForm(name="login", action="/")
+      .welcome
+         span(data-html-loginText)=coreText.loginText
+         span.icon-cancel-circle(tabindex=0)
+      input.username(name="email", placeholder=coreText.login_username_placeholder, data-placeholder-login_username_placeholder, type="text", required)
+      input.password(name="password", placeholder=coreText.login_password_placeholder, data-placeholder-login_password_placeholder, type="password", required)
+      .forgot-password
+         a(tabindex=0, data-html-forgot_password, class="fpass-btn")=coreText.forgot_password
+      .no-robot#login_no_robot
+      .error.ani04
+      input(type="submit", data-val-log_in, value=coreText.log_in).done
+      .oauth-wrapper
+         a.fb.disabled(tabindex=0)
+            span.icon-facebook
+            span(data-html-sign_in_with)=coreText.sign_in_with
+            b Facebook
+         a.g-plus.disabled#g_log(tabindex=0)
+            span.icon-google-plus
+            span(data-html-sign_in_with)=coreText.sign_in_with
+            b Google+
+      .acc-question
+         span(data-html-no_acc_question)=coreText.no_acc_question
+         a.create-acc(tabindex=0, data-html-registerText)=coreText.registerText
+      .loader
+   form.register-frame.hide.ani04(name="register", action="/")
+      .welcome
+         span(data-html-registerText)=coreText.registerText
+         span.icon-cancel-circle(tabindex=0)
+      input.username(name="email", placeholder=coreText.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
+      input.password(name="password", placeholder=coreText.register_password_placeholder, data-placeholder-register_password_placeholder type="password", required)
+      .no-robot#register_no_robot
+      .checkbox
+      .error.ani04
+      input(type="submit", data-val-register, value=coreText.register).done
+      .oauth-wrapper
+         a.fb.disabled(tabindex=0)
+            span.icon-facebook
+            span(data-html-sign_in_with)=coreText.sign_in_with
+            b Facebook
+         a.g-plus.disabled#g_reg(tabindex=0)
+            span.icon-google-plus
+            span(data-html-sign_in_with)=coreText.sign_in_with
+            b Google+
+      .acc-question
+         span(data-html-login_question)=coreText.login_question
+         a.log-acc(tabindex=0, data-loginText)=coreText.loginText
+      .loader
+   form.forgot-password-frame.hide.ani04
+      .welcome
+         span(data-html-recover_password_title)=coreText.recover_password_title
+         span.icon-cancel-circle(tabindex=0)
+      .min-height-wrapper
+         .not-sent-yet
+            .fpass-text(data-html-fpass_main_text)=coreText.fpass_main_text
+            input.username(name="email", placeholder=coreText.register_username_placeholder, data-placeholder-register_username_placeholder, type="text", required)
+            .no-robot#fpass_no_robot
+            .error.ani04
+            input(type="submit", data-val-send_email, value=coreText.send_email).done
+         .success(data-html-forgot_password_success)!=coreText.forgot_password_success
+      .acc-question
+         a.log-acc(tabindex=0, data-menu_signin)=coreText.menu_signin
+         span=" - "
+         a.create-acc(tabindex=0, data-registerText)=coreText.registerText
+      .loader
+   form.recover-password-frame.hide.ani04
+      .welcome
+         span(data-html-new_password)=coreText.new_password
+         span.icon-cancel-circle(tabindex=0)
+      .min-height-wrapper
+         .not-sent-yet
+            .fpass-text(data-html-recover_pass_main_text)=coreText.recover_pass_main_text
+            input.password(placeholder=coreText.new_password, title=global.clientData.min_pass_length+" - "+global.clientData.max_pass_length+" "+coreText.characters, pattern=".{"+global.clientData.min_pass_length+","+global.clientData.max_pass_length+"}", data-placeholder-new_password type="password", required)
+            input.token(type="hidden")
+            .error.ani04
+            input(type="submit", data-val-save_new_password, value=coreText.save_new_password).done
+         .success(data-html-password_updated_text)!=coreText.password_updated_text
+      .acc-question
+         a.log-acc(tabindex=0, data-menu_signin)=coreText.menu_signin
+         span=" - "
+         a.create-acc(tabindex=0, data-registerText)=coreText.registerText
+      .loader
+
+      

@@ -1,5 +1,5 @@
 function interceptor(event) {
-
+  
    var target = $(event.target);
    var href = target.attr('href') || target.parents('a[href]').attr('href');
 

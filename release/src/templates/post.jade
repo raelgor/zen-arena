@@ -1,0 +1,36 @@
+.post-wrapper.white-box(data-controller="post", data-post-id=data.id)
+   .post-container
+      .post-head
+         if(data.isOwner)
+            .icon-cross.post(tabindex=0)
+         a.post-publisher-image(style="background-image: url("+data.publisher_image+")", href="/"+data.publisher_namespace)
+         .post-publisher-info
+            a.post-publisher-name(href="/"+data.publisher_namespace)=data.publisher_display_name
+            a.post-date-published(href="/post/"+data.id, data-date=data.date_published)
+               span.date-number
+               span.date-text
+      if data.title
+         .post-title=data.title
+      .post-text!=data.text?data.text.split('\n').join('<br/>'):''
+      .post-interaction-wrapper
+         span.post-interaction-button.like(tabindex=0, class=+data.selfLiked?"liked":"")
+            .icon-like
+            .post-interaction-action-text(data-html-like)=coreText.like
+            .post-interaction-pool=+data.likes||''
+         span.post-interaction-button.comment(tabindex=0)
+            .icon-bubble3
+            .post-interaction-action-text(data-html-comment)=coreText.comment
+            .post-interaction-pool=+data.comments||''
+         span.post-interaction-button.share(tabindex=0, style="display:none")
+            .icon-paperplane
+            .post-interaction-action-text(data-html-share)=coreText.share
+            .post-interaction-pool=+data.shares||''
+      .post-comment-section
+         .load-more(data-html-load_previous_comments, tabindex=0)=coreText.load_previous_comments
+         .comment-pool
+            each comment in data.commentsHtml
+               div!=comment
+         form.user-comment
+            .comment-user-image
+            input(type="submit", style="display:none")
+            input.comment-text(type="text", placeholder=coreText.write_comment, data-placeholder-write_comment)
