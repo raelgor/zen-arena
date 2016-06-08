@@ -1,0 +1,35 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "filesGlob": [
+    "./typings/**/*.ts",
+    "./main.ts",
+    "./src/**/*.ts"
+  ],
+  "files": [
+    "./typings/chalk/chalk.d.ts",
+    "./typings/colors/colors.d.ts",
+    "./typings/jquery/jquery.d.ts",
+    "./typings/node/node.d.ts",
+    "./typings/tsd.d.ts",
+    "./main.ts",
+    "./src/app.ts",
+    "./src/classes/Instance.ts",
+    "./src/definitions.d.ts",
+    "./src/dependencies.ts",
+    "./src/log.ts",
+    "./src/slave.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  }
+}

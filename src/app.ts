@@ -1,20 +1,22 @@
-/* global config */
-'use strict';
+import * as cluster from 'cluster';
 
-const cluster = global.cluster;
-
-module.exports = clientConfig => {
+export default function(clientConfig, flags: ClusterFlags, config, numOfCores) {
 
    cluster.setupMaster({ exec: __dirname + '/slave.js' });
 
-   var instances = clientConfig.instances || global.numOfCores;
+   var instances = clientConfig.instances || numOfCores;
 
    for(let i = 0; i < instances; i++)
       forkOne();
 
    function forkOne(){
       let worker = cluster.fork();
-      worker.send({config, clientConfig, DEBUG_MODE, TEST_MODE});
+
+      worker.send({
+        config,
+        clientConfig,
+        flags
+      });
 
       worker.on('disconnect', () => {
          worker.kill('SIGTERM');
@@ -22,4 +24,4 @@ module.exports = clientConfig => {
       });
    }
 
-};
+}

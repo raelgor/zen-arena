@@ -41,12 +41,20 @@ gulp.task('minify-css', () =>
 gulp.task('process-src', () => {
   gulp
   .src([
-    'main.js',
+    './main.ts',
+    './typings/**/*.ts',
     './src/**/*.*'
   ], {base: './'})
   .pipe(
     gulpIf(/\.ts[x]{0,1}$/,
-      ts({ target: 'es6', noExternalResolve: true })))
+      ts({
+        target: 'es6',
+        noExternalResolve: true,
+        module: 'commonjs',
+        moduleResolution: 'node',
+        experimentalDecorators: true,
+        rootDir: './'
+      })))
   .pipe(
     gulpIf(/\.js$/,
       babel()))

@@ -1,0 +1,42 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "filesGlob": [
+    "./typings/**/*.ts",
+    "./main.ts",
+    "./src/**/*.ts"
+  ],
+  "files": [
+    "./typings/chalk/chalk.d.ts",
+    "./typings/colors/colors.d.ts",
+    "./typings/eventemitter2/eventemitter2.d.ts",
+    "./typings/jquery/jquery.d.ts",
+    "./typings/mongodb/mongodb.d.ts",
+    "./typings/node/node.d.ts",
+    "./typings/tsd.d.ts",
+    "./main.ts",
+    "./src/app.ts",
+    "./src/classes/DataTransporter.ts",
+    "./src/classes/Instance.ts",
+    "./src/classes/Server.ts",
+    "./src/definitions.d.ts",
+    "./src/dependencies.ts",
+    "./src/fn/make_mongo_url.ts",
+    "./src/loaddirSync.ts",
+    "./src/log.d.ts",
+    "./src/log.ts",
+    "./src/slave.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  }
+}
