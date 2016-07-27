@@ -1,23 +1,19 @@
+import * as methodOverride from 'method-override';
+import * as multipart from 'connect-multiparty';
 import { EventEmitter2 } from 'eventemitter2';
+import * as cookieParser from 'cookie-parser';
+import * as compression from 'compression';
+import * as bodyParser from 'body-parser';
+import * as express from 'express';
+import * as helmet from 'helmet';
 import * as path from 'path';
-
-const libs = {
-    ws: require('ws'),
-    compression: require('compression'),
-    express: require('express'),
-    path: require('path'),
-    bodyParser: require('body-parser'),
-    helmet: require('helmet'),
-    cookieParser: require('cookie-parser'),
-    multipart: require('connect-multiparty'),
-    methodOverride: require('method-override')
-};
+import * as ws from 'ws';
 
 export default class Server extends EventEmitter2 {
 
     config: any;
     status: number;
-    server: any;
+    server: express.Express;
     router: any;
     httpServer: any;
     ws: any;
@@ -40,16 +36,17 @@ export default class Server extends EventEmitter2 {
             this.config[option] = options[option];
 
         // Create the express app
-        this.server = libs.express();
+        this.server = express();
 
         // Use compression on all requests
-        //this.server.use(libs.compression({threshold:0}));
+        // @todo toggle compression with optional parameter
+        //this.server.use(compression({threshold:0}));
 
         // Create router
-        this.router = libs.express.Router();
+        this.router = express.Router();
 
         // Set upload limit
-        this.server.use(libs.bodyParser.raw({
+        this.server.use(bodyParser.raw({
             limit: this.config.uploadLimit
         }));
 
@@ -59,8 +56,8 @@ export default class Server extends EventEmitter2 {
                 /libwww-perl/.test(req.get('user-agent')) ? res.status(403).end() : next());
 
         // Parse json api requests
-        this.server.use(libs.bodyParser.urlencoded({ extended: true }));
-        this.server.use(libs.bodyParser.json({ extended: true }));
+        this.server.use(bodyParser.urlencoded({ extended: true }));
+        this.server.use(bodyParser.json());
 
 
         // Add headers
@@ -79,11 +76,10 @@ export default class Server extends EventEmitter2 {
         });
 
         // Standard middleware
-        this.server.use(libs.helmet.xssFilter());
-        this.server.use(libs.cookieParser());
-        this.server.use(libs.multipart());
-        this.server.use(libs.methodOverride());
-
+        this.server.use(helmet.xssFilter());
+        this.server.use(cookieParser());
+        this.server.use(multipart());
+        this.server.use(methodOverride());
 
         // Disable x-powered-by header
         this.server.disable('x-powered-by');
@@ -107,7 +103,7 @@ export default class Server extends EventEmitter2 {
 
             // Serve static content
             this.server.use(
-                libs.express.static(
+                express.static(
                     path.resolve(this.config.static)));
 
         }
@@ -138,17 +134,16 @@ export default class Server extends EventEmitter2 {
         // specified in config
         if (config.ws) {
 
-            var ws = require('ws');
-            var headers: any = {};
+            // @todo check headers
+            // var headers: any = {};
 
-            if (config.serverHeader)
-                headers.server = 'ZenX/' +
-                    packageInfo.version;
+            // if (config.serverHeader)
+            // headers.server = 'ZenX/' +
+            // packageInfo.version;
 
             // Start and bind websocket server
             this.ws = new ws.Server({
-                server: this.server,
-                headers: headers
+                server: this.server
             });
 
         }

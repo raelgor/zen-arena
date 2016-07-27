@@ -97,7 +97,7 @@ var Instance = function (_eventemitter2_1$Even) {
                                 });
 
                             case 10:
-                                global["mongos"] = _context.sent;
+                                this.mongos = _context.sent;
 
                                 log('Getting configuration...');
                                 _context.next = 14;

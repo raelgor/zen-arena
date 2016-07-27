@@ -14,19 +14,15 @@ var _inherits3 = _interopRequireDefault(_inherits2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var methodOverride = require('method-override');
+var multipart = require('connect-multiparty');
 var eventemitter2_1 = require('eventemitter2');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var express = require('express');
+var helmet = require('helmet');
 var path = require('path');
-var libs = {
-    ws: require('ws'),
-    compression: require('compression'),
-    express: require('express'),
-    path: require('path'),
-    bodyParser: require('body-parser'),
-    helmet: require('helmet'),
-    cookieParser: require('cookie-parser'),
-    multipart: require('connect-multiparty'),
-    methodOverride: require('method-override')
-};
+var ws = require('ws');
 
 var Server = function (_eventemitter2_1$Even) {
     (0, _inherits3.default)(Server, _eventemitter2_1$Even);
@@ -47,13 +43,14 @@ var Server = function (_eventemitter2_1$Even) {
         for (var option in options) {
             _this.config[option] = options[option];
         } // Create the express app
-        _this.server = libs.express();
+        _this.server = express();
         // Use compression on all requests
-        //this.server.use(libs.compression({threshold:0}));
+        // @todo toggle compression with optional parameter
+        //this.server.use(compression({threshold:0}));
         // Create router
-        _this.router = libs.express.Router();
+        _this.router = express.Router();
         // Set upload limit
-        _this.server.use(libs.bodyParser.raw({
+        _this.server.use(bodyParser.raw({
             limit: _this.config.uploadLimit
         }));
         // Block libwww-perl
@@ -62,8 +59,8 @@ var Server = function (_eventemitter2_1$Even) {
             );
         });
         // Parse json api requests
-        _this.server.use(libs.bodyParser.urlencoded({ extended: true }));
-        _this.server.use(libs.bodyParser.json({ extended: true }));
+        _this.server.use(bodyParser.urlencoded({ extended: true }));
+        _this.server.use(bodyParser.json());
         // Add headers
         _this.server.use(function (req, res, next) {
             if (_this.config.serverHeader) res.setHeader('Server', 'ZenX/' + packageInfo.version);
@@ -72,10 +69,10 @@ var Server = function (_eventemitter2_1$Even) {
             return next();
         });
         // Standard middleware
-        _this.server.use(libs.helmet.xssFilter());
-        _this.server.use(libs.cookieParser());
-        _this.server.use(libs.multipart());
-        _this.server.use(libs.methodOverride());
+        _this.server.use(helmet.xssFilter());
+        _this.server.use(cookieParser());
+        _this.server.use(multipart());
+        _this.server.use(methodOverride());
         // Disable x-powered-by header
         _this.server.disable('x-powered-by');
         // A route to be used later
@@ -89,7 +86,7 @@ var Server = function (_eventemitter2_1$Even) {
                 return next();
             });
             // Serve static content
-            _this.server.use(libs.express.static(path.resolve(_this.config.static)));
+            _this.server.use(express.static(path.resolve(_this.config.static)));
         }
         // Not found
         _this.server.get('*', function (req, res) {
@@ -109,13 +106,14 @@ var Server = function (_eventemitter2_1$Even) {
         // Start and bind a WebSocket server if
         // specified in config
         if (config.ws) {
-            var ws = require('ws');
-            var headers = {};
-            if (config.serverHeader) headers.server = 'ZenX/' + packageInfo.version;
+            // @todo check headers
+            // var headers: any = {};
+            // if (config.serverHeader)
+            // headers.server = 'ZenX/' +
+            // packageInfo.version;
             // Start and bind websocket server
             _this.ws = new ws.Server({
-                server: _this.server,
-                headers: headers
+                server: _this.server
             });
         }
         // Callback

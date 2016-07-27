@@ -11,6 +11,7 @@ export default class Instance extends EventEmitter2 {
     config: any;
     cache: ThunkRedisClient;
     app: Server;
+    mongos: any;
 
     async init(message: {
       config: any,
@@ -32,7 +33,7 @@ export default class Instance extends EventEmitter2 {
 
         await dataTransporter.connectMongos(make_mongo_url(this.config.systemDatabase));
 
-        global["mongos"] = await new Promise(r =>
+        this.mongos = await new Promise(r =>
             new mongodb.MongoClient().connect(make_mongo_url(this.config.systemDatabase),
                 (err, db) => r(db)));
 
