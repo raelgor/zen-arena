@@ -23,5 +23,6 @@
   "browser": true,
   "-W083": false,
   "-W030": false,
-  "-W124": false
+  "-W124": false,
+  "-W109": false
 }
